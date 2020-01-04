@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>New Filipeta</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/stylesheet/munique-css.css}" rel="stylesheet">
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <div th:replace="NavBar :: navbar"></div>
+
+            <div class="jumbotron">
+                
+                <p>Registration Flyer</p>
+                
+                
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="response-error">Todos os campos são obrigatórios!</span>
+                </div>
+                
+                <div style="display: none;" class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    Flyer registrado com sucesso.
+                </div>
+
+                <form>
+                    
+                    <div class="row">
+
+                        <div class="condominio col-sm-6 form-group"> <!--has-success has-feedback--> 
+                            <label class="control-label" for="condominio">Condominio</label> 
+                            <input type="text" class="form-control" id="condominio" aria-describedby="condominio">
+                        </div>
+
+                        <div class="portaria col-sm-6 form-group "> <!--has-warning has-feedback-->
+                            <label class="control-label" for="portaria">Portaria</label> 
+                            <input type="text" class="form-control" id="portaria" aria-describedby="portaria">
+                        </div>
+
+                    </div>
+
+                    <div class="filipeta form-group "> <!--has-error has-feedback-->
+                        <label class="control-label" for="filipeta">Flyer Cod</label> 
+                        <input type="text" class="form-control" id="filipeta" aria-describedby="filipeta">
+                    </div>
+                
+                </form>    
+                    
+                <button class="btn btn-primary btn-save">
+                    <span class="glyphicon glyphicon-floppy-save"></span>
+                    Cadastrar
+                </button>
+
+            </div>
+            <div id="divLoading"></div>
+        </div>
+        
+    </body>
+    <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+    <script th:src="@{/flyer-js/save.flyer.js}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"],[data-original-title]').popover();
+        });
+    </script>
+
+</html>

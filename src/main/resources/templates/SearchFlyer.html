@@ -1,0 +1,94 @@
+<!DOCTYPE html >
+<html>
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>Search Filipeta</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/stylesheet/munique-css.css}" rel="stylesheet">
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+    </head>
+
+    <body>
+
+        <div class="container">
+            
+            <div th:replace="NavBar :: navbar"></div>
+            
+            <div class="jumbotron">
+                
+                <div>
+                    <p>Search Flyer</p>
+                </div>
+                
+                <div class="row">
+                    
+                    <div class="feed col-sm-4 form-group" > <!--has-success has-feedback--> 
+                        <input type="text" class="form-control" placeholder="Flyer cod..." name="filipeta" id="filipeta" aria-describedby="filipeta">
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-search">
+                            <span class="glyphicon glyphicon-search"></span>
+                            Search
+                        </button>
+                    </div>
+                    
+                </div>
+                <div style="padding-top: 30px;" class="table-responsive">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Condominio</th>
+                                <th>Portaria</th>
+                                <th>N° Flyer</th>
+                                <th class="text-center" style="width: 100px;">Ação</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr th:each="filipeta : ${todas}" style="background-color: white">
+                                <td th:text="${filipeta.id}">1</td>
+                                <td th:text="${filipeta.condominio}">Munique</td>
+                                <td th:text="${filipeta.portaria}">Social</td>
+                                <td style="font-weight: bold;" th:text="${filipeta.filipeta}">123654</td>
+                                <td class="text-center">
+                                    <a class="btn  btn-link  btn-xs" title="Editar"> 
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                    <a class="btn  btn-link  btn-xs" title="Excluir">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            
+                            <tr th:if="${vazio}" class='lista-vazia'>
+                                <td colspan='7' style='color:green'>
+                                    <b>Nenhum flyer encontrado</b>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                        
+                    </table>
+                </div>
+                
+            </div>
+            <div id="divLoading"></div>
+        </div>
+
+    </body>
+    <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+    <script th:src="@{/vendor-js/jquery-1.12.4.js}" type="text/javascript"></script>
+    <script th:src="@{/flyer-js/save.flyer.js}"></script>
+    <script>
+        $(document).ready(function(){
+            $.noConflict();
+            $('[data-toggle="popover"],[data-original-title]').popover();
+        });
+    </script>
+</html>

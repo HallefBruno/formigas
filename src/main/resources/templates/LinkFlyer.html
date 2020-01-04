@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:data="http://www.thymeleaf.org/extras/data">
+    
+    <head>
+        <title>Vincular Filipeta</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/stylesheet/jquery-ui.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/munique-css.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/bootstrap-toggle.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/select2.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/select2-bootstrap.css}" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+        <style>
+            #autocomplete::placeholder {
+                text-transform: none;
+            }
+            #autocomplete {
+                text-transform:uppercase;
+            }
+            #autocompletemodelo::placeholder {
+                text-transform: none;
+            }
+            #autocompletemodelo {
+                text-transform:uppercase;
+            }
+            
+            #tdEvent:hover {
+                background-color: #edeff2;
+            }
+        </style>
+        
+    </head>
+    
+    <body>
+        
+        
+        
+        <div class="container">
+            
+            <div th:replace="NavBar :: navbar"></div>
+            
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="form-group  col-sm-3">
+                        <label class="control-label">Tipo de automovel</label>
+                        <div>
+                            <input id="tipoautomovel" type="checkbox" class="js-status" data-on="CARRO" data-off="MOTO"  data-toggle="toggle" data-offstyle="info" checked/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-sm-6">
+                        <label for="nome" class="control-label">Nome</label>
+                        <input onclick="$('#nome').select();" name="nome" type="text" id="nome" class="form-control"/>
+                    </div>
+                    
+                    <div class="form-group col-sm-4">
+                        <label for="rg">Nº RG</label>
+                        <input class="form-control" id="rg" name="rg" type="text" />
+                    </div>
+                    
+                    <div class="form-group col-sm-2">
+                        <label for="orgao" class="control-label">Orgão emissor</label>
+                        <input onclick="$('#orgao').select();" name="orgao" type="text" id="orgao" class="form-control"/>
+                    </div>
+                </div>
+                
+                <div class="row">
+
+                    <div class="form-group col-sm-6">
+                        <label class="control-label">
+                            <strong class="iniciais">Digite as iniciais da marca do carro</strong>
+                        </label>
+                        <div class="inner-addon right-addon">
+                            <i class="glyphicon glyphicon-search"></i>
+                            <input onclick="$('#autocomplete').select();" name="autocomplete" type="text" id="autocomplete" class="form-control" placeholder="Fabricante..."/>
+                            <input name="codMarca" type="hidden" id="codMarca"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6"><!--col-xs-4-->
+                        <label class="control-label carros-motos" for="carros-motos">Selecione o carro</label>
+                        <select class="form-control" id="carros-motos" name="carros-motos" disabled> <!-- data-style="btn-default" data-max-options="1" multiple btn-warning-info --> 
+                            <option value="" class="option-select">Selecione um veículo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <div style="background-color: #f9f9f9" class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                    Search Resident
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <strong>Atenção!</strong> <br>Realize a busca de seguinte forma: <strong>digite a quadra e lote ou nome do morador.</strong>
+                                <div class="inner-addon right-addon">
+                                    <!--<input onclick="$('#resident').select();" name="resident" type="text" id="resident" class="form-control" placeholder="Qd 03 Lt 04 or Name"/>-->
+                                    <select data-placeholder="Qd 03 Lt 02 or Name..." class="form-control" id="resident" name="resident" >  <!-- data-style="btn-default" data-max-options="1" multiple btn-warning-info-->  
+                                    </select>
+                                    <input name="codRedident" type="hidden" id="codRedident"/>
+                                     <i class="glyphicon glyphicon-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div style="padding-top: 5px;">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label class="control-label" for="searchFlyer">Buscar flyer</label>
+                            <input id="searchFlyer" class="form-control" onkeyup="searchFlyer(this.value)" placeholder="N° Flyer..."/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Condominio</th>
+                                <th>Portaria</th>
+                                <th>N° Flyer</th>
+                                <th style="width: 140px" class="text-center">Status flyer</th>
+                                <th class="text-center" style="width: 100px">Ação</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            
+                            <tr th:each="status : ${listFlyerOff}" style="background-color: white">
+                                <td th:text="${status.id}">1</td>
+                                <td th:text="${status.filipeta.condominio}">Munique</td>
+                                <td th:text="${status.filipeta.portaria}">Social</td>
+                                <td style="font-weight: bold;" th:text="${status.filipeta.filipeta}">123654</td>
+                                <td class="text-center" title="Status do flyer">
+                                    <label class="label label-danger" th:text="${status.status}">Offline</label>
+                                </td>
+                                <td id="tdEvent" style="text-align: center;" title="Enviar">
+                                    <a>
+                                        <i class="glyphicon glyphicon-send"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            
+                            <tr class='lista-vazia'><td colspan='7' style='color:green' th:if="${vazio}">
+                                <b>Nenhum flyer encontrado</b>
+                            </tr>
+                            
+                        </tbody>
+
+                    </table>
+                </div>
+                
+            </div>
+            
+        </div>
+        <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+        <script th:src="@{/vendor-js/jquery-1.12.4.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/jquery-ui.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/bootstrap-toggle.min.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/select2.min.js}" type="text/javascript"></script>
+        <script th:src="@{/flyer-js/status.flyer.autocomplete.js}" type="text/javascript"></script>
+        <script th:src="@{/flyer-js/searchFlyerLink.js}" type="text/javascript"></script>
+
+    </body>
+</html>
+
+<!--<button class="btn btn-primary" onclick="alert(this.value);">
+    <i class="glyphicon glyphicon-send"></i>
+</button>-->

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Search Resident</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/stylesheet/jquery-ui.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/munique-css.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/bootstrap-toggle.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/select2.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/select2-bootstrap.css}" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+
+    </head>
+    
+    
+    
+    <body>
+
+        <div class="container">
+
+            <div th:replace="NavBar :: navbar"></div>
+            
+            <div class="jumbotron">
+
+                <div>
+                    <p>Search Resident</p>
+                    <input type="hidden" id="ambiente" th:value="${ambiente}" />
+                    <input type="hidden" id="context-app" th:value="@{/}" />
+
+                    <div  class="row">
+                        <div class="form-group col-sm-12">
+                            <div style="background-color: #f9f9f9" class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        Search Resident
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <strong>Atenção!</strong> <br>Realize a busca de seguinte forma: <strong>digite a quadra e lote ou nome do morador.</strong>
+                                    <div class="inner-addon right-addon">
+                                        <!--<input onclick="$('#resident').select();" name="resident" type="text" id="resident" class="form-control" placeholder="Qd 03 Lt 04 or Name"/>-->
+                                        <select data-placeholder="Qd 03 Lt 02 or Name..." class="form-control" id="resident" name="resident" >  <!-- data-style="btn-default" data-max-options="1" multiple btn-warning-info-->  
+                                        </select>
+                                        <input name="codRedident" type="hidden" id="codRedident"/>
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="table-responsive">
+                    
+                    <table class="table"><!--table-bordered-->
+                        
+                        <tbody>
+                            
+                            
+                        </tbody>
+
+                    </table>
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+        <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+        <script th:src="@{/vendor-js/jquery.maskMoney.min.js}"></script>
+        <script th:src="@{/vendor-js/jquery.mask.min.js}"></script>
+        <script th:src="@{/vendor-js/mask.phone.decimal.plain.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/select2.min.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/jquery-ui.js}" type="text/javascript"></script>
+        <script th:src="@{/flyer-js/search.resident.js}" type="text/javascript"></script>
+
+        <script>
+            if($("#ambiente").val() === "dev") {
+                $(".ambiente-dev").prop("style","display:block;");
+                $(".ambiente-prod").prop("style","display:none;");
+            } else {
+                $(".ambiente-prod").prop("style","display:block;");
+                $(".ambiente-dev").prop("style","display:none;");
+            }
+        </script>
+        
+        
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="popover"],[data-original-title]').popover();
+            });
+        </script>
+        
+    </body>
+</html>
+
+
+<!--
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"],[data-original-title]').popover();
+    });
+</script> 
+
+<div class="container">
+<h3>Tooltip Example</h3>
+<a href="#" data-toggle="tooltip" title="Hooray!">Hover over me</a>
+</div>
+
+<button type="button"  class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+
+
+<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+Link with href
+</a>
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+Button with data-target
+</button>
+
+<div class="collapse" id="collapseExample">
+<div class="well">
+Aqui posso colocar qualque coisa
+<input class="form-control" name="codRedident" type="text" id="codRedident"/>
+</div>
+</div>
+
+-->

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Página principal</title>
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+    </head>
+
+    <body>
+        <div align="center" class="alert alert-success">
+            <h3><p><span style="color: black">Bem vindo, clique o botão abaixo!</span></p></h3>
+            <hr>
+            <a th:href="@{/flyer}">
+                <button class="btn btn-default">
+                    Ir para sistema <span class="glyphicon glyphicon-pencil"></span>
+                </button> 
+            </a>
+        </div>
+    </body>
+
+    <script th:href="@{webjars/jquery/1.9.1/jquery.min.js}"></script>
+    <script th:href="@{webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+</html>
