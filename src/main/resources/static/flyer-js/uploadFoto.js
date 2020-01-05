@@ -6,8 +6,9 @@ $(document).ready(function () {
         data.append('files', $('#fileimagem')[0].files[0]);
         var resident = "Carlos";
         var idResident = "1";
+        var context = $("#context-app").val();
         $.ajax({
-            url: "/formigas/fotos/save/"+resident+"/"+idResident,
+            url: context+"fotos/save/"+resident+"/"+idResident,
             data: data,
             enctype: 'multipart/form-data',
             processData: false,

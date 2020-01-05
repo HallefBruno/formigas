@@ -101,7 +101,7 @@ function list_result_search() {
             type: 'GET',
             contentType: 'application/json',
             dataType: 'json',
-            url: $("#context-app").val()+"resident/search/'+codResident",
+            url: $("#context-app").val()+"resident/search/"+codResident,
             data: codResident,
 
             error: function (data, textStatus, jqXHR) {
@@ -117,6 +117,8 @@ function list_result_search() {
 }
 
 function table(data) {
+    
+    var context = $("#context-app").val();
     
     var table = $('table').find('tbody');
 
@@ -143,7 +145,7 @@ function table(data) {
                                                     "<div class=' col-xs-6 col-md-3'>"+
                                                         
                                                         "<a style='display: block;' class='ambiente-dev thumbnail'>"+
-                                                            "<img src='/munique/imagens/resident/"+resident.fileName+"' id='imagenFondo' style='height: 180px; width: 100%;'>"+
+                                                            "<img src='"+context+"imagens/resident/"+resident.fileName+"' id='imagenFondo' style='height: 180px; width: 100%;'>"+
                                                         "</a>"+
                                                         
                                                         "<a style='display: none;' class='ambiente-prod thumbnail'>"+

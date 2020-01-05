@@ -2,11 +2,11 @@ $(document).ready(function () {
     
     event.preventDefault();
 
-    $('.btn-save').on('click', function () {
+    $(".btn-save").on("click", function () {
        save();
     });
     
-    $('.btn-search').on('click', function () {
+    $(".btn-search").on("click", function () {
         searching_filipeta(); 
     });
 
@@ -16,9 +16,9 @@ function save() {
     
     var filipeta = {
         
-        "condominio":$('#condominio').val(),
-        "portaria":$('#portaria').val(),
-        "filipeta":$('#filipeta').val()
+        "condominio":$("#condominio").val(),
+        "portaria":$("#portaria").val(),
+        "filipeta":$("#filipeta").val()
     };
     
     if(filipeta.condominio && filipeta.portaria && filipeta.filipeta) {
@@ -27,39 +27,34 @@ function save() {
         $(".portaria").removeClass("has-error has-feedback");
         $(".filipeta").removeClass("has-error has-feedback");
         
+        var context = $("#context-app").val();
+        
         $.ajax({
 
-            type: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            url: '/formigas/flyer/save',
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            url: context+"flyer/save",
             data: JSON.stringify(filipeta),
 
             error: function (data, textStatus, jqXHR) {
-                $('.alert-danger').prop('style','display: block;');
-                $('.alert-success').prop('style','display: none;');
-                $('.response-error').text(data.responseText);
+                $(".alert-danger").prop("style","display: block;");
+                $(".alert-success").prop("style","display: none;");
+                $(".response-error").text(data.responseText);
             },
             success: function (data, textStatus, jqXHR) {
-                $('.alert-danger').prop('style','display: none;');
-                $('.alert-success').prop('style','display: block;');
+                $(".alert-danger").prop("style","display: none;");
+                $(".alert-success").prop("style","display: block;");
             },
             beforeSend: start_request,
             complete: finalize_request
 
-    //        error: on_error_response.bind(this),
-    //        beforeSend: start_request,
-    //        complete: finalize_request
 
         });
-    } else {//alert-warning
-        //$('.response-error').removeClass('alert-danger');
-        //$('.response-error').addClass('alert-warning');
+    } else {
         
         var msg = "Todos os campos são obrigatórios!";
-        
-        
-        
+
         if($("#condominio").val() === "") {
             $(".condominio").addClass("has-error has-feedback");
         } else {
@@ -79,7 +74,7 @@ function save() {
             $(".filipeta").removeClass("has-error has-feedback");
         }
         
-        $('.response-error').text(msg);
+        $(".response-error").text(msg);
         
     }
     
@@ -87,18 +82,20 @@ function save() {
 
 function searching_filipeta() {
     
-    if($('#filipeta').val()) {
+    if($("#filipeta").val()) {
         
-        $('.feed').removeClass('has-error has-feedback');
-        $('.feed').removeProp('placeholder');
+        $(".feed").removeClass("has-error has-feedback");
+        $(".feed").removeProp("placeholder");
+        
+        var context = $("#context-app").val();
         
         $.ajax({
 
-            type: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            url: '/formigas/flyer/searching/'+$('#filipeta').val(),
-            data: JSON.stringify({filipetaCod:$('#filipeta').val()}),
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            url: context+"flyer/searching/"+$("#filipeta").val(),
+            data: JSON.stringify({filipetaCod:$("#filipeta").val()}),
 
             error: function (data, textStatus, jqXHR) {
                 console.log(data);
@@ -107,15 +104,14 @@ function searching_filipeta() {
                 table(data);
             },
 
-            //error: on_error_response.bind(this),
             beforeSend: start_request,
             complete: finalize_request
 
         });
     } else {
-        $('.feed').addClass('has-error has-feedback');
-        $('#filipeta').focus();
-        $('#filipeta').prop('placeholder','Flyer cod...');
+        $(".feed").addClass("has-error has-feedback");
+        $("#filipeta").focus();
+        $("#filipeta").prop("placeholder","Flyer cod...");
     }
     
 }
@@ -162,29 +158,9 @@ function table(data) {
 }
 
 function start_request() {
-    $('#divLoading').addClass('show');
+    $("#divLoading").addClass("show");
 }
 
 function finalize_request() {
-    $('#divLoading').removeClass('show');
+    $("#divLoading").removeClass("show");
 }
-
-
-//table.append("<tr>"+
-//                            "<td>"+
-//                                "<div class='panel panel-primary'>"+
-//                                    "<div class='panel-heading'>Filipeta</div>"+
-//                                    "<div class='panel-body'>"+
-//                                        "<div class='list-group'>"+
-//                                            "<input type='hidden' value='"+filipeta.id+"' />"+
-//                                            "<a class='list-group-item'>"+"Condominio: "+filipeta.condominio+"</a>"+
-//                                            "<a class='list-group-item'>"+"Portaria: "+filipeta.portaria+"</a>"+
-//                                            "<b><a style='color: #000000;' class='list-group-item'>"+"Filipeta: "+filipeta.filipeta+"</a></b>"+
-//                                        "</div>"+
-//                                    "</div>"+
-//                                    "<div class='panel-footer'>"+
-//                                        "<button class='btn btn-primary'>Visitar</button>"+
-//                                    "</div>"+
-//                                "</div>"+
-//                            "</td>"+
-//                        "</tr>");

@@ -1,18 +1,18 @@
-var teste = "";
+
 $(document).ready(function () {
     
     event.preventDefault();
     $.fn.select2.defaults.set("theme", "bootstrap");
     
-    $('.select-quadra').select2();
-    $('.select-lote').select2();
-    $('.select-estado').select2();
-    $('.select-cidade').select2();
-    $('.select-bairro').select2();
+    $(".select-quadra").select2();
+    $(".select-lote").select2();
+    $(".select-estado").select2();
+    $(".select-cidade").select2();
+    $(".select-bairro").select2();
     
-    $('.cpf').mask('000.000.000-00', {reverse: true});
+    $(".cpf").mask("000.000.000-00", {reverse: true});
     
-    $("#fileimagem").on('change',function () {
+    $("#fileimagem").on("change",function () {
         if($("#fileimagem").val() !== "") {
             $(".btn-file").removeClass("btn btn-danger");
             $(".btn-file").addClass("btn btn-primary");
@@ -94,16 +94,16 @@ function savePhoto(idResident) {
     if(idResident> 0 ) {
         
         var data = new FormData();
-        data.append('photo', $('#fileimagem')[0].files[0]);
+        data.append("photo", $('#fileimagem')[0].files[0]);
         var residentName = $("#nome").val();
 
         $.ajax({
-            url: $('.context-app').val()+"fotos/save/"+residentName+"/"+idResident,
+            url: $(".context-app").val()+"fotos/save/"+residentName+"/"+idResident,
             data: data,
-            enctype: 'multipart/form-data',
+            enctype: "multipart/form-data",
             processData: false,
             contentType: false,
-            type: 'POST',
+            type: "POST",
             success: function (resp) {
                 $(".alert-danger").prop('style','display: none;');
                 $(".alert-foto").prop('style','display: block;').fadeOut(3000);
@@ -121,9 +121,9 @@ function savePhoto(idResident) {
 function popularCombos() {
     var valueSelectEstado = $(".select-estado").select2({
         ajax: {
-            url: $('.context-app').val()+'resident/lists/estado/0',
+            url: $(".context-app").val()+"resident/lists/estado/0",
             type: "get",
-            dataType: 'json',
+            dataType: "json",
 
             data: function (params) {
                 return {
@@ -140,11 +140,13 @@ function popularCombos() {
     });
     
     valueSelectEstado.on("select2:select", function (e) {
+        
         var valueSelectCidade = $(".select-cidade").select2({
+            
             ajax: {
-                url: $('.context-app').val()+'resident/lists/cidade/'+e.params.data.id,
+                url: $(".context-app").val()+"resident/lists/cidade/"+e.params.data.id,
                 type: "get",
-                dataType: 'json',
+                dataType: "json",
                 
                 data: function (params) {
                     return {
@@ -163,9 +165,9 @@ function popularCombos() {
         valueSelectCidade.on("select2:select", function (e) {
             $(".select-bairro").select2({
                 ajax: {
-                    url: $('.context-app').val()+'resident/lists/bairro/'+e.params.data.id,
+                    url: $(".context-app").val()+"resident/lists/bairro/"+e.params.data.id,
                     type: "get",
-                    dataType: 'json',
+                    dataType: "json",
 
                     data: function (params) {
                         return {

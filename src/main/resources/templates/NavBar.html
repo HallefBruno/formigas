@@ -4,6 +4,8 @@
       xmlns:data="http://www.thymeleaf.org/extras/data"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     
+    
+        
     <nav class="navbar navbar-default navbar-top " th:fragment="navbar">
         
         <div class="container-fluid">
@@ -16,6 +18,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 
+                <input type="hidden" th:value="@{/}" id="context-app">
+                    
                 <a class="navbar-brand">
                     <img alt="Brand" width="26px" height="22px" th:src="@{/imagens/exemplo-bootstrap.png}">
                 </a>
