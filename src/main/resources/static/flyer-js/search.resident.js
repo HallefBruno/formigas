@@ -80,7 +80,7 @@ $(document).ready(function () {
                 return state.text;
             }
 
-            url_photo = $("#context-app").val()+"imagens/resident/thumbnail-" + photo + "_" + state.id + ".png";
+            url_photo = $("#context-app").val()+"imagens/resident/thumbnail-" + photo.toLowerCase() + "_" + state.id + ".png";
 
             var $state = $('<span ><img sytle="display: inline-block;" src="'+url_photo+'"/> ' + state.text + '</span>');
             return $state;
