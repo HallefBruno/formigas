@@ -3,7 +3,6 @@ package com.formiga.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,7 +23,7 @@ public class StatusFlyer implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "id_flyer")
-    private Filipeta filipeta;
+    private Flyer flyer;
     
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -37,12 +36,12 @@ public class StatusFlyer implements Serializable {
         this.id = id;
     }
 
-    public Filipeta getFilipeta() {
-        return filipeta;
+    public Flyer getFlyer() {
+        return flyer;
     }
 
-    public void setFilipeta(Filipeta filipeta) {
-        this.filipeta = filipeta;
+    public void setFlyer(Flyer flyer) {
+        this.flyer = flyer;
     }
 
     public Status getStatus() {

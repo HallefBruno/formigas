@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IStatusFlyerRepository extends JpaRepository<StatusFlyer, Long> {
 
-    @Query("FROM StatusFlyer sf INNER JOIN sf.filipeta where  sf.filipeta.filipeta like %:flyer%")
+    @Query("FROM StatusFlyer sf INNER JOIN sf.flyer where  sf.flyer.codFlyer like %:flyer%")
     public List<StatusFlyer> searchFlyerStatus(@Param("flyer") String flyer);
     
     @Query(value = " SELECT DISTINCT morador.quadra_lote_nome, morador.id "

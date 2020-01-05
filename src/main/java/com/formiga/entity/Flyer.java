@@ -1,8 +1,9 @@
 package com.formiga.entity;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Filipeta implements Serializable {
+public class Flyer implements Serializable {
 
     private static final long serialVersionUID = 1103354502657630401L;
 
@@ -28,7 +29,10 @@ public class Filipeta implements Serializable {
 
     @NotBlank
     @NotNull
-    private String filipeta;
+    private String codFlyer;
+    
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Long getId() {
         return id;
@@ -54,14 +58,22 @@ public class Filipeta implements Serializable {
         this.portaria = portaria;
     }
 
-    public String getFilipeta() {
-        return filipeta;
+    public String getCodFlyer() {
+        return codFlyer;
     }
 
-    public void setFilipeta(String filipeta) {
-        this.filipeta = filipeta;
+    public void setCodFlyer(String codFlyer) {
+        this.codFlyer = codFlyer;
     }
-    
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -81,7 +93,7 @@ public class Filipeta implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Filipeta other = (Filipeta) obj;
+        Flyer other = (Flyer) obj;
         if (id == null) {
             if (other.id != null) {
                 return false;

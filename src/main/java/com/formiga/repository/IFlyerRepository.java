@@ -3,7 +3,7 @@ package com.formiga.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.formiga.entity.Filipeta;
+import com.formiga.entity.Flyer;
 import com.formiga.entity.MarcaCarro;
 import com.formiga.entity.MarcaMoto;
 import java.util.List;
@@ -12,10 +12,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 @Repository
-public interface IFilipetaRepository extends JpaRepository<Filipeta, Long>{
+public interface IFlyerRepository extends JpaRepository<Flyer, Long>{
     
-    public Optional<Filipeta> findByFilipeta(String nome);
-    public List<Filipeta> findListByFilipeta(String filipetaCod);
+    public Optional<Flyer> findByCodFlyer(String codFlyer);
     
     @Query("FROM MarcaCarro where nome like %:keyword%")
     public List<MarcaCarro> searchMarcaCar(@Param("keyword") String keyword);

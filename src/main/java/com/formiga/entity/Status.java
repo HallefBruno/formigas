@@ -6,7 +6,7 @@ public enum Status {
     ONLINE("Online"),
     OFFLINE("Offline");
     
-    private final String value;
+    private String value;
 
     private Status(String value) {
         this.value = value;
@@ -14,5 +14,9 @@ public enum Status {
 
     public String getValue() {
         return value;
+    }
+    
+    public void setValue(String value) {
+        this.value = value;
     }
 }

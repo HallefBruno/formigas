@@ -5,7 +5,7 @@
       xmlns:data="http://www.thymeleaf.org/extras/data">
     
     <head>
-        <title>Vincular Filipeta</title>
+        <title>Bind Flyer</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
@@ -143,9 +143,9 @@
                             
                             <tr th:each="status : ${listFlyerOff}" style="background-color: white">
                                 <td th:text="${status.id}">1</td>
-                                <td th:text="${status.filipeta.condominio}">Munique</td>
-                                <td th:text="${status.filipeta.portaria}">Social</td>
-                                <td style="font-weight: bold;" th:text="${status.filipeta.filipeta}">123654</td>
+                                <td th:text="${status.flyer.condominio}">Munique</td>
+                                <td th:text="${status.flyer.portaria}">Social</td>
+                                <td style="font-weight: bold;" th:text="${status.flyer.codFlyer}">123654</td>
                                 <td class="text-center" title="Status do flyer">
                                     <label class="label label-danger" th:text="${status.status}">Offline</label>
                                 </td>
