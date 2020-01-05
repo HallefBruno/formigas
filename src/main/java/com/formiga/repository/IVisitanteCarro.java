@@ -12,7 +12,6 @@ public interface IVisitanteCarro extends JpaRepository<VisitanteCarro, Long>{
     
     @Query("FROM VisitanteCarro vc "
          + "INNER JOIN vc.statusFlyer "
-         + "INNER JOIN vc.marcaCarro "
          + "INNER JOIN vc.modeloCarro ")
     public List<VisitanteCarro> searchVisitanteCarro();
     

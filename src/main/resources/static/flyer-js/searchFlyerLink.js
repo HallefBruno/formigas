@@ -1,12 +1,13 @@
+var context;
 $(document).ready(function () {
-    
+    context = $("#context-app").val();
 });
 
 function searchFlyer(value) {
-
+    
     $.ajax({
-        type: 'GET',
-        url: '/formigas/flyer/offline',
+        type: "GET",
+        url: context+"flyer/offline",
         data: {
             flyer: value
         },
