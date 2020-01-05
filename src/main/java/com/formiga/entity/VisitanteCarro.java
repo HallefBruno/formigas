@@ -4,6 +4,7 @@ package com.formiga.entity;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,15 +24,11 @@ public class VisitanteCarro implements Serializable {
     private String orgao;
     private String nome;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_status_flyer")
     private StatusFlyer statusFlyer;
-    
-    @OneToOne
-    @JoinColumn(name = "id_marca_carro")
-    private MarcaCarro marcaCarro;
-    
-    @OneToOne
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_modelo_carro")
     private ModeloCarro modeloCarro;
 
@@ -73,14 +70,6 @@ public class VisitanteCarro implements Serializable {
 
     public void setStatusFlyer(StatusFlyer statusFlyer) {
         this.statusFlyer = statusFlyer;
-    }
-
-    public MarcaCarro getMarcaCarro() {
-        return marcaCarro;
-    }
-
-    public void setMarcaCarro(MarcaCarro marcaCarro) {
-        this.marcaCarro = marcaCarro;
     }
 
     public ModeloCarro getModeloCarro() {
