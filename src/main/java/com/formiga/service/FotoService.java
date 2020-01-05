@@ -60,15 +60,6 @@ public class FotoService {
     public File folderResidentPhoto() {
         Path curretPath = Paths.get(".");
         Path absolutPath = curretPath.toAbsolutePath();
-        System.out.println(absolutPath.toString());
-        System.out.println(absolutPath.toString());
-        System.out.println(absolutPath.toString());
-        System.out.println(absolutPath.toString());
-        System.out.println(absolutPath.toString());
-        System.out.println(absolutPath.toString());
-        System.out.println(absolutPath.toString());
-        System.out.println(absolutPath.toString());
-        
         int removePonto = absolutPath.toString().indexOf(".");
         String caminhoFormatado = absolutPath.toString().substring(0, (removePonto - 1));
         File file = new File(caminhoFormatado + "/src/main/resources/static/imagens/resident/");
