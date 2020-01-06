@@ -1,5 +1,6 @@
 package com.formiga.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,6 +30,7 @@ public class Foto implements Serializable {
     
     @JoinColumn(name = "id_resident")
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Resident resident;
     
     public Foto() {

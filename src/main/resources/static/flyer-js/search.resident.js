@@ -105,7 +105,7 @@ function list_result_search() {
             data: codResident,
 
             error: function (data, textStatus, jqXHR) {
-                alert.log(data);
+                console.log(data);
             },
             success: function (data, textStatus, jqXHR) {
                 table(data);
