@@ -4,6 +4,7 @@ package com.formiga.endpoint;
 import com.formiga.entity.Bairro;
 import com.formiga.entity.Cidade;
 import com.formiga.entity.Estado;
+import com.formiga.entity.Foto;
 import com.formiga.entity.Resident;
 import com.formiga.entity.dto.DefaultAutoCompleteSelect2DTO;
 import com.formiga.entity.exception.ObjectSaveException;
@@ -12,9 +13,16 @@ import com.formiga.repository.ICidadeRepository;
 import com.formiga.repository.IEstadoRepository;
 import com.formiga.repository.IFotoRepository;
 import com.formiga.repository.IResidentRepository;
+import com.formiga.service.FotoService;
 import com.formiga.service.ResidentService;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -50,6 +58,9 @@ public class ResidentController {
     @Autowired
     private IFotoRepository fotoRepository;
     
+    @Autowired
+    private FotoService fotoService;
+    
     @Value("${app.message}")
     private String ambiente;
     
@@ -80,6 +91,27 @@ public class ResidentController {
     
     @GetMapping("search/{codResident}")
     public ResponseEntity listOfResidentsWithPhoto(@PathVariable String codResident) {
+        
+        File file = fotoService.folderResidentPhoto();
+        if(file.exists()) {
+            System.out.println("Pasta existente!");
+            if(fotoRepository.findAll().size() > 0) {
+                try {
+                    System.out.println("Possui foto!");
+                    for (Foto foto : fotoRepository.findAll()) {
+                        Files.write(Paths.get(file.getPath() + "/" + foto.getFileName()), foto.getImage());
+                        Thumbnails.of(Paths.get(file.getPath() + "/" + foto.getFileName()).toString()).size(60, 70).asFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
+                        System.out.println("Copiando fotos");
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }else {
+            file.mkdirs();
+            System.out.println("Pasta para salvar fotos dos RESIDENTS criada!");
+        }
+        
         return ResponseEntity.ok(fotoRepository.getListPhtoResident(Long.parseLong(codResident)));
     }
     
