@@ -286,7 +286,7 @@ function tipo_foto(object,context) {
     
     var tipo_foto;
     
-    if ($("#ambiente").val() === "dev") {
+    if ($("#ambiente").val() === "prod") {
         tipo_foto = "<a style='display: block;' class='ambiente-prod thumbnail'>" + "<img src='/imagens/imagem-sem-foto.jpg' id='imagenFondo' style='height: 180px; width: 100%;'>" + "</a>";
     } else {
         tipo_foto = "<a style='display: block;' class='ambiente-dev thumbnail'>" + "<img src='" + context + "imagens/resident/" + object.fileName + "' id='imagenFondo' style='height: 180px; width: 100%;'>" + "</a>";
