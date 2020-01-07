@@ -7,7 +7,7 @@ $(document).ready(function () {
     $(".btn-save").on("click", function () {
        save();
     });
-
+    
 });
 
 function save() {
@@ -30,9 +30,7 @@ function save() {
     };
     
     if(flyer.condominio && flyer.portaria && flyer.codFlyer) {
-        
-        console.log(status);
-        
+
         $(".condominio").removeClass("has-error has-feedback");
         $(".portaria").removeClass("has-error has-feedback");
         $(".codFlyer").removeClass("has-error has-feedback");

@@ -22,7 +22,7 @@ $(document).ready(function () {
 
         language: {
             noResults: function () {
-                return "Nehum Resident encontrado <a id='no-results-btn' href='"+url_new_resident+"' target='_blank'><label style='cursor: pointer;' class='label label-default'>Add novo</label></a>";
+                return "Nenhum Resident encontrado <a id='no-results-btn' href='"+url_new_resident+"' target='_blank'><label style='cursor: pointer;' class='label label-default'>Add new</label></a>";
             }
         },
         escapeMarkup: function (markup) {
@@ -79,9 +79,13 @@ $(document).ready(function () {
             if (!state.id) {
                 return state.text;
             }
-
-            url_photo = $("#context-app").val()+"imagens/resident/thumbnail-" + photo.toLowerCase() + "_" + state.id + ".png";
-
+            
+            if($("#ambiente").val() === "prod") {
+                url_photo = $("#context-app").val()+"imagens/thumbnail-sem-foto.png";
+            } else {
+                url_photo = $("#context-app").val()+"imagens/resident/thumbnail-" + photo.toLowerCase() + "_" + state.id + ".png";
+            }
+            
             var $state = $('<span ><img sytle="display: inline-block;" src="'+url_photo+'"/> ' + state.text + '</span>');
             return $state;
         }

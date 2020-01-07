@@ -1,0 +1,91 @@
+<div  class=" modal fade" id="modalUpdateFlyer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="modalUpdate">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Atualizar Flyer</h4>
+            </div>
+            <div class="modal-body" >
+                <!--<div class="alert alert-success msg" style="display: none"></div>-->
+                <form>
+                    
+                    <div style="display: none;" class="alert alert-success alert-update-success" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Alterção realizada.
+                    </div>
+
+                    <div style="display: block;" class="alert alert-danger alert-update-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="response-error-update">Todos os campos são obrigatórios!</span>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="form-group  col-sm-4">
+                            <div class="row">
+                                <div class="form-group col-sm-5">
+                                    <label class="control-label">Situação</label>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <span  title="Click para..." role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <input id="situacao" type="checkbox" class="js-status" data-on="ON" data-off="OFF"  data-toggle="toggle" data-onstyle="success" data-offstyle="danger"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <div class="collapse" id="collapseExample">
+                                <div class="well">
+                                    <ul>
+                                        <li>
+                                            <span>Se o Flyer for salvo como <label style="background-color:  red" class="badge">OFF</label> significa que poderá ser excluido em uma oportunidade futura</span>
+                                        </li>
+                                        <li>
+                                            <span>Se o Flyer for salvo como <label style="background-color:  green" class="badge">ON</label> significa que não poderá ser excluir, pois estará vinculado ao um link </span>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+
+                        <input type="hidden" id="context-app" th:value="@{/}">
+                        <input type="hidden" id="idFlyer">
+                        
+                        <div class="col-sm-6  form-group">
+                            <label for="condominio" class="control-label">Condominio</label>
+                            <input id="condominio-update" type="text" class="form-control" />
+                        </div>
+
+                        <div class="col-sm-6  form-group" >
+                            <label for="portaria" class="control-label">Portaria</label>
+                            <input id="portaria-update" type="text" class="form-control"  />
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+                        <label for="codFlyer" class="control-label" >Flyer Cod</label>
+                        <input id="codFlyer-update" type="text" class="form-control"  />
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align: left">
+                    <button type="button" class="btn btn-secondary js-modal-cancel" data-dismiss="modal">Sair</button>
+                    <button type="button" class="btn btn-success js-modal-update">
+                        <div class="icone-btn-save"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

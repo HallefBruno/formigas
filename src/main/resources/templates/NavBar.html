@@ -3,9 +3,7 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:data="http://www.thymeleaf.org/extras/data"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    
-    
-        
+
     <nav class="navbar navbar-default navbar-top " th:fragment="navbar">
         
         <div class="container-fluid">
@@ -27,15 +25,19 @@
                 <a class="navbar-brand" th:href="@{/}" style="font-size: medium; color: #000000" >
                     Bem vindo ao acompanha Flyer
                 </a>
+                    
+                <a class="navbar-brand" th:href="@{/dashboard}" style="font-size: medium; color: #000000" >
+                    Dashboard
+                </a>
 
             </div>
             
             <div id="navbar" class="navbar-collapse collapse">
 
                 <p title="Info importantes" class="navbar-text navbar-right">
-                    <a data-placement="left" data-toggle="popover" title="Notificações" data-content="Todas as notificações aqui!" class="badge">
+<!--                    <a data-placement="left" data-toggle="popover" title="Notificações" data-content="Todas as notificações aqui!" class="badge">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    </a>
+                    </a>-->
                 </p>
                 
                 <ul class="nav navbar-nav">

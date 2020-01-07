@@ -6,6 +6,7 @@ import com.formiga.entity.MarcaMoto;
 import com.formiga.entity.dto.MarcaCarroDTO;
 import com.formiga.entity.dto.MarcaMotoDTO;
 import com.formiga.entity.exception.FilipetaCadastradaException;
+import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IStatusFlyerRepository;
 import com.formiga.service.FlyerService;
 import com.formiga.service.StatusFlyerService;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.formiga.repository.IFlyerRepository;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/flyer")
@@ -66,7 +68,7 @@ public class FLyerController {
 
         try {
             return ResponseEntity.ok(flyerService.save(flyer));
-        } catch(FilipetaCadastradaException e) {
+        } catch(MessageException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
@@ -74,9 +76,23 @@ public class FLyerController {
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         if(flyerService.delete(Long.valueOf(id)) == 0) {
-            return ResponseEntity.ok("Exclusão realizada!");
+            return ResponseEntity.ok(flyerRepository.findAll());
         }
         return ResponseEntity.noContent().build();
+    }
+    
+    @PutMapping("update")
+    public ResponseEntity<?> update(@RequestBody Flyer flyer) {
+        try {
+            if(flyerService.save(flyer) != null) {
+                return ResponseEntity.ok(flyerRepository.findAll());
+            } else {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            }
+        } catch(MessageException e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        }
+        
     }
     
     @RequestMapping("link")

@@ -6,6 +6,7 @@ import com.formiga.entity.Status;
 import com.formiga.entity.StatusFlyer;
 import com.formiga.entity.dto.CarroMotoDTO;
 import com.formiga.entity.exception.FilipetaCadastradaException;
+import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IStatusFlyerRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.formiga.repository.IFlyerRepository;
 import javax.persistence.EntityNotFoundException;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 @Service
 public class FlyerService {
@@ -34,19 +36,41 @@ public class FlyerService {
     @Transactional
     public Flyer save(Flyer folheto) {
         
-        Optional<Flyer> exist = flyerRepository.findByCodFlyer(folheto.getCodFlyer());
+        Flyer flyer = new Flyer();
         
-        if(exist.isPresent()) {
-            throw new FilipetaCadastradaException("Essa folheto ja foi cadastrada");
+        if(folheto != null && folheto.getId() == null) {
+            
+            Optional<Flyer> exist = flyerRepository.findByCodFlyer(folheto.getCodFlyer());
+
+            if(exist.isPresent()) {
+                throw new MessageException("Essa folheto ja foi cadastrado!");
+            }
+            
+            flyer = flyerRepository.save(folheto);
+
+        } else {
+            
+            if(folheto != null) {
+                
+                flyer = flyerRepository.getOne(folheto.getId());
+                
+                if(flyer.getStatus() == Status.ONLINE) {
+                    throw new MessageException("Não é possível realizar a alteração!");
+                } else if(flyer.getStatus() == Status.ONLINE && folheto.getStatus() == Status.OFFLINE){
+                    throw new MessageException("Não é possível realizar a alteração!");
+                }
+
+            }
+            
+            flyer = flyerRepository.save(folheto);
         }
-
-        Flyer flyer = flyerRepository.save(folheto);
-
-        if(flyer.getStatus() == Status.ONLINE) {
+        
+        if (flyer.getStatus() == Status.ONLINE) {
             StatusFlyer statusFlyer = new StatusFlyer();
             statusFlyer.setFlyer(flyer);
             statusFlyer.setStatus(Status.OFFLINE);
             statusFlyerRepository.save(statusFlyer);
+        
         }
         
         return flyer;
@@ -58,7 +82,7 @@ public class FlyerService {
         try {
             flyerRepository.deleteById(cod);
             return 0;
-        }catch(EntityNotFoundException e) {
+        } catch(EntityNotFoundException e) {
             return 1;
         }
     }

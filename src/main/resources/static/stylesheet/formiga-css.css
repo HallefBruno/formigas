@@ -1,0 +1,131 @@
+#divLoading {
+    display : none;
+}
+#divLoading.show {
+    display : block;
+    position : fixed;
+    z-index: 100;
+    background-image : url('/formiga/imagens/hourglass.gif');
+    background-color:#ffffff;
+    opacity : 0.8;
+    background-repeat : no-repeat;
+    background-position : center;
+    left : 0;
+    bottom : 0;
+    right : 0;
+    top : 0;
+}
+#loadinggif.show {
+    left : 50%;
+    top : 50%;
+    position : absolute;
+    z-index : 101;
+    width : 32px;
+    height : 32px;
+    margin-left : -16px;
+    margin-top : -16px;
+}
+
+div.content {
+    width : 1000px;
+    height : 1000px;
+}
+
+.inner-addon {
+    position: relative;
+}
+/* style glyph */
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+/* align glyph */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+
+body { 
+    padding-top: 20px;
+    background-color: #f8f8f8;
+}
+
+/*Legenda horizontal*/
+.legenda-horizontal .legend-title {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 70%;
+}
+.legenda-horizontal .legend-scale ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+.legenda-horizontal .legend-scale ul li {
+    display: block;
+    float: left;
+    width: 50px;
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 80%;
+    list-style: none;
+}
+.legenda-horizontal ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 15px;
+    width: 50px;
+}
+.legenda-horizontal .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+}
+.legenda-horizontal a {
+    color: #777;
+}
+
+
+/*Legenda vertical*/
+.legenda-vertical .legend-title {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 90%;
+}
+.legenda-vertical .legend-scale ul {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+.legenda-vertical .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    margin-left: 0;
+    line-height: 18px;
+    margin-bottom: 2px;
+}
+.legenda-vertical ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 1px solid #999;
+}
+.legenda-vertical .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+}
+.legenda-vertical a {
+    color: #777;
+}

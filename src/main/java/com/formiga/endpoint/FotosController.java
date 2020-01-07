@@ -35,10 +35,6 @@ public class FotosController {
             String photo = absolutePath+"/"+foto.getFileName();
             
             try {
-                System.out.println(photo);
-                System.out.println(photo);
-                System.out.println(photo);
-                
                 Files.write(Paths.get(photo), foto.getImage());
                 Thumbnails.of(Paths.get(photo).toString()).size(60, 70).asFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
                 

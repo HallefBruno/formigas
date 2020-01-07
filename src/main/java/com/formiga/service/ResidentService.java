@@ -6,7 +6,7 @@ import com.formiga.entity.Cidade;
 import com.formiga.entity.Estado;
 import com.formiga.entity.Pais;
 import com.formiga.entity.Resident;
-import com.formiga.entity.exception.ObjectSaveException;
+import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IBairroRepository;
 import com.formiga.repository.ICidadeRepository;
 import com.formiga.repository.IResidentRepository;
@@ -32,7 +32,7 @@ public class ResidentService {
         Optional<Resident> exist = iResidentRepository.findByCpf(resident.getCpf());
         
         if(exist.isPresent()) {
-            throw new ObjectSaveException("Essa pessoa ja foi cadastrada");
+            throw new MessageException("Essa pessoa ja foi cadastrada");
         }
         
         return iResidentRepository.save(resident);
