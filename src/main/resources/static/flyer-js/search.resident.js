@@ -135,8 +135,9 @@ function table(data) {
         
         $('.lista-vazia').remove();
         
+        
         $.each(data, function (index, resident) {
-
+            
             table.append("<tr>"+
                                 "<td>"+
                                     "<div class='panel panel-primary'>"+
@@ -148,13 +149,7 @@ function table(data) {
                                                 "<div class='list-group'>"+
                                                     "<div class=' col-xs-6 col-md-3'>"+
                                                         
-                                                        "<a style='display: block;' class='ambiente-dev thumbnail'>"+
-                                                            "<img src='"+context+"imagens/resident/"+resident.fileName+"' id='imagenFondo' style='height: 180px; width: 100%;'>"+
-                                                        "</a>"+
-                                                        
-                                                        "<a style='display: none;' class='ambiente-prod thumbnail'>"+
-                                                            "<img th:src='@{/imagens/imagem-sem.jpg}' id='imagenFondo' style='height: 180px; width: 100%;'>"+
-                                                        "</a>"+
+                                                        tipo_foto(resident,context)+
                                                         
                                                     "</div>"+
                                                 "</div>"+
@@ -286,3 +281,23 @@ function table(data) {
         });
     }
 }
+
+function tipo_foto(object,context) {
+    
+    var tipo_foto;
+    
+    if ($("#ambiente").val() === "prod") {
+        tipo_foto = "<a style='display: none;' class='ambiente-prod thumbnail'>" + "<img th:src='@{/imagens/imagem-sem-foto.jpg}' id='imagenFondo' style='height: 180px; width: 100%;'>" + "</a>";
+    } else {
+        tipo_foto = "<a style='display: block;' class='ambiente-dev thumbnail'>" + "<img src='" + context + "imagens/resident/" + object.fileName + "' id='imagenFondo' style='height: 180px; width: 100%;'>" + "</a>";
+    }
+    
+    return tipo_foto;
+}
+
+//"<a style='display: block;' class='ambiente-dev thumbnail'>" +
+//        "<img src='" + context + "imagens/resident/" + resident.fileName + "' id='imagenFondo' style='height: 180px; width: 100%;'>" +
+//        "</a>" +
+//        "<a style='display: none;' class='ambiente-prod thumbnail'>" +
+//        "<img th:src='@{/imagens/imagem-sem.jpg}' id='imagenFondo' style='height: 180px; width: 100%;'>" +
+//        "</a>" +
