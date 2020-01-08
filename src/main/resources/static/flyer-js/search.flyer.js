@@ -1,4 +1,6 @@
 /* global Swal */
+var add_msg_success;
+var add_msg_danger;
 
 $(document).ready(function () {
     
@@ -10,9 +12,14 @@ $(document).ready(function () {
         searching_flyer(); 
     });
     
+    add_msg_success = "<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button>"+"<span class='response-success-flyer'></span>"+"</div>";
+    add_msg_danger = "<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='response-error-flyer'></span>"+"</div>";
+
     $(".open-modal").on("click", function () {
+
         update();
     });
+    
     
 });
 
@@ -48,11 +55,11 @@ function deletar(id) {
                 error: function (data, textStatus, jqXHR) {
                     $(".alert-danger").prop("style", "display: block;");
                     $(".alert-success").prop("style", "display: none;");
-                    $(".response-error").text(data.responseText);
+                    $(".response-error-flyer").text(" "+data.responseText);
                 },
 
-                beforeSend: start_request,
-                complete: finalize_request
+                beforeSend: startRequest,
+                complete: finalizeRequest
             });
         }
     });
@@ -61,13 +68,12 @@ function deletar(id) {
 }
 
 function update() {
-
+    
+    initUpdate();
+    
     var flyer = $(event.currentTarget);
     
     $('.js-status').bootstrapToggle('off');
-    
-    $(".alert-update-danger").prop("style","display: block;");
-    $(".alert-update-success").prop("style","display: none;");
     
     $("#idFlyer").val(flyer.data("id"));
     $("#condominio-update").val(flyer.data("condominio"));
@@ -108,14 +114,11 @@ function update() {
                 data: JSON.stringify(flyer),
 
                 error: function (data, textStatus, jqXHR) {
-                    $(".alert-update-danger").prop("style","display: block;");
-                    $(".alert-update-success").prop("style","display: none;");
-                    $(".response-error-update").text(data.responseText);
+                    responseMensage(-1,data);
                 },
                 success: function (data, textStatus, jqXHR) {
-                    $(".alert-update-danger").prop("style","display: none;");
-                    $(".alert-update-success").prop("style","display: block;");
-                    table(data);
+                    responseMensage(0,data);
+                    table(data.lista[0]);
                 },
 
                 beforeSend: function() {
@@ -166,8 +169,8 @@ function searching_flyer() {
                 table(data);
             },
 
-            beforeSend: start_request,
-            complete: finalize_request
+            beforeSend: startRequest,
+            complete: finalizeRequest
         });
         
     } else {
@@ -227,10 +230,38 @@ function table(data) {
     }
 }
 
-function start_request() {
+function responseMensage(indicator, data) {
+    //Erro
+    if(indicator === -1) {
+        $(".alert-danger-flyer").prop("style", "display: block;");
+        $(".alert-danger-flyer").html("");
+        $(".alert-danger-flyer").append(add_msg_danger);
+        $(".alert-success-flyer").prop("style", "display: none;");
+        $(".response-error-flyer").text(" "+data.responseText);
+    } 
+    
+    //Sucesso
+    if(indicator === 0) {
+        $(".alert-success-flyer").prop("style", "display: block;");
+        $(".alert-success-flyer").html("");
+        $(".alert-danger-flyer").prop("style", "display: none;");
+        $(".alert-success-flyer").append(add_msg_success);
+        $(".response-success-flyer").text(" "+data.message[0]);
+    }
+}
+
+function initUpdate() {
+    $(".alert-danger-flyer").prop("style", "display: block;");
+    $(".alert-success-flyer").prop("style", "display: none;");
+    $(".alert-danger-flyer").html("");
+    $(".alert-danger-flyer").append(add_msg_danger);
+    $(".response-error-flyer").text(" Todos os campos são obrigatórios!");
+}
+
+function startRequest() {
     $("#divLoading").addClass("show");
 }
 
-function finalize_request() {
+function finalizeRequest() {
     $("#divLoading").removeClass("show");
 }

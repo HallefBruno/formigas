@@ -5,7 +5,6 @@ import com.formiga.entity.MarcaCarro;
 import com.formiga.entity.Status;
 import com.formiga.entity.StatusFlyer;
 import com.formiga.entity.dto.CarroMotoDTO;
-import com.formiga.entity.exception.FilipetaCadastradaException;
 import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IStatusFlyerRepository;
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.formiga.repository.IFlyerRepository;
 import javax.persistence.EntityNotFoundException;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 @Service
 public class FlyerService {
@@ -35,45 +33,85 @@ public class FlyerService {
     
     @Transactional
     public Flyer save(Flyer folheto) {
-        
+
         Flyer flyer = new Flyer();
-        
-        if(folheto != null && folheto.getId() == null) {
-            
+        StatusFlyer statusFlyer = new StatusFlyer();
+
+        if (folheto != null && folheto.getId() == null) {
+
             Optional<Flyer> exist = flyerRepository.findByCodFlyer(folheto.getCodFlyer());
 
-            if(exist.isPresent()) {
-                throw new MessageException("Essa folheto ja foi cadastrado!");
+            if (exist.isPresent()) {
+                throw new MessageException("Essa flyer ja foi cadastrado!");
             }
-            
+
             flyer = flyerRepository.save(folheto);
+
+            if (folheto.getStatus() == Status.ONLINE) {
+                Optional<StatusFlyer> existStausFlyerIdFlyer = statusFlyerRepository.findByFlyerId(flyer.getId());
+                if (!existStausFlyerIdFlyer.isPresent()) {
+                    statusFlyer.setFlyer(flyer);
+                    statusFlyer.setStatus(Status.ONLINE);
+                    statusFlyerRepository.save(statusFlyer);
+                }
+            }
 
         } else {
-            
-            if(folheto != null) {
-                
-                flyer = flyerRepository.getOne(folheto.getId());
-                
-                if(flyer.getStatus() == Status.ONLINE) {
-                    throw new MessageException("Não é possível realizar a alteração!");
-                } else if(flyer.getStatus() == Status.ONLINE && folheto.getStatus() == Status.OFFLINE){
-                    throw new MessageException("Não é possível realizar a alteração!");
-                }
 
+            if (folheto != null) {
+
+                flyer = flyerRepository.getOne(folheto.getId());
+
+                if (folheto.getStatus() == Status.OFFLINE && flyer.getStatus() == Status.OFFLINE) {
+                    
+                    if(flyer.getCodFlyer().equalsIgnoreCase(folheto.getCodFlyer())) {
+                        flyer = flyerRepository.save(folheto);
+                    } else if(!flyer.getCodFlyer().equalsIgnoreCase(folheto.getCodFlyer())){
+                        Optional<Flyer> exist = flyerRepository.findByCodFlyer(folheto.getCodFlyer());
+                        if (exist.isPresent()) {
+                            throw new MessageException("Essa flyer ja foi cadastrado!");
+                        } else {
+                            flyer = flyerRepository.save(folheto);
+                        }
+                    } 
+                    
+                } else if (flyer.getStatus() == Status.OFFLINE && folheto.getStatus() == Status.ONLINE) {
+                    
+                    flyer = flyerRepository.getOne(folheto.getId());
+                    
+                    if(flyer.getCodFlyer().equalsIgnoreCase(folheto.getCodFlyer())) {
+                        flyer = flyerRepository.save(folheto);
+                        Optional<StatusFlyer> exist = statusFlyerRepository.findByFlyerId(flyer.getId());
+                        if(!exist.isPresent()) {
+                            statusFlyer.setFlyer(flyer);
+                            statusFlyer.setStatus(Status.ONLINE);
+                            statusFlyerRepository.save(statusFlyer);
+                        }
+                    } else if(!flyer.getCodFlyer().equalsIgnoreCase(folheto.getCodFlyer())){
+                        Optional<Flyer> existFlyer = flyerRepository.findByCodFlyer(folheto.getCodFlyer());
+                        if (existFlyer.isPresent()) {
+                            throw new MessageException("Essa flyer ja foi cadastrado!");
+                        } else {
+                            flyer = flyerRepository.save(folheto);
+                            Optional<StatusFlyer> exist = statusFlyerRepository.findByFlyerId(flyer.getId());
+                            if(!exist.isPresent()) {
+                                statusFlyer.setFlyer(flyer);
+                                statusFlyer.setStatus(Status.ONLINE);
+                                statusFlyerRepository.save(statusFlyer);
+                            }
+                        }
+                    } 
+
+                } else {
+                    throw new MessageException("Não é possível fazer a alteração!");
+                }
+            } else {
+                throw new MessageException("Houve problema com a entidade!");
             }
-            
-            flyer = flyerRepository.save(folheto);
         }
-        
-        if (flyer.getStatus() == Status.ONLINE) {
-            StatusFlyer statusFlyer = new StatusFlyer();
-            statusFlyer.setFlyer(flyer);
-            statusFlyer.setStatus(Status.OFFLINE);
-            statusFlyerRepository.save(statusFlyer);
-        
-        }
-        
+
         return flyer;
+        
     }
     
     @Transactional
@@ -86,7 +124,7 @@ public class FlyerService {
             return 1;
         }
     }
-    
+
     public List<Flyer> pesquisaFilipeta(String flyerCod) {
         try {
             Query query = manager.createNativeQuery(" SELECT * FROM FLYER WHERE LOWER(COD_FLYER) LIKE LOWER(?1)");  

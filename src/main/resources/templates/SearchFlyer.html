@@ -20,6 +20,14 @@
             
             <div class="jumbotron">
                 
+                <div style="display: none;" class="alert-update-success">
+
+                </div>
+
+                <div style="display: none;" class="alert-update-danger">
+
+                </div>
+                
                 <div>
                     <p>Search Flyer</p>
                 </div>
@@ -30,21 +38,12 @@
                     
                     <div class="row">
 
-                        <div style="display: none;" class="form-group alert alert-success" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            Flyer excluido com sucesso.
-                        </div>
-
-                        <div style="display: none;" class="form-group alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <span class="response-error">Erro ao excluir Flyer!</span>
-                        </div>
 
                         <div class="feed col-sm-4 form-group" > <!--has-success has-feedback--> 
                             <input type="text" class="form-control" placeholder="Flyer cod..." name="codFlyer" id="codFlyer" aria-describedby="codFlyer">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-sm-3">
                             <button class="btn btn-primary btn-search">
                                 <span class="glyphicon glyphicon-search"></span>
                                 Search

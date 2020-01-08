@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.formiga.repository.IFlyerRepository;
+import java.util.HashMap;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
@@ -65,9 +68,8 @@ public class FLyerController {
     
     @PostMapping("save")
     public ResponseEntity<?> registerFilipeta(@RequestBody Flyer flyer) {
-
         try {
-            return ResponseEntity.ok(flyerService.save(flyer));
+            return new ResponseEntity(flyerService.save(flyer), HttpStatus.OK);
         } catch(MessageException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -83,16 +85,16 @@ public class FLyerController {
     
     @PutMapping("update")
     public ResponseEntity<?> update(@RequestBody Flyer flyer) {
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         try {
             if(flyerService.save(flyer) != null) {
-                return ResponseEntity.ok(flyerRepository.findAll());
-            } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+                map.add("lista", flyerRepository.findAll());
+                map.add("message", "Salvo com sucesso!");
             }
         } catch(MessageException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
-        
+        return ResponseEntity.ok(map);
     }
     
     @RequestMapping("link")

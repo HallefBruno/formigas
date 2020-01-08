@@ -1,9 +1,17 @@
+var add_msg_success;
+var add_msg_danger;
+
 $(document).ready(function () {
     
     event.preventDefault();
 
     $(".js-status").bootstrapToggle();
-
+    
+    add_msg_success = "<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button>"+"<span class='response-success-flyer'></span>"+"</div>";
+    add_msg_danger = "<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='response-error-flyer'></span>"+"</div>";
+    
+    initMessage();
+    
     $(".btn-save").on("click", function () {
        save();
     });
@@ -11,7 +19,7 @@ $(document).ready(function () {
 });
 
 function save() {
-    
+
     var tipoSelecionado = $("#situacao").prop("checked");
     var status;
     
@@ -46,13 +54,10 @@ function save() {
             data: JSON.stringify(flyer),
 
             error: function (data, textStatus, jqXHR) {
-                $(".alert-danger").prop("style","display: block;");
-                $(".alert-success").prop("style","display: none;");
-                $(".response-error").text(data.responseText);
+                responseMensage(-1,data);
             },
             success: function (data, textStatus, jqXHR) {
-                $(".alert-danger").prop("style","display: none;");
-                $(".alert-success").prop("style","display: block;");
+                responseMensage(0,data);
             },
             beforeSend: start_request,
             complete: finalize_request
@@ -61,7 +66,7 @@ function save() {
         });
     } else {
         
-        var msg = "Todos os campos são obrigatórios!";
+        initMessage();
 
         if($("#condominio").val() === "") {
             $(".condominio").addClass("has-error has-feedback");
@@ -81,11 +86,38 @@ function save() {
         } else {
             $(".codFlyer").removeClass("has-error has-feedback");
         }
-        
-        $(".response-error").text(msg);
-        
+
     }
     
+}
+
+function responseMensage(indicator, data) {
+    //Erro
+    if(indicator === -1) {
+        $(".alert-danger-flyer").prop("style", "display: block;");
+        $(".alert-danger-flyer").html("");
+        $(".alert-danger-flyer").append(add_msg_danger);
+        $(".alert-success-flyer").prop("style", "display: none;");
+        $(".response-error-flyer").text(" "+data.responseText);
+    } 
+    
+    //Sucesso
+    if(indicator === 0) {
+        $(".alert-success-flyer").prop("style", "display: block;");
+        $(".alert-success-flyer").html("");
+        $(".alert-danger-flyer").prop("style", "display: none;");
+        $(".alert-success-flyer").append(add_msg_success);
+        if(data !== null)
+            $(".response-success-flyer").text(" Registro salvo com sucesso!");
+    }
+}
+
+function initMessage() {
+    $(".alert-danger-flyer").prop("style", "display: block;");
+    $(".alert-success-flyer").prop("style", "display: none;");
+    $(".alert-danger-flyer").html("");
+    $(".alert-danger-flyer").append(add_msg_danger);
+    $(".response-error-flyer").text(" Todos os campos são obrigatórios!");
 }
 
 function start_request() {
