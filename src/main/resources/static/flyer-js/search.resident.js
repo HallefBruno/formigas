@@ -81,7 +81,7 @@ $(document).ready(function () {
             }
             
             if($("#ambiente").val() === "prod") {
-                url_photo = $("#context-app").val()+"imagens/thumbnail-sem-foto.png";
+                url_photo = "https://res.cloudinary.com/hgefhowox/image/upload/v1578512699/resident/thumbnail-" + photo.toLowerCase() + "_" + state.id + ".png";
             } else {
                 url_photo = $("#context-app").val()+"imagens/resident/thumbnail-" + photo.toLowerCase() + "_" + state.id + ".png";
             }
@@ -287,7 +287,7 @@ function tipo_foto(object,context) {
     var tipo_foto;
     
     if ($("#ambiente").val() === "prod") {
-        tipo_foto = "<a style='display: block;' class='ambiente-prod thumbnail'>" + "<img src='" + context + "imagens/imagem-sem-foto.jpg' id='imagenFondo' style='height: 180px; width: 100%;'>" + "</a>";
+        tipo_foto = "<a style='display: block;' class='ambiente-prod thumbnail'>" + "<img src='https://res.cloudinary.com/hgefhowox/image/upload/v1578512699/resident/" + object.fileName + "' id='imagenFondo' style='height: 180px; width: 100%;'>" + "</a>";
     } else {
         tipo_foto = "<a style='display: block;' class='ambiente-dev thumbnail'>" + "<img src='" + context + "imagens/resident/" + object.fileName + "' id='imagenFondo' style='height: 180px; width: 100%;'>" + "</a>";
     }

@@ -25,6 +25,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.name.Rename;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,7 +89,12 @@ public class ResidentController {
     
     @GetMapping("search/{codResident}")
     public ResponseEntity listOfResidentsWithPhoto(@PathVariable String codResident) {
-        return ResponseEntity.ok(fotoRepository.getListPhtoResident(Long.parseLong(codResident)));
+        //response.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
+        //HttpHeaders respHeaders = new HttpHeaders();
+        //respHeaders.add("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
+                .body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
     }
     
     @GetMapping("/lists/{qual}/{cod}")

@@ -1,13 +1,20 @@
 package com.formiga.endpoint;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
+import com.cloudinary.utils.ObjectUtils;
 import com.formiga.entity.Foto;
 import com.formiga.service.FotoService;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.name.Rename;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,25 +32,53 @@ public class FotosController {
     @Autowired
     private FotoService fotoService;
     
+    @Value("${app.message}")
+    private String ambiente;
+    
     @PostMapping("save/{residentName}/{idResident}")
-    public ResponseEntity<?> upload(@RequestParam("photo") MultipartFile files, @PathVariable String residentName, @PathVariable String idResident) {
+    public ResponseEntity<?> upload(@RequestParam("photo") MultipartFile file, @PathVariable String residentName, @PathVariable String idResident) {
         
-        Foto foto = fotoService.storeFoto(files, Long.valueOf(idResident),residentName );
+        Foto foto = fotoService.storeFoto(file, Long.valueOf(idResident),residentName);
         
         if(foto != null) {
-            String absolutePath = fotoService.folderResidentPhoto().getAbsolutePath();
-            String photo = absolutePath+"/"+foto.getFileName();
             
-            try {
-                Files.write(Paths.get(photo), foto.getImage());
-                Thumbnails.of(Paths.get(photo).toString()).size(60, 70).asFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
+            FormigaCloudinary formigaCloudinary = new FormigaCloudinary();
+            String photoName;
+            
+            if(residentName.contains(" ")) {
+            
+                int space = residentName.indexOf(" ");
+
+                photoName = residentName.substring(0, space).toLowerCase()+"_"+idResident;
                 
-            } catch (IOException e) {
-                
-                throw new RuntimeException(e);
+            } else {
+                photoName = residentName.toLowerCase()+"_"+idResident;
             }
             
-            return ResponseEntity.ok().build();
+            if(ambiente.equalsIgnoreCase("prod")) {
+                try {
+                    
+                    formigaCloudinary.savePhotoResident(file.getBytes(), photoName);
+                    formigaCloudinary.savePhotoThumbnail(file.getBytes(), "thumbnail"+"-"+photoName);
+                    return ResponseEntity.ok().build();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                
+                String absolutePath = fotoService.folderResidentPhoto().getAbsolutePath();
+                String photo = absolutePath+"/"+foto.getFileName();
+
+                try {
+                    Files.write(Paths.get(photo), foto.getImage());
+                    Thumbnails.of(Paths.get(photo).toString()).size(60, 70).asFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
+                    return ResponseEntity.ok().build();
+                } catch (IOException e) {
+
+                    throw new RuntimeException(e);
+                }
+            }
+            
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
