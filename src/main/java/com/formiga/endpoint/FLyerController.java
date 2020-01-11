@@ -5,8 +5,8 @@ import com.formiga.entity.MarcaCarro;
 import com.formiga.entity.MarcaMoto;
 import com.formiga.entity.dto.MarcaCarroDTO;
 import com.formiga.entity.dto.MarcaMotoDTO;
-import com.formiga.entity.exception.FilipetaCadastradaException;
 import com.formiga.entity.exception.MessageException;
+import com.formiga.entity.exception.NotDeleteException;
 import com.formiga.repository.IStatusFlyerRepository;
 import com.formiga.service.FlyerService;
 import com.formiga.service.StatusFlyerService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.formiga.repository.IFlyerRepository;
-import java.util.HashMap;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -57,7 +57,7 @@ public class FLyerController {
     @GetMapping("page/search")
     public ModelAndView pageSearch() {
         ModelAndView mv = new ModelAndView("SearchFlyer");
-        mv.addObject("todas", flyerRepository.findAll());
+        mv.addObject("todas", flyerRepository.findAllByOrderById());
         return mv;
     }
     
@@ -77,19 +77,25 @@ public class FLyerController {
     
     @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        if(flyerService.delete(Long.valueOf(id)) == 0) {
-            return ResponseEntity.ok(flyerRepository.findAll());
+        try {
+            flyerService.delete(Long.valueOf(id));
+            return ResponseEntity.ok(flyerRepository.findAllByOrderById());
+        }catch(DataIntegrityViolationException e) {
+            if(e.getMessage().contains("ConstraintViolationException")) {
+                return new ResponseEntity("No presente momento, não será possível excluir esse registro!",HttpStatus.CONFLICT);
+            }
+            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
-        return ResponseEntity.noContent().build();
     }
     
     @PutMapping("update")
     public ResponseEntity<?> update(@RequestBody Flyer flyer) {
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         try {
-            if(flyerService.save(flyer) != null) {
-                map.add("lista", flyerRepository.findAll());
-                map.add("message", "Salvo com sucesso!");
+            Flyer f = flyerService.save(flyer);
+            if(f != null && f.getId() != null) {
+                map.add("lista", flyerRepository.findAllByOrderById());
+                map.add("message", "Seu registro foi atualizado!");
             }
         } catch(MessageException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);

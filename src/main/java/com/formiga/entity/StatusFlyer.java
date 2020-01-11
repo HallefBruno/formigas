@@ -20,7 +20,8 @@ public class StatusFlyer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne
     @JoinColumn(name = "id_flyer")
     private Flyer flyer;

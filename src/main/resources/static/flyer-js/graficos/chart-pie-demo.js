@@ -1,3 +1,5 @@
+/* global Chart */
+
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
@@ -8,7 +10,7 @@ var myPieChart = new Chart(ctx, {
     data: {
         labels: ["Offline", "Online"],
         datasets: [{
-            data: [55, 15],
+            data: [4, 500],
             backgroundColor: ['red', 'greenyellow'],
             hoverBackgroundColor: ['red', 'greenyellow'],
             hoverBorderColor: "rgba(234, 236, 244, 1)"
@@ -27,7 +29,7 @@ var myPieChart = new Chart(ctx, {
             caretPadding: 10
         },
         legend: {
-            display: false
+            display: true
         },
         cutoutPercentage: 80
     }

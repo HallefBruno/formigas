@@ -17,16 +17,8 @@
         <div class="container">
             
             <div th:replace="NavBar :: navbar"></div>
-            
+
             <div class="jumbotron">
-                
-                <div style="display: none;" class="alert-update-success">
-
-                </div>
-
-                <div style="display: none;" class="alert-update-danger">
-
-                </div>
                 
                 <div>
                     <p>Search Flyer</p>
@@ -37,7 +29,6 @@
                     <div th:replace="flyer/UpdateFlyer :: modalUpdate"></div>
                     
                     <div class="row">
-
 
                         <div class="feed col-sm-4 form-group" > <!--has-success has-feedback--> 
                             <input type="text" class="form-control" placeholder="Flyer cod..." name="codFlyer" id="codFlyer" aria-describedby="codFlyer">
@@ -61,26 +52,56 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Condominio</th>
-                                <th>Portaria</th>
-                                <th>N° Flyer</th>
+                                <th class="text-center" >Portaria</th>
+                                <th class="text-center">N° Flyer</th>
+                                <th class="text-center" style="width: 100px;">Status</th>
                                 <th class="text-center" style="width: 100px;">Ação</th>
                             </tr>
                         </thead>
                         
                         <tbody>
                             <tr th:each="flyer : ${todas}" style="background-color: white">
-                                <td th:text="${flyer.id}">1</td>
-                                <td th:text="${flyer.condominio}">Munique</td>
-                                <td th:text="${flyer.portaria}">Social</td>
-                                <td style="font-weight: bold;" th:text="${flyer.codFlyer}">123654</td>
                                 
+                                <td th:text="${flyer.id}">1</td>
+                                
+                                <th:block th:if="${flyer.status.value eq 'Online'}">
+
+                                    <td th:text="${flyer.condominio}">Jardins</td>
+
+                                    <td class="text-center"  th:text="${flyer.portaria}">Social</td>
+
+                                    <td style="font-weight: bold" class="text-center"  th:text="${flyer.codFlyer}">40</td>
+
+                                    <td style="text-align: center;">
+                                        <input disabled id="situacao" type="checkbox" class="js-status" data-on="ON" data-off="OFF"  data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-size="small" checked/>
+                                    </td>
+                                    
+                                </th:block>
+                                
+                                <th:block th:if="${flyer.status.value eq 'Offline'}">
+                                    
+                                    <td>
+                                        <input class="form-control" th:value="${flyer.condominio}" data-container="body" data-toggle="cond" data-placement="top" data-content="Este campo é obrigatório." type="text" name="condominio" />
+                                    </td>
+
+                                    <td style="width: 150px" >
+                                        <input style="text-align: center"  class="form-control " th:value="${flyer.portaria}" data-container="body" data-toggle="por" data-placement="top" data-content="Este campo é obrigatório." type="text" name="portaria" />
+                                    </td>
+
+                                    <td style="width: 150px" >
+                                        <input style="text-align: center; font-weight: bold;" class="form-control" th:value="${flyer.codFlyer}" data-container="body" data-toggle="codf" data-placement="top" data-content="Este campo é obrigatório." type="text" name="codflyer" />
+                                    </td>
+
+                                    <td style="width: 80px; text-align: center;" >
+                                        <input type="checkbox" class="js-status" data-on="ON" data-off="OFF"  data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-size="small"/>
+                                    </td>
+                                
+                                </th:block>
+                        
                                 <td class="text-center">
-                                    <a data:id="${flyer.id}" 
-                                       data:condominio="${flyer.condominio}" 
-                                       data:portaria="${flyer.portaria}"
-                                       data:codFlyer="${flyer.codFlyer}"
-                                       th:if="${flyer.status.value eq 'Offline'}" title="Editar" class="btn btn-link btn-xs open-modal"> 
-                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    <a data:id="${flyer.id}"
+                                       th:if="${flyer.status.value eq 'Offline'}" title="Salvar" class="btn btn-link btn-xs btn_update_flyer">
+                                        <i class="glyphicon glyphicon-ok"></i>
                                     </a>
                                     <a th:if="${flyer.status.value eq 'Offline'}" class="btn btn-link btn-xs" onclick="deletar(this.id);" th:id="${flyer.id}"  title="Excluir">
                                         <i class="glyphicon glyphicon-remove"></i>
@@ -92,7 +113,6 @@
                                 </td>
                                 
                             </tr>
-                            
                             
                             <tr th:if="${todas == null or todas.isEmpty()}" class='lista-vazia'>
                                 <td colspan='7' style='color:green'>

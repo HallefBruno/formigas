@@ -14,25 +14,34 @@
     </head>
 
     <body>
-
-        <div  style="padding-top: 15px; text-align: center">
-            <a th:href="@{/dashboard}">
-                <button class="btn btn-default">
-                    Ir para sistema <span class="glyphicon glyphicon-pencil"></span>
-                </button> 
-            </a>
-            <h4>Seja bem vindo, estamos em construção, mas algumas telas já podem ser usada.</h4>
-            <h5>Em apresentação algumas imagens do sistema!</h5>
-            
-            <br><br><br><br><br><br><br><br><br>
-                        
+        
+        <div class="row">
+            <div style="text-align: center" class="col-sm-12 form-group">
+                <div class=" alert alert-warning alert-dismissible fade in" role="alert"> 
+    <!--                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button> -->
+                    <h4>Feliz por você está aqui!</h4> 
+                    <p>estamos em construção, mas algumas telas já podem ser usada.</p> 
+                    <p> 
+                        <a th:href="@{/dashboard}">
+                            <button class="btn btn-success">
+                                Visitinha rápida <span class="glyphicon glyphicon-pencil"></span>
+                            </button> 
+                        </a>
+                        <button type="button" class="btn btn-default">Agora não</button> 
+                    </p> 
+                </div> 
+            </div>              
         </div>
+        
         <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
         <script th:src="@{/vendor-js/owl.carousel.min.js}" type="text/javascript"></script>
+        
         <section id="demos">
 
-
+            
             <div class="owl-carousel owl-theme">
 
                 <div class="item">
@@ -57,10 +66,10 @@
                     <img th:src="@{/imagens/sistema/Mensagem-pos-delete.png}"/>
                 </div>
                 <div class="item">
-                    <img th:src="@{/imagens/sistema/Update-flyer.png}"/>
+                    <img th:src="@{/imagens/sistema/Nova-tela-update-flyer.png}"/>
                 </div>
                 <div class="item">
-                    <img th:src="@{/imagens/sistema/Dashboard.png}"/>
+                    <img th:src="@{/imagens/sistema/Dashboard-tempo-real.png}"/>
                     <div style="text-align: center">
                         <span><b>Dashboard</b></span>
                     </div>
@@ -100,7 +109,10 @@
                         <span><b>Update resident</b></span>
                     </div>
                 </div>
-
+                
+                
+                
+                
                 <script>
                     $(document).ready(function () {
                         var owl = $('.owl-carousel');
@@ -118,6 +130,7 @@
                 </script>
             </div>
         </section>
+
     </body>
 
 </html>

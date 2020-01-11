@@ -25,7 +25,7 @@ public interface IFlyerRepository extends JpaRepository<Flyer, Long>{
     @Query("FROM MarcaMoto where nome like %:keyword%")
     public List<MarcaMoto> searchMarcaMoto(@Param("keyword") String keyword);
     
-    
+    public List<Flyer> findAllByOrderById();
     
     @Query(value = "select modelos_carro.id, modelos_carro.nome as modelo from modelos_carro inner join marcas_carro on(modelos_carro.id_marca_carro = marcas_carro.id) where marcas_carro.id = :idMarcaModelo order by modelos_carro.nome", nativeQuery = true)
     public List<Object[]> modelsCarId(@Param("idMarcaModelo") Long idMarcaModelo);

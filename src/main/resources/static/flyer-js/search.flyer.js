@@ -1,27 +1,156 @@
 /* global Swal */
-var add_msg_success;
-var add_msg_danger;
+
+var add_msg_success = "<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button>"+"<span class='response-success-flyer'></span>"+"</div>";
+var add_msg_danger = "<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='response-error-flyer'> Todos os campos são obrigatórios!</span>"+"</div>";
 
 $(document).ready(function () {
     
     event.preventDefault();
-    
+
     $('.icone-btn-save').append("<i class='glyphicon glyphicon-floppy-saved'></i> Salvar");
-    
+
     $(".btn-search").on("click", function () {
         searching_flyer(); 
     });
-    
-    add_msg_success = "<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button>"+"<span class='response-success-flyer'></span>"+"</div>";
-    add_msg_danger = "<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='response-error-flyer'></span>"+"</div>";
 
-    $(".open-modal").on("click", function () {
-
-        update();
+    $(".btn_update_flyer").on("click", function (e) {
+        
+        var id, condominio, portaria, codFlyer,status;
+        
+        $(this).closest('tr').find('input').each(function() {
+            if ($(this).attr("name") === "condominio") {
+                condominio = $(this).val();
+                if(condominio===""){
+                    $('[data-toggle="cond"]').popover('show');
+                } else {
+                    $('[data-toggle="cond"]').popover('hide');
+                }
+            }
+            if ($(this).attr("name") === "portaria") {
+                portaria = $(this).val();
+                if(portaria===""){
+                    $('[data-toggle="por"]').popover('show');
+                } else {
+                    $('[data-toggle="por"]').popover('hide');
+                }
+            }
+            if ($(this).attr("name") === "codflyer") {
+                codFlyer = $(this).val();
+                if(codFlyer===""){
+                    $('[data-toggle="codf"]').popover('show');
+                } else {
+                    $('[data-toggle="codf"]').popover('hide');
+                }
+            }
+            if($(this).attr("class") === "js-status") {
+                if($(this).prop('checked')) {
+                    status = "ONLINE";
+                } else {
+                    status = "OFFLINE";
+                }
+            }
+        });
+        
+        id = $(event.currentTarget).data("id");
+        
+        var flyer = {
+            "id":id,
+            "condominio":condominio,
+            "portaria":portaria,
+            "codFlyer":codFlyer,
+            "status":status
+        };
+        
+        update(flyer);
     });
-    
-    
 });
+
+
+function updateTbMontada() {
+
+    var id, condominio, portaria, codFlyer, status,i = 0;
+    
+    var index = $(event.currentTarget).data("rowstatuson");
+    
+    var array = [];
+    
+    var arrayFlyer = [];
+    
+    var fake_row = 0;
+    
+    var qtdCasas;
+    
+    
+    $('tr').find('input').each(function () {
+        
+        i = i + 1;
+        
+        if ($(this).attr("name") === "condominio") {
+            condominio = $(this).val();
+            if(condominio === "") {
+                $('[data-toggle="cond"]').popover('show');
+            } else {
+                $('[data-toggle="cond"]').popover('hide');
+            }
+            array.push(condominio);
+        }
+        if ($(this).attr("name") === "portaria") {
+            portaria = $(this).val();
+            if(portaria === "") {
+                $('[data-toggle="por"]').popover('show');
+            } else {
+                $('[data-toggle="por"]').popover('hide');
+            }
+            
+            array.push(portaria);
+        }
+        if ($(this).attr("name") === "codflyer") {
+            codFlyer = $(this).val();
+            if(codFlyer === "") {
+                $('[data-toggle="codf"]').popover('show');
+            } else {
+                $('[data-toggle="codf"]').popover('hide');
+            }
+            array.push(codFlyer);
+        }
+        if ($(this).attr("class") === "js-status") {
+
+            if($(this).prop('checked')) {
+                status = "ONLINE";
+            } else {
+                status = "OFFLINE";
+            }
+            array.push(status);
+            
+            fake_row++;
+        }
+        
+    });
+
+    id = $(event.currentTarget).data("id");
+    
+    qtdCasas = (array.length/fake_row);
+    
+    if(index === 1) {
+        for(var i=0; i<qtdCasas; i++) {
+            arrayFlyer.push(array[i]);
+        }
+    } else {
+        for(var i=(qtdCasas*index)-4; i<(qtdCasas*index); i++) {
+            arrayFlyer.push(array[i]);
+        }
+    }
+
+    var flyer = {
+        "id": id,
+        "condominio": arrayFlyer[0],
+        "portaria": arrayFlyer[1],
+        "codFlyer": arrayFlyer[2],
+        "status": arrayFlyer[3]
+    };
+    
+    update(flyer);
+}
 
 function deletar(id) {
     
@@ -53,9 +182,7 @@ function deletar(id) {
                     Swal.fire('Pronto!', 'Seu registro foi deletado.', 'success');
                 },
                 error: function (data, textStatus, jqXHR) {
-                    $(".alert-danger").prop("style", "display: block;");
-                    $(".alert-success").prop("style", "display: none;");
-                    $(".response-error-flyer").text(" "+data.responseText);
+                    Swal.fire('Ocorreu um erro!', data.responseText, 'error');
                 },
 
                 beforeSend: startRequest,
@@ -67,82 +194,33 @@ function deletar(id) {
     remove_class_swal2();
 }
 
-function update() {
-    
-    initUpdate();
-    
-    var flyer = $(event.currentTarget);
-    
-    $('.js-status').bootstrapToggle('off');
-    
-    $("#idFlyer").val(flyer.data("id"));
-    $("#condominio-update").val(flyer.data("condominio"));
-    $("#portaria-update").val(flyer.data("portaria"));
-    $("#codFlyer-update").val(flyer.data("codflyer"));
-    
-    $("#modalUpdateFlyer").modal("show");
-    
-    $('.icone-btn-save').on("click", function () {
-        
-        var context = $("#context-app").val();
-        
-        var tipoSelecionado = $("#situacao").prop("checked");
-        var status;
+function update(flyer) {
 
-        if(tipoSelecionado === true) {
-            status = "ONLINE";
-        } else {
-            status = "OFFLINE";
-        }
-        
-        var flyer = {
-            "id":$("#idFlyer").val(),
-            "condominio":$("#condominio-update").val(),
-            "portaria":$("#portaria-update").val(),
-            "codFlyer":$("#codFlyer-update").val(),
-            "status":status
-        };
+    var context = $("#context-app").val();
 
-        if(flyer.condominio && flyer.portaria && flyer.codFlyer) {
-            
-            $.ajax({
+    if(flyer.id && flyer.condominio && flyer.portaria && flyer.codFlyer) {
 
-                type: "PUT",
-                contentType: "application/json",
-                dataType: "json",
-                url: context+"flyer/update",
-                data: JSON.stringify(flyer),
+        $.ajax({
 
-                error: function (data, textStatus, jqXHR) {
-                    responseMensage(-1,data);
-                },
-                success: function (data, textStatus, jqXHR) {
-                    responseMensage(0,data);
-                    table(data.lista[0]);
-                },
+            type: "PUT",
+            contentType: "application/json",
+            dataType: "json",
+            url: context+"flyer/update",
+            data: JSON.stringify(flyer),
 
-                beforeSend: function() {
-                    $(".js-modal-update").addClass('disabled');
-                    $(".js-modal-cancel").addClass('disabled');
-                    $('.icone-btn-save').html('');
-                    $('.icone-btn-save').append("<img src='"+$('#context-app').val()+"imagens/mini-loading.gif'/> Salvar");
-                },
-                complete: function () {
-                    $(".js-modal-update").removeClass('disabled');
-                    $(".js-modal-cancel").removeClass('disabled');
-                    $('.icone-btn-save').html('');
-                    $('.icone-btn-save').append("<i class='glyphicon glyphicon-floppy-saved'></i> Salvar");
-                }
+            error: function (data, textStatus, jqXHR) {
+                Swal.fire('Ocorreu um erro!', data.responseText, 'error');
+            },
+            success: function (data, textStatus, jqXHR) {
+                Swal.fire('Pronto!', data.message[0], 'success');
+                table(data.lista[0]);
+            },
 
-            });
-            
-        }else {
-        
+            beforeSend: startRequest,
+            complete: finalizeRequest
 
-        }
-        
-    });
-    
+        });
+    }
 }
 
 function searching_flyer() {
@@ -163,7 +241,7 @@ function searching_flyer() {
             data: JSON.stringify({filipetaCod:$("#codFlyer").val()}),
 
             error: function (data, textStatus, jqXHR) {
-                console.log(data);
+                responseMensage(-1, data);
             },
             success: function (data, textStatus, jqXHR) {
                 table(data);
@@ -184,13 +262,14 @@ function searching_flyer() {
 function table(data) {
     
     var table = $('table').find('tbody');
-
+    
     $('table tr').remove();
     table.append("<tr>"+
                     "<th>Id</th>"+
                     "<th>Condominio</th>"+
-                    "<th>Portaria</th>"+
-                    "<th>N° Flyer</th>"+
+                    "<th class='text-center'>Portaria</th>"+
+                    "<th class='text-center'>N° Flyer</th>"+
+                    "<th class='text-center' style='width: 100px;'>Status</th>"+
                     "<th class='text-center' style='width: 100px'>Ação</th>"+
                 "</tr>");
 
@@ -199,63 +278,62 @@ function table(data) {
     if(typeof data !== 'undefined' && data.length > 0) {
         
         $('.lista-vazia').remove();
-        
-        
+
         //$('.table-responsive').prop('style','padding-top: 20px;');
         
+        var acaoDelete = "<a class='btn  btn-link  btn-xs' title='Excluir'>"+ "<i class='glyphicon glyphicon-remove'></i>"+"</a>";
+        var acaoUpdate = "<a class='btn  btn-link  btn-xs' title='Editar'>"+ "<i class='glyphicon glyphicon glyphicon-ok'></i>"+"</a>";
+        var tdCondominio;
+        var tdPortaria;
+        var tdCodFlyer;
+        var tdStatus;
+        var tabela;
+        var rowStatusOn = 1;
+        
         $.each(data, function (index, flyer) {
-            
-            var acaoDelete = "<a class='btn  btn-link  btn-xs' title='Excluir'>"+ "<i class='glyphicon glyphicon-remove'></i>"+"</a>";
-            var acaoUpdate = "<a class='btn  btn-link  btn-xs' title='Editar'>"+ "<i class='glyphicon glyphicon-pencil'></i>"+"</a>";
+
+            if(index === 0) {
+                index = index +1;
+            } else {
+                index = index +1;
+            }
+
+            tdCondominio = "<td class='id_flyer'>"+flyer.condominio+"</td>";
+            tdPortaria = "<td style='text-align: center;'>"+flyer.portaria+"</td>";
+            tdCodFlyer = "<td style='font-weight: bold; text-align: center;' class='text-center' >"+flyer.codFlyer+"</td>";
+            tdStatus = "<td style='text-align: center;'><input disabled id='situacao' type='checkbox' class='checkd_vinculado' data-on='ON' data-off='OFF'  data-toggle='toggle' data-onstyle='success' data-offstyle='danger' checked data-size='small'/></td>";
             
             if(flyer.status === "ONLINE") {
                 acaoDelete = "";
                 acaoUpdate = "<a class='btn  btn-link  btn-xs' title='Vinculado'>"+"<i style='color: #b80b0c' class='glyphicon glyphicon-link'></i>"+"</a>";
             } else {
-                acaoDelete = "<a class='btn  btn-link  btn-xs' title='Excluir' onclick='deletar(this.id);' id="+flyer.id+">"+ "<i class='glyphicon glyphicon-remove'></i>"+"</a>";
-                acaoUpdate = "<a class='btn  btn-link  btn-xs open-modal' title='Editar' onclick='update();' data-id="+flyer.id+" data-condominio="+flyer.condominio+" data-portaria="+flyer.portaria+" data-codFlyer="+flyer.codFlyer+">"+ "<i class='glyphicon glyphicon-pencil'></i>"+"</a>";
+                
+                tdCondominio="<td><input class='form-control' value='"+flyer.condominio+"' data-toggle='cond' data-placement='top' data-content='Este campo é obrigatório.' type='text' name='condominio' /></td>";
+                tdPortaria="<td style='width: 150px;' ><input style='text-align: center;' class='form-control' value='"+flyer.portaria+"' data-toggle='por' data-placement='top' data-content='Este campo é obrigatório.' type='text' name='portaria' /></td>";
+                tdCodFlyer="<td style='width: 150px; font-weight: bold;' ><input style='text-align: center;' class='form-control' value='"+flyer.codFlyer+"' data-toggle='codf' data-placement='top' data-content='Este campo é obrigatório.' type='text' name='codflyer' /></td>";
+                tdStatus="<td style='text-align: center;' ><input id='situacao' type='checkbox' class='js-status' data-on='ON' data-off='OFF'  data-toggle='toggle' data-onstyle='success' data-offstyle='danger' data-size='small'/></td>";
+                acaoDelete="<a class='btn  btn-link  btn-xs' title='Excluir' onclick='deletar(this.id);' id="+flyer.id+">"+ "<i class='glyphicon glyphicon-remove'></i>"+"</a>";
+                acaoUpdate="<a class='btn  btn-link  btn-xs btn_update_flyer' onclick='updateTbMontada();' title='Editar' data-rowstatuson="+rowStatusOn+" data-row="+index+" data-id="+flyer.id+">"+ "<i class='glyphicon glyphicon glyphicon-ok'></i>"+"</a>";
+                rowStatusOn++;
             }
 
-            table.append("<tr style='background-color: white'>"+
+            tabela += "<tr style='background-color: white'>"+
                             "<td>"+flyer.id+"</td>"+
-                            "<td>"+flyer.condominio+"</td>"+
-                            "<td>"+flyer.portaria+"</td>"+
-                            "<td style='font-weight: bold;' >"+flyer.codFlyer+"</td>"+
+                            tdCondominio+
+                            tdPortaria+
+                            tdCodFlyer+
+                            tdStatus+
                             "<td class='text-center'>"+
                                 acaoUpdate+
                                 acaoDelete+
                             "</td>"+
-                        "</tr>");
+                        "</tr>";
         });
+        
+        table.append(tabela);
     }
-}
-
-function responseMensage(indicator, data) {
-    //Erro
-    if(indicator === -1) {
-        $(".alert-danger-flyer").prop("style", "display: block;");
-        $(".alert-danger-flyer").html("");
-        $(".alert-danger-flyer").append(add_msg_danger);
-        $(".alert-success-flyer").prop("style", "display: none;");
-        $(".response-error-flyer").text(" "+data.responseText);
-    } 
-    
-    //Sucesso
-    if(indicator === 0) {
-        $(".alert-success-flyer").prop("style", "display: block;");
-        $(".alert-success-flyer").html("");
-        $(".alert-danger-flyer").prop("style", "display: none;");
-        $(".alert-success-flyer").append(add_msg_success);
-        $(".response-success-flyer").text(" "+data.message[0]);
-    }
-}
-
-function initUpdate() {
-    $(".alert-danger-flyer").prop("style", "display: block;");
-    $(".alert-success-flyer").prop("style", "display: none;");
-    $(".alert-danger-flyer").html("");
-    $(".alert-danger-flyer").append(add_msg_danger);
-    $(".response-error-flyer").text(" Todos os campos são obrigatórios!");
+    $(".js-status").bootstrapToggle();
+    $(".checkd_vinculado").bootstrapToggle();
 }
 
 function startRequest() {

@@ -1,5 +1,5 @@
 
-<div  class=" modal fade" id="modalUpdateFlyer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="modalUpdate">
+<div  class="modal fade" data-keyboard="false" data-backdrop="static" id="modalUpdateFlyer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="modalUpdate">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -44,7 +44,7 @@
                                             <span>Se o Flyer for salvo como <label style="background-color:  red" class="badge">OFF</label> significa que poderá ser excluido em uma oportunidade futura</span>
                                         </li>
                                         <li>
-                                            <span>Se o Flyer for salvo como <label style="background-color:  green" class="badge">ON</label> significa que não poderá ser excluir, pois estará vinculado ao um link </span>
+                                            <span>Se o Flyer for salvo como <label style="background-color:  green" class="badge">ON</label> significa que não poderá ser excluir, e nem alterado os dados, pois estará vinculado ao um link </span>
                                         </li>
                                     </ul>
 
@@ -79,7 +79,7 @@
             <div class="modal-footer">
                 <div style="text-align: left">
                     <button type="button" class="btn btn-secondary js-modal-cancel" data-dismiss="modal">Sair</button>
-                    <button type="button" class="btn btn-success js-modal-update">
+                    <button type="button" class="btn btn-primary js-modal-update">
                         <div class="icone-btn-save"></div>
                     </button>
                 </div>

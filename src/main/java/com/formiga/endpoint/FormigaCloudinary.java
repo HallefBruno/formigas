@@ -1,16 +1,10 @@
 package com.formiga.endpoint;
 
-import com.cloudinary.Api;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
-import org.cloudinary.json.JSONArray;
-import org.cloudinary.json.JSONObject;
 
 public class FormigaCloudinary {
 

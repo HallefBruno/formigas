@@ -6,6 +6,7 @@ import com.formiga.entity.Status;
 import com.formiga.entity.StatusFlyer;
 import com.formiga.entity.dto.CarroMotoDTO;
 import com.formiga.entity.exception.MessageException;
+import com.formiga.entity.exception.NotDeleteException;
 import com.formiga.repository.IStatusFlyerRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.formiga.repository.IFlyerRepository;
+import java.sql.SQLException;
 import javax.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 @Service
 public class FlyerService {
@@ -36,7 +39,8 @@ public class FlyerService {
 
         Flyer flyer = new Flyer();
         StatusFlyer statusFlyer = new StatusFlyer();
-
+        boolean permiteException = true;
+        
         if (folheto != null && folheto.getId() == null) {
 
             Optional<Flyer> exist = flyerRepository.findByCodFlyer(folheto.getCodFlyer());
@@ -87,7 +91,7 @@ public class FlyerService {
                             statusFlyer.setStatus(Status.ONLINE);
                             statusFlyerRepository.save(statusFlyer);
                         }
-                    } else if(!flyer.getCodFlyer().equalsIgnoreCase(folheto.getCodFlyer())){
+                    } else if(!flyer.getCodFlyer().equalsIgnoreCase(folheto.getCodFlyer())) {
                         Optional<Flyer> existFlyer = flyerRepository.findByCodFlyer(folheto.getCodFlyer());
                         if (existFlyer.isPresent()) {
                             throw new MessageException("Essa flyer ja foi cadastrado!");
@@ -99,11 +103,16 @@ public class FlyerService {
                                 statusFlyer.setStatus(Status.ONLINE);
                                 statusFlyerRepository.save(statusFlyer);
                             }
+                            
                         }
-                    } 
+                    }
+                    permiteException = false;
 
                 } else {
-                    throw new MessageException("Não é possível fazer a alteração!");
+                    //Necessário pois estava entrando aqui sem precisão.
+                    if(permiteException) {
+                        throw new MessageException("Não é possível fazer a alteração!");
+                    }
                 }
             } else {
                 throw new MessageException("Houve problema com a entidade!");
@@ -115,13 +124,12 @@ public class FlyerService {
     }
     
     @Transactional
-    public int delete(long cod) {
+    public void delete(long cod) {
         
         try {
             flyerRepository.deleteById(cod);
-            return 0;
-        } catch(EntityNotFoundException e) {
-            return 1;
+        } catch(DataIntegrityViolationException e) {
+            throw e;
         }
     }
 

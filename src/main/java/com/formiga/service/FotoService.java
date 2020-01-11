@@ -1,17 +1,17 @@
 package com.formiga.service;
 
+import com.formiga.endpoint.FormigaCloudinary;
 import com.formiga.entity.Foto;
 import com.formiga.entity.exception.FileStorageException;
-import com.formiga.entity.exception.MyFileNotFoundException;
 import com.formiga.repository.IFotoRepository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import javax.transaction.Transactional;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -24,7 +24,7 @@ public class FotoService {
     private IFotoRepository fotoRepository;
     
     @Transactional
-    public Foto storeFoto(MultipartFile file, Long idResident, String residentName) {
+    public Foto storeFoto(MultipartFile file, Long idResident, String residentName, String ambiente) {
         
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         
@@ -49,7 +49,31 @@ public class FotoService {
             }
             
             Foto foto = new Foto(photoName, file.getContentType(), file.getBytes(),idResident);
-            
+
+            if(ambiente.equalsIgnoreCase("prod")) {
+                
+                FormigaCloudinary formigaCloudinary = new FormigaCloudinary();
+                
+                try {
+                    
+                    formigaCloudinary.savePhotoResident(file.getBytes(), photoName.substring(0, photoName.indexOf(".")));
+                    formigaCloudinary.savePhotoThumbnail(file.getBytes(), "thumbnail"+"-"+photoName.substring(0, photoName.indexOf(".")));
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                
+                String photo = folderResidentPhoto().getAbsolutePath()+"/"+foto.getFileName();
+                
+                try {
+                    Files.write(Paths.get(photo), foto.getImage());
+                    Thumbnails.of(Paths.get(photo).toString()).size(60, 70).asFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             
             return fotoRepository.save(foto);
         } catch (IOException ex) {
@@ -65,29 +89,5 @@ public class FotoService {
         File file = new File(caminhoFormatado + "/src/main/resources/static/imagens/resident/");
         return file;
     }
-    
-    //list of photos and residents
-//    public List<Foto> listOfPhotoAndResident() {
-//        
-//        List<Foto> listResult = new ArrayList<>();
-//        
-//        String absolutePath = folderResidentPhoto().getAbsolutePath();
-//
-//        for(Foto foto : fotoRepository.getListPhtoResident()) {
-//            try {
-//                
-//                String photo = absolutePath+"/"+foto.getFileName();
-//                
-//                Files.write(Paths.get(photo), foto.getImage());
-//                
-//            } catch (IOException e) {
-//                
-//                throw new RuntimeException(e);
-//            }
-//            
-//            listResult.add(foto);
-//        }
-//        
-//        return listResult;
-//    }
+
 }
