@@ -1,0 +1,58 @@
+<div  class="modal fade" data-keyboard="false" data-backdrop="static" id="modaltelefoneResident" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="modalUpdate">
+    <div class="modal-dialog " role="document" > <!--modal-sm-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Telefone</h4>
+            </div>
+            
+            <div class="modal-body" >
+ 
+                <div style="display: none;" class="alert-success-flyer"></div>
+                <div style="display: none;" class="alert-danger-flyer"></div>
+
+                <form>
+                    <div class="row">
+                        <input type="hidden" id="context-app" th:value="@{/}">
+                        <input type="hidden" id="idTelefone">
+
+                        <div class="col-sm-12  form-group">
+                            <label for="lista_telefone" class="control-label">Número</label>
+                            <input id="lista_telefone" type="text" class="form-control js-phone-number" />
+                        </div>
+
+                    </div>     
+                    
+                    <div style="display: none;" class="alert alert-danger tel-adicionado" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span>Ja foi adicionado!</span>
+                    </div>
+                    
+                    <div style="padding-top: 30px;" class="table-responsive">
+                        <table class="table table-bordered" id="tbl" border="1">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px">Telefone</th>
+                                    <th class="text-center" style="width: 50px">Remover</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <div style="text-align: left">
+                    <button type="button" class="btn btn-default " data-dismiss="modal">Sair</button>
+                    <button class="btn btn-success" type="button" onclick="addNewPhone('tbl')">Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -54,42 +54,6 @@ $(document).ready(function () {
 
 });
 
-function test(element) {
-    document.getElementById(element).addEventListener("keydown", function(event) {
- 
-	var tecla = event.keyCode;
-	
-	if(tecla === 13) {
-	 
-	 // tecla ENTER
-		
-	} else if(tecla === 27) {
-	 
-	 // tecla ESC
-		
-	} else if(tecla === 37) {
-	 
-	 // seta pra ESQUERDA
-		
-	} else if(tecla === 38) {
-            
-	 // seta pra CIMA
-            console.log(event.target.label);
-            console.log(event);
-	} else if(tecla === 39) {
-	 
-	 // seta pra DIREITA
-		
-	} else if(tecla === 40) {
-            console.log(event.target.label);
-            console.log(event);
-	 // seta pra BAIXO
-		
-	}
- 
-});
-}
-
 function alterPropAutoCompleteSelect() {
     
     var tipoSelecionado = $("#tipoautomovel").prop("checked");

@@ -5,37 +5,37 @@
       xmlns:data="http://www.thymeleaf.org/extras/data">
 
     <head>
-        <title>Cadastro de morador e dependentes</title>
+        <title>Cadastro de Resident</title>
         <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-            <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
-            <link th:href="@{/stylesheet/jquery-ui.css}" rel="stylesheet" type="text/css"/>
-            <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet"/>
-            <link th:href="@{/stylesheet/select2.min.css}" rel="stylesheet" type="text/css"/>
-            <link th:href="@{/stylesheet/select2-bootstrap.css}" rel="stylesheet" type="text/css"/>
-            <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
-            <style>
-                .btn-file {
-                    position: relative;
-                    overflow: hidden;
-                }
-                .btn-file input[type=file] {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    min-width: 100%;
-                    min-height: 100%;
-                    font-size: 100px;
-                    text-align: right;
-                    filter: alpha(opacity=0);
-                    opacity: 0;
-                    outline: none;
-                    background: white;
-                    cursor: inherit;
-                    display: block;
-                }
-            </style>
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/stylesheet/jquery-ui.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet"/>
+        <link th:href="@{/stylesheet/select2.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/select2-bootstrap.css}" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+        <style>
+            .btn-file {
+                position: relative;
+                overflow: hidden;
+            }
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+        </style>
 
     </head>
 
@@ -44,6 +44,7 @@
         <div class="container">
 
             <div th:replace="NavBar :: navbar"></div>
+            <div th:replace="resident/Telefone :: modalUpdate"></div>
 
             <div class="jumbotron">
 
@@ -73,17 +74,10 @@
                                 <div class="foto col-xs-6 col-md-3"> <!--col-xs-6 col-md-3-->
                                     <img class="thumbnail" id="imagenFondo" style="height: 180px; width: 100%;">
                                     <span title="Obrigatório" style="width: 100%;" class="btn btn-danger btn-file glyphicon glyphicon-folder-open">
-                                        <input onchange="preview_2(this)" id="fileimagem" type="file" accept=".png"/>
+                                        <input onchange="preview(this)" id="fileimagem" type="file" accept=".png"/>
                                     </span>
                                 </div>
                             </div>
-                            
-<!--                            <div class="col-sm-9 form-group">
-                                <div>
-                                    <span class="glyphicon glyphicon-saved" aria-hidden="true"></span>
-                                    <span class="response-success-morador" ></span>
-                                </div>
-                            </div>-->
                         </div>
                     </a>
 
@@ -100,13 +94,26 @@
                                 <label class="control-label" for="cpf">CPF</label> 
                                 <input type="text" class="form-control cpf" id="cpf" name="cpf">
                             </div>
-
-                            <div class="telefone col-sm-4 form-group ">
-                                <label class="control-label" for="telefone">Telefone</label> 
-                                <input type="text" class="form-control js-phone-number" id="telefone" name="telefone" aria-describedby="telefone">
+                            
+                            <div class="telefone col-sm-4  form-group">
+                                <label for="telefone" class="control-label">Telefone</label>
+                                <div style="display: flex;">
+                                    <input type="text" class="form-control js-phone-number" id="telefone" name="telefone" aria-describedby="telefone">
+                                    <select style="display: none;" data-placeholder="Lista de telefone" id="telefones" name="telefones" class="form-control select-telefones" data-live-search="true" >
+                                        <option value="">Lista de telefone</option>
+                                    </select>
+                                    <div style="margin: 0 0 0 5px;">
+                                        <button style="display: none" title="Remover telefone selecionado" type="button" class="btn btn-danger btn-remove-tel">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </button>
+                                        <button title="Clique aqui se for mais de um" type="button" class="btn btn-warning btn-open-modal" data-toggle="modal" data-target="#modaltelefoneResident">
+                                            <i class="glyphicon  glyphicon-plus-sign"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
+                        
                     </a>
 
                     <a class="list-group-item" >
@@ -179,22 +186,25 @@
                         </div>
                     </a>
                     
+                    <a class="list-group-item">
+                        <div style="margin-top: 20px;">
+                            <button type="button" class="btn btn-primary btn-save">
+                                <span class="glyphicon glyphicon-floppy-save"></span>
+                                Salvar
+                            </button>
+                        </div>
+                    </a>
+                    
                 </form>
                 
                 
-                <div style="margin-top: 20px;">
-                    <button class="btn btn-primary btn-save">
-                        <span class="glyphicon glyphicon-floppy-save"></span>
-                        Cadastrar
-                    </button>
-                </div>
+                
                 
             </div>
-            
 
             <script>
                 var outImage = "imagenFondo";
-                function preview_2(obj) {
+                function preview(obj) {
                     if (FileReader) {
                         var reader = new FileReader();
                         reader.readAsDataURL(obj.files[0]);
@@ -219,13 +229,11 @@
         <script th:src="@{/vendor-js/jquery.maskMoney.min.js}"></script>
         <script th:src="@{/vendor-js/jquery.mask.min.js}"></script>
         <script th:src="@{/vendor-js/mask.phone.decimal.plain.js}" type="text/javascript"></script>
-        <script th:src="@{/vendor-js/select2.min.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/select2.full.min.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/pt-BR.js}" type="text/javascript"></script>
         <script th:src="@{/vendor-js/jquery-ui.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/save.resident.js}" type="text/javascript"></script>
-        <script>
-            $(document).ready(function(){
-                $('[data-toggle="popover"],[data-original-title]').popover();
-            });
-        </script>
+        <script th:src="@{/flyer-js/resident/addTelefone.js}" type="text/javascript"></script>
+        
     </body>
 </html>

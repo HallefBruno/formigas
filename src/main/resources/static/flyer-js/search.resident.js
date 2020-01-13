@@ -21,6 +21,7 @@ $(document).ready(function () {
     select_resident = $("#resident").select2({
 
         language: {
+            
             noResults: function () {
                 return "Nenhum Resident encontrado <a id='no-results-btn' href='"+url_new_resident+"' target='_blank'><label style='cursor: pointer;' class='label label-default'>Add new</label></a>";
             }
@@ -29,6 +30,8 @@ $(document).ready(function () {
             return markup;
         },
         
+        minimumInputLength: 1,
+
         ajax: {
             url: $("#context-app").val()+"flyer/search/resident",
             type: "get",

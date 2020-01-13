@@ -3,7 +3,7 @@ $(document).ready(function () {
     
     event.preventDefault();
     $.fn.select2.defaults.set("theme", "bootstrap");
-    
+
     $(".select-quadra").select2();
     $(".select-lote").select2();
     $(".select-estado").select2();
@@ -47,6 +47,7 @@ function saveResident() {
                 
                 $('.'+resident_array[vazio].name).removeClass("has-error has-feedback");
             }
+
         }
 
         $(".alert-danger").prop('style','display: block;');
@@ -120,6 +121,9 @@ function savePhoto(idResident) {
 
 function popularCombos() {
     var valueSelectEstado = $(".select-estado").select2({
+        
+        language: 'pt-BR',
+        
         ajax: {
             url: $(".context-app").val()+"resident/lists/estado/0",
             type: "get",
@@ -143,6 +147,8 @@ function popularCombos() {
         
         var valueSelectCidade = $(".select-cidade").select2({
             
+            language: 'pt-BR',
+            
             ajax: {
                 url: $(".context-app").val()+"resident/lists/cidade/"+e.params.data.id,
                 type: "get",
@@ -160,10 +166,14 @@ function popularCombos() {
                 },
                 cache: true
             }
+            
         });
         
         valueSelectCidade.on("select2:select", function (e) {
             $(".select-bairro").select2({
+                
+                language: 'pt-BR',
+                
                 ajax: {
                     url: $(".context-app").val()+"resident/lists/bairro/"+e.params.data.id,
                     type: "get",
@@ -184,4 +194,5 @@ function popularCombos() {
             });
         });
     });
+
 }
