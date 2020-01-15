@@ -17,30 +17,19 @@ $(document).ready(function () {
         
         var id, condominio, portaria, codFlyer,status;
         
+        id = $(event.currentTarget).data("id");
+        
         $(this).closest('tr').find('input').each(function() {
             if ($(this).attr("name") === "condominio") {
                 condominio = $(this).val();
-                if(condominio===""){
-                    $('[data-toggle="cond"]').popover('show');
-                } else {
-                    $('[data-toggle="cond"]').popover('hide');
-                }
             }
             if ($(this).attr("name") === "portaria") {
                 portaria = $(this).val();
-                if(portaria===""){
-                    $('[data-toggle="por"]').popover('show');
-                } else {
-                    $('[data-toggle="por"]').popover('hide');
-                }
+              
             }
             if ($(this).attr("name") === "codflyer") {
                 codFlyer = $(this).val();
-                if(codFlyer===""){
-                    $('[data-toggle="codf"]').popover('show');
-                } else {
-                    $('[data-toggle="codf"]').popover('hide');
-                }
+                
             }
             if($(this).attr("class") === "js-status") {
                 if($(this).prop('checked')) {
@@ -71,7 +60,7 @@ function updateTbMontada() {
     var id, condominio, portaria, codFlyer, status,i = 0;
     
     var index = $(event.currentTarget).data("rowstatuson");
-    
+
     var array = [];
     
     var arrayFlyer = [];
@@ -80,37 +69,22 @@ function updateTbMontada() {
     
     var qtdCasas;
     
-    
     $('tr').find('input').each(function () {
         
         i = i + 1;
         
         if ($(this).attr("name") === "condominio") {
             condominio = $(this).val();
-            if(condominio === "") {
-                $('[data-toggle="cond"]').popover('show');
-            } else {
-                $('[data-toggle="cond"]').popover('hide');
-            }
             array.push(condominio);
         }
         if ($(this).attr("name") === "portaria") {
             portaria = $(this).val();
-            if(portaria === "") {
-                $('[data-toggle="por"]').popover('show');
-            } else {
-                $('[data-toggle="por"]').popover('hide');
-            }
-            
+
             array.push(portaria);
         }
         if ($(this).attr("name") === "codflyer") {
             codFlyer = $(this).val();
-            if(codFlyer === "") {
-                $('[data-toggle="codf"]').popover('show');
-            } else {
-                $('[data-toggle="codf"]').popover('hide');
-            }
+            
             array.push(codFlyer);
         }
         if ($(this).attr("class") === "js-status") {
@@ -148,8 +122,9 @@ function updateTbMontada() {
         "codFlyer": arrayFlyer[2],
         "status": arrayFlyer[3]
     };
-    
+
     update(flyer);
+    
 }
 
 function deletar(id) {
@@ -220,6 +195,8 @@ function update(flyer) {
             complete: finalizeRequest
 
         });
+    } else {
+        Swal.fire("Ocorreu um erro!","Todos os campos são obrigatorios!","error");
     }
 }
 
@@ -308,9 +285,9 @@ function table(data) {
                 acaoUpdate = "<a class='btn  btn-link  btn-xs' title='Vinculado'>"+"<i style='color: #b80b0c' class='glyphicon glyphicon-link'></i>"+"</a>";
             } else {
                 
-                tdCondominio="<td><input class='form-control' value='"+flyer.condominio+"' data-toggle='cond' data-placement='top' data-content='Este campo é obrigatório.' type='text' name='condominio' /></td>";
-                tdPortaria="<td style='width: 150px;' ><input style='text-align: center;' class='form-control' value='"+flyer.portaria+"' data-toggle='por' data-placement='top' data-content='Este campo é obrigatório.' type='text' name='portaria' /></td>";
-                tdCodFlyer="<td style='width: 150px; font-weight: bold;' ><input style='text-align: center;' class='form-control' value='"+flyer.codFlyer+"' data-toggle='codf' data-placement='top' data-content='Este campo é obrigatório.' type='text' name='codflyer' /></td>";
+                tdCondominio="<td><input class='form-control' value='"+flyer.condominio+"' type='text' name='condominio' /></td>";
+                tdPortaria="<td style='width: 150px;' ><input style='text-align: center;' class='form-control' value='"+flyer.portaria+"' type='text' name='portaria' /></td>";
+                tdCodFlyer="<td style='width: 150px; font-weight: bold;' ><div class='feed"+index+"'><input style='text-align: center;' class='form-control' value='"+flyer.codFlyer+"' type='text' name='codflyer' /></div></td>";
                 tdStatus="<td style='text-align: center;' ><input id='situacao' type='checkbox' class='js-status' data-on='ON' data-off='OFF'  data-toggle='toggle' data-onstyle='success' data-offstyle='danger' data-size='small'/></td>";
                 acaoDelete="<a class='btn  btn-link  btn-xs' title='Excluir' onclick='deletar(this.id);' id="+flyer.id+">"+ "<i class='glyphicon glyphicon-remove'></i>"+"</a>";
                 acaoUpdate="<a class='btn  btn-link  btn-xs btn_update_flyer' onclick='updateTbMontada();' title='Editar' data-rowstatuson="+rowStatusOn+" data-row="+index+" data-id="+flyer.id+">"+ "<i class='glyphicon glyphicon glyphicon-ok'></i>"+"</a>";
