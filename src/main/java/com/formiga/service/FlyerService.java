@@ -6,7 +6,6 @@ import com.formiga.entity.Status;
 import com.formiga.entity.StatusFlyer;
 import com.formiga.entity.dto.CarroMotoDTO;
 import com.formiga.entity.exception.MessageException;
-import com.formiga.entity.exception.NotDeleteException;
 import com.formiga.repository.IStatusFlyerRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.formiga.repository.IFlyerRepository;
-import java.sql.SQLException;
-import javax.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @Service

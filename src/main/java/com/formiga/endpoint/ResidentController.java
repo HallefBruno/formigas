@@ -59,7 +59,12 @@ public class ResidentController {
     
     @RequestMapping
     public ModelAndView initial() {
-        ModelAndView mv = new ModelAndView("ResidentRegistration");
+        ModelAndView mv = new ModelAndView();
+        if(1==1) {
+            mv.setViewName("resident/ResidentRegistrationCondCasaNumerada");
+        } else {
+            mv.setViewName("ResidentRegistration");
+        }
         return mv;
     }
     
@@ -81,12 +86,7 @@ public class ResidentController {
     
     @GetMapping("search/{codResident}")
     public ResponseEntity listOfResidentsWithPhoto(@PathVariable String codResident) {
-        //response.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
-        //HttpHeaders respHeaders = new HttpHeaders();
-        //respHeaders.add("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
-        return ResponseEntity.status(HttpStatus.OK)
-                .header("Set-Cookie", "HttpOnly;Secure;SameSite=Strict")
-                .body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
+        return ResponseEntity.status(HttpStatus.OK).body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
     }
     
     @GetMapping("/lists/{qual}/{cod}")

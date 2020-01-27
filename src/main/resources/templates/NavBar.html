@@ -3,7 +3,9 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:data="http://www.thymeleaf.org/extras/data"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+      
+    
+    
     <nav class="navbar navbar-default navbar-top " th:fragment="navbar">
         
         <div class="container-fluid">
@@ -34,12 +36,14 @@
             
             <div id="navbar" class="navbar-collapse collapse">
 
-                <p title="Info importantes" class="navbar-text navbar-right">
-<!--                    <a data-placement="left" data-toggle="popover" title="Notificações" data-content="Todas as notificações aqui!" class="badge">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    </a>-->
-                </p>
-                
+                <form th:action="@{/logout}" method="post" class="navbar-form navbar-right">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-log-out"></span>
+                        Sair
+                    </button>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                </form>
+
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
@@ -56,9 +60,9 @@
                                     <li><a th:href="@{/flyer/page/search}">Search Flyer</a></li>
                                 </ul>
                             </li>
-                            
+
                             <li role="separator" class="divider"></li> 
-                            
+
                             <li class="dropdown-submenu">
                                 <a tabindex="-1" href="#">Resident</a>
                                 <ul class="dropdown-menu">
@@ -67,7 +71,7 @@
                                     <li><a th:href="@{/resident/page/search}">Search Resident</a></li>
                                 </ul>
                             </li>
-                            
+
                             <li role="separator" class="divider"></li>
                             <li><a th:href="@{/flyer/link}">Link Flyer</a></li>
                             
@@ -88,7 +92,7 @@
                 
                 <form style="display: none" class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search"/>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -114,3 +118,15 @@
         <li><a href="#">Second level</a></li>
     </ul>
 </li>-->
+
+                            
+                            
+<!--<li class="dropdown-submenu">
+        <a tabindex="-1" href="#">Flyer</a>
+        <ul class="dropdown-menu">
+            <li><a th:href="@{/flyer}">New Flyer</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a th:href="@{/flyer/page/search}">Search Flyer</a></li>
+        </ul>
+    </li>-->
+                            

@@ -28,3 +28,16 @@ insert into modelos_carro(nome,id_marca_carro) values('KA',4);
 insert into modelos_carro(nome,id_marca_carro) values('KA SE',4);
 insert into modelos_carro(nome,id_marca_carro) values('FOCUS',4);
 insert into modelos_carro(nome,id_marca_carro) values('FUSION',4);
+
+
+--Insert menu
+insert into menu(nome_menu, url) VALUES('Flyer',null);
+insert into menu(nome_menu, url) VALUES('Resident',null);
+insert into menu(nome_menu, url) VALUES('Link Flyer','flyer/link');
+
+
+--Insert menu-item
+insert into menu_item(nome_menu_item, url_menu_item,id_menu) VALUES('New Flyer','flyer',1);
+insert into menu_item(nome_menu_item, url_menu_item,id_menu) VALUES('Search Flyer','flyer/page/search',1);
+insert into menu_item(nome_menu_item, url_menu_item,id_menu) VALUES('New Resident','resident',2);
+insert into menu_item(nome_menu_item, url_menu_item,id_menu) VALUES('Search Resident','resident/page/search',2);

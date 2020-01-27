@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public class FormigaCloudinary {
-
+    ////cloudinary.url().transformation(new Transformation().height(200).quality(100).width(180).crop("scale")).imageTag("mascote/mascote-formiga_rvitia.png");
     private Map configOpenCloudinary() {
         Map chave = ObjectUtils.asMap(
                 "cloud_name", "hgefhowox",
