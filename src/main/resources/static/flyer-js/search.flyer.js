@@ -313,7 +313,11 @@ function table(data) {
     $(".checkd_vinculado").bootstrapToggle();
 }
 
-function startRequest() {
+function startRequest(xhr) {
+    var token = $("input[name='_csrf']").val();
+    var header = $("input[name='_csrf_header']").val();
+    
+    xhr.setRequestHeader(header, token);
     $("#divLoading").addClass("show");
 }
 

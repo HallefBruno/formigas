@@ -120,7 +120,7 @@ function initMessage() {
     $(".response-error-flyer").text(" Todos os campos são obrigatórios!");
 }
 
-function start_request() {
+function start_request(xhr) {
     $("#divLoading").addClass("show");
 }
 

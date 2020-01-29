@@ -9,5 +9,4 @@ public class FormigaApplication {
     public static void main(String[] args) {
         SpringApplication.run(FormigaApplication.class, args);
     }
-
 }
