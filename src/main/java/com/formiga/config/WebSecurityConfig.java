@@ -50,7 +50,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .accessDeniedPage("/403")
             .and()
           .rememberMe()
-            .userDetailsService(userDetailsService);
+            .userDetailsService(userDetailsService)
+            .and()
+          .sessionManagement()
+            .maximumSessions(1).expiredUrl("/login")
+            .and()
+          .invalidSessionUrl("/login");
           
     }
     
