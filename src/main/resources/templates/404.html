@@ -1,36 +1,35 @@
-<!DOCTYPE html>
 
-<html>
+
+<html lang="pt">
+
     <head>
-        <title>Acesso negado</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <title>Página não encontrada</title>
+         <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
         <link th:href="@{/stylesheet/font-awesome.css}" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
-        
-        <style>
-            body { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);}
+        <style>body { background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);}
             .error-template {padding: 40px 15px;text-align: center;}
             .error-actions {margin-top:15px;margin-bottom:15px;}
             .error-actions .btn { margin-right:10px; }
         </style>
-
     </head>
-    
+
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="error-template">
-                        <div><i style="color: #999999; font-size: 150px;" class="icon-lock icon-4x" ></i></div>
+                        <h1>Oops!</h1>
+                        <h2>404 Not Found</h2>
                         <div class="error-details">
-                            Você não possui permissão para acessar esse recurso.
+                            Página não encontrada ou não existe.
                         </div>
                         <div class="error-actions">
                             <a th:href="@{/dashboard}" class="btn btn-primary btn-lg">
                                 <span class="glyphicon glyphicon-home"></span> Dashboard
                             </a>
+                            <a href="#" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"></span> Entrar em contado </a>
                         </div>
                     </div>
                 </div>
@@ -39,5 +38,4 @@
         <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
     </body>
-    
 </html>

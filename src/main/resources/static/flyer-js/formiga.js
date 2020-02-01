@@ -11,7 +11,11 @@ function getUsuarioNomeAtivo() {
     var ativo = $("input[name='ativoUsuario']").val();
     
     $("#navUsuarioNome").html(nome+"   "+" <span class='glyphicon glyphicon-user pull-right'> </span>");
-    $("#navUsuarioAtivo").html(ativo+"  "+" <span class='glyphicon glyphicon-stats pull-right' > </span>");
+    if(ativo) {
+        $("#navUsuarioAtivo").html("<label class='label label-success '>Online</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
+    } else {
+        $("#navUsuarioAtivo").html("<label class='label label-success' >OFF</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
+    }
 }
 
 Formiga.Security = (function () {

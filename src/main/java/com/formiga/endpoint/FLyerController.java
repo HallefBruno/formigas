@@ -6,7 +6,6 @@ import com.formiga.entity.MarcaMoto;
 import com.formiga.entity.dto.MarcaCarroDTO;
 import com.formiga.entity.dto.MarcaMotoDTO;
 import com.formiga.entity.exception.MessageException;
-import com.formiga.entity.exception.NotDeleteException;
 import com.formiga.repository.IStatusFlyerRepository;
 import com.formiga.service.FlyerService;
 import com.formiga.service.StatusFlyerService;
