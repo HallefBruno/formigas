@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Criar conta</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/stylesheet/bootstrap-toggle.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+    </head>
+    <body>
+        <div class="tab-content" >
+
+            <div class="tab-pane fade in active" id="home">
+
+                <h3 class="head text-center" style="color: #b3b3b3">Vamos começar nossa personalização, escolha abaixo </h3> <!--<sup>™</sup> <span style="color:#f48260;">♥</span>-->
+
+                <h3 class="text-center" style="color: #337ab7; margin-top: 50px;">Condomínio horizontal</h3>
+
+                <div class="container-fluid">
+                    <div class="portfolio-grid">
+                        <div class="row ">
+                            <div class="col-sm-6">
+
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading text-center">Casa numerada</div>
+                                    <div class="panel-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"><b>Descrição: </b>Esse tipo de condominio, as casa não tem quadra e lote, apenas o numero que a identifica.</li>
+                                            <li class="list-group-item"><input type="checkbox" id="checkcn" /></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="card card-block">
+                                    <div class="panel panel-primary ">
+                                        <div class="panel-heading text-center">Casa com rua nomeada com quadra e lote</div>
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item"><b>Descrição: </b>Condomios de casas com extesão maior, no geral as casas são identificadas por quadra e lote.</li>
+                                                <li class="list-group-item"><input type="checkbox" id="checkcqdlt"/></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="portfolio-over">
+                                        <div>
+                                            <h3 class="card-title">
+                                                # Off... '
+                                            </h3>
+
+                                            <p class="card-text">
+                                                Está em fase de construção.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-center" style="color: #2e97be">Condomínio vertical</h3>
+
+                <div class="container-fluid">
+                    <div class="portfolio-grid">
+                        <div class="row" >
+                            <div class="col-sm-6">
+                                <div class="card card-block">
+                                    <div class="panel panel-success" style="height: 210px;">
+                                        <div class="panel-heading text-center" style="background-color: #2e97be; color: white">Apenas um edifício ou bloco</div>
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item"><b>Descrição: </b>No geral os aptos são identificados por número.</li>
+                                                <li class="list-group-item"><input type="checkbox" id="checkceb"/></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-over">
+                                        <div>
+                                            <h3 class="card-title">
+                                                # Off... '
+                                            </h3>
+
+                                            <p class="card-text">
+                                                Está em fase de construção.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="card card-block">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading text-center" style="background-color: #2e97be; color: white">Mais de um edifício ou bloco</div>
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item"><b>Descrição: </b>Quando há mais de um edifício ou bloco, os apto, são identificados pela letra o bloco + Nº apto.</li>
+                                                <li class="list-group-item"><input type="checkbox" id="checkmeb"/></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-over">
+                                        <div>
+                                            <h3 class="card-title">
+                                                # Off... '
+                                            </h3>
+
+                                            <p class="card-text">
+                                                Está em fase de construção.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid" style="margin-top: 50px;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #563d7c; color: white;">Dados cadastrais</div>
+                <div class="panel-body">
+                    <form th:action="@{/criarconta/save}" method="post">
+                        <div class="form-group col-sm-6">
+                            <label for="nome" >Nome completo</label>
+                            <input class="form-control" name="nome" id="nome" type="text" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="email" >Email</label>
+                            <input class="form-control" name="email" id="email" type="email" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="senha" >Senha</label>
+                            <input class="form-control" name="senha" id="senha" type="password" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="confirmaSenha" >Confirma senha</label>
+                            <input class="form-control" name="confirmaSenha" id="confirmaSenha" type="password" />
+                        </div>
+                     
+                        <div class="form-group col-sm-1">
+                            <label class="control-label" for="ativo" >Ativo</label>
+                            <div>
+                                <input checked name="ativo" id="ativo" disabled type="checkbox" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-sm-5">
+                            <label class="control-label" for="perfil" >Perfil</label>
+                            <div>
+                                <input checked name="perfil" id="perfil" disabled type="checkbox" />
+                            </div>
+                        </div>
+                      
+                        <div class="form-group col-sm-6">
+                            <label for="dataNascimento" >Data nascimento</label>
+                            <input class="form-control" name="dataNascimento" id="dataNascimento" type="date" />
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+        <script th:src="@{/vendor-js/bootstrap-toggle.min.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/sweetalert2.all.min.js}" type="text/javascript"></script>
+        <script th:src="@{/flyer-js/conta/criar.conta.js}" type="text/javascript"></script>
+    </body>
+</html>

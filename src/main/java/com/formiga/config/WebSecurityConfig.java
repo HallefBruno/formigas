@@ -27,6 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/stylesheet/**");
         web.ignoring().antMatchers("/font/**");
         web.ignoring().antMatchers("/imagens/**");
+        web.ignoring().antMatchers("/vendor-js/**");
+        web.ignoring().antMatchers("/flyer-js/conta/**");
     }
 
     @Override
@@ -37,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+          .authorizeRequests().antMatchers("/criarconta").permitAll()
+            .and()
           .authorizeRequests()
             .antMatchers("/flyer").hasAnyAuthority("CADASTRAR")
             .antMatchers("/resident").hasAnyAuthority("CADASTRAR")
@@ -56,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .maximumSessions(1).expiredUrl("/login")
             .and()
           .invalidSessionUrl("/login");
+            
           
     }
     

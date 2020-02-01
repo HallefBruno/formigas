@@ -13,39 +13,8 @@
         
         <style>
             body {
-                background-color: white;
+                background-color: black;
                 margin-top: 100px;
-            }
-
-            #loginbox {
-                margin-top: 30px;
-            }
-
-            #loginbox > div:first-child {        
-                padding-bottom: 10px;    
-            }
-
-            .iconmelon {
-                display: block;
-                margin: auto;
-            }
-
-            #form > div {
-                margin-bottom: 25px;
-            }
-
-            #form > div:last-child {
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-
-            .panel {    
-                background-color: #ffffff;
-            }
-
-            .panel-body {
-                padding-top: 30px;
-                background-color: rgba(255,255,255,.3);
             }
 
             #particles {
@@ -59,91 +28,17 @@
                 position: absolute;
                 z-index: -2;
             }
-
-            .iconmelon,
-            .im {
-                position: relative;
-                width: 150px;
-                height: 150px;
-                display: block;
-                fill: #4A575D;
+            
+            .glyphicon-envelope {
+                background-color: #999999;
+                color: white;
             }
-
-            .iconmelon:after,
-            .im:after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-
-
-            @import url('https://fonts.googleapis.com/css?family=Numans');
-
-            .container{
-                height: 100%;
-                align-content: center;
-            }
-
-            .card{
-                height: 345px;
-                margin-top: auto;
-                margin-bottom: auto;
-                width: 400px;
-                background-color: rgba(0,0,0,0.5) !important;
-            }
-
-            .input-group-prepend span{
-                width: 50px;
-                background-color: #CF1F46;
-                color: black;
-                border:0 !important;
-            }
-
-            input:focus{
-                outline: 0 0 0 0  !important;
-                box-shadow: 0 0 0 0 !important;
-
-            }
-
-            .remember{
+            
+            .glyphicon-lock {
+                background-color: #999999;
                 color: white;
             }
 
-            .remember input
-            {
-                width: 20px;
-                height: 20px;
-                margin-left: 15px;
-                margin-right: 5px;
-            }
-
-            .login_btn{
-                color: black;
-                background-color: #CF1F46;
-
-            }
-
-            .login_btn:hover{
-                color: black;
-                background-color: #4A575D;
-            }
-
-            .links{
-                color: white;
-            }
-            .links:hover{
-                color: #CF1F46;
-            }
-
-            .links a{
-                margin-left: 4px;
-            }
-            .times:hover{
-                background-color: #CF1F46;
-            }
         </style>
     </head>
     
@@ -159,12 +54,13 @@
                 <div class="alert alert-info">Até logo!</div>
             </div>
 
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Formiga login</h3>
                 </div>
                 <div class="panel-body">
                     <form th:action="@{/login}" method="post">
+                        
                         <div class="form-group has-feedback">
                             <input name="username" class="form-control" placeholder="Email"/>
                             <span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
@@ -179,11 +75,18 @@
                             <button class="btn btn-success btn-block">Entrar</button>
                         </div>
 
-                        <div class="form-group">
-                            <input type="checkbox" id="remember-me" name="remember-me" />
-                            <label for="remember-me">Lembrar?</label>
+                        
+                        <div class="row" >
+                            <div class="form-group col-sm-8">
+                                <input type="checkbox" id="remember-me" name="remember-me" />
+                                <label for="remember-me">Lembrar?</label>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <a th:href="@{/criarconta}">Criar conta free</a>
+                            </div>
                         </div>
-
+                        
+                        
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </form>
                 </div>
@@ -440,7 +343,7 @@
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
         <script>
             !function (a) {
                 function b(b, d) {
@@ -625,7 +528,7 @@
                     directionX: 'center', // 'center', 'left' or 'right'. 'center' = dots bounce off edges
                     directionY: 'center', // 'center', 'up' or 'down'. 'center' = dots bounce off edges
                     density: 6000, // How many particles will be generated: one particle every n pixels
-                    dotColor: '#CF1F46', // noktaların rengi.
+                    dotColor: '#337ab7', // noktaların rengi.
                     lineColor: '#D6D6D6', // çizgilerin rengi.
                     particleRadius: 5, // Dot size
                     lineWidth: 1,
