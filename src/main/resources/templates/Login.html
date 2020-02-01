@@ -5,18 +5,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         
+        <title>Formiga Login</title>
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/stylesheet/font-awesome.css}" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
         
         <style>
             body {
                 background-color: white;
+                margin-top: 100px;
             }
 
             #loginbox {
@@ -147,90 +145,50 @@
                 background-color: #CF1F46;
             }
         </style>
-        <title>Login</title>
-
     </head>
+    
     <body>
-        <div class="container">
-            
-            <div style="margin-top: 100px;" class="d-flex justify-content-center h-100">
+        
 
-                <div class="card ">
-                    <div class="card-header">
-                        <h2 class="text-center text-light">Formiga Login</h2>
-                    </div>
-                    <div th:if="${param.error}">
-                        <div class="text-center" style="color: white">Email e/ou inválidos!</div>
-                    </div>
+        <div class="col-sm-4 col-sm-offset-4">
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">Email e/ou inválidos!</div>
+            </div>
 
-                    <div th:if="${param.logout}">
-                        <div class="text-center" style="color: white">Até logo!</div>
-                    </div>
-                    <div class="card-body">
-                        <form th:action="@{/login}" method="post" class="needs-validation">
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class='fas fa-envelope' style='font-size:23px'></i></span>
-                                    <input type="text" class="form-control" name="username" placeholder="Email" id="tbEmail" required>
-                                </div>         
-                            </div>
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class='fa fa-key ml-2' style='font-size:22px'></i></span>
-                                    <input type="password" class="form-control" name="password" placeholder="Password" id="tbSifre" required>
-                                </div>   
-                            </div>
-                            <div class="row align-items-center remember">
-                                <input type="checkbox">Remember me
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Login" class="btn float-right login_btn text-light" id="btnGiris">    
-                            </div>
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        </form>
-                    </div>
-                    <div class="card-footer">
-                       
-                        <div class="d-flex justify-content-center links my-1">
-                            <button class="btn login_btn text-light" role="button" id="btnSifreUnuttum" data-toggle="modal" data-target="#openModalID">
-                                Esqueceu a senha?</button>
+            <div th:if="${param.logout}">
+                <div class="alert alert-info">Até logo!</div>
+            </div>
 
-                            <div class="modal fade " tabindex="-1" role="dialog" id="openModalID" aria-labelledby="ModalTitle" aria="true" data-backdrop="false">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" id="ModalTitle2">Recuperar senha</h3>
-                                            <button type="button" class="close times" data-dismiss="modal" aria-label="recuperar senha">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form class="needs-validation">
-                                                <div class="form-group">
-                                                    <div class="input-group form-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class='fa fa-envelope ml-2' style='font-size:26px'></i></span>
-                                                            <input type="text" class="form-control" placeholder="E-mail" id="tbEmail" required> 
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text  text-light" style="width: 100px;font-size: 15px; font-weight: 500">@example.com</span>
-                                                            </div>     
-                                                        </div>       
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <input type="submit" value="Recuperar" class="btn login_btn text-light">
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Formiga login</h3>
+                </div>
+                <div class="panel-body">
+                    <form th:action="@{/login}" method="post">
+                        <div class="form-group has-feedback">
+                            <input name="username" class="form-control" placeholder="Email"/>
+                            <span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
                         </div>
-                    </div>
+
+                        <div class="form-group has-feedback">
+                            <input type="password" name="password" class="form-control" placeholder="Senha"/>
+                            <span class="glyphicon glyphicon-lock form-control-feedback" ></span>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">Entrar</button>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="checkbox" id="remember-me" name="remember-me" />
+                            <label for="remember-me">Lembrar?</label>
+                        </div>
+
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    </form>
                 </div>
             </div>
         </div>
-
         
         <div id="particles"></div>
 
