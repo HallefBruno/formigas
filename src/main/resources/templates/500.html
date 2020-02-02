@@ -14,8 +14,21 @@
     </head>
     
     <body>
-        <h1 class="text-center">Um erro ocorreu no sistema!</h1>
-        
+        <div class="text-center" style="margin-top: 40px; margin-bottom: 40px;">
+            <h1 class="text-center">Um erro ocorreu no sistema!</h1>
+            <button class="btn btn-lg btn-danger" href="#collapseErro" data-toggle="collapse" aria-expanded="false" aria-controls="collapseErro" >Visualizar erro</button>
+        </div>
+        <div class="collapse" id="collapseErro">
+            <div class="well">
+                <h1 id="message"></h1>
+            </div>
+        </div>
+        <script>
+            var erro = sessionStorage.getItem("erro");
+            document.getElementById("message").innerHTML = erro;
+            sessionStorage.clear();
+            sessionStorage.removeItem();
+        </script>
         
         <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>

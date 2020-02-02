@@ -54,11 +54,15 @@ function save() {
             data: JSON.stringify(flyer),
 
             error: function (data, textStatus, jqXHR) {
-                responseMensage(-1,data);
+
+                if(data.status !== 500) {
+                    responseMensage(-1,data);
+                }
             },
             success: function (data, textStatus, jqXHR) {
                 responseMensage(0,data);
             },
+            
             beforeSend: start_request,
             complete: finalize_request
 

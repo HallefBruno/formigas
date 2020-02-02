@@ -18,6 +18,20 @@ function getUsuarioNomeAtivo() {
     }
 }
 
+function internalError() {
+    
+    $(document).ajaxError(function (event, jqxhr, settings) {
+        
+        if(jqxhr.status === 500) {
+            var erro = new Array();
+            erro.push(jqxhr.responseText);
+            sessionStorage.setItem("erro", erro);
+            window.open("500");
+        }
+    });
+}
+
+
 Formiga.Security = (function () {
 
     function Security() {
@@ -39,4 +53,5 @@ $(function () {
     var security = new Formiga.Security();
     security.enable();
     getUsuarioNomeAtivo();
+    internalError();
 });

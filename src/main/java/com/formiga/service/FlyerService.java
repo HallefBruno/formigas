@@ -120,7 +120,7 @@ public class FlyerService {
         
     }
     
-    @Transactional
+    //@Transactional
     public void delete(long cod) {
         
         try {
