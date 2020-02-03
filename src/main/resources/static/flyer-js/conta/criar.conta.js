@@ -2,7 +2,13 @@ $(function () {
     
     initCheck();
     
+    criarConta();
+    
 });
+
+function criarConta() {
+    alert("Criar conta");
+}
 
 function initCheck() {
     

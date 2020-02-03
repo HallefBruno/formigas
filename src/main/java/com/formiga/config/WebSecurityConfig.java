@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/font/**");
         web.ignoring().antMatchers("/imagens/**");
         web.ignoring().antMatchers("/vendor-js/**");
-        web.ignoring().antMatchers("/flyer-js/conta/**");
+        web.ignoring().antMatchers("/flyer-js/**");
     }
 
     @Override
@@ -39,7 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-          .authorizeRequests().antMatchers("/criarconta").permitAll()
+          .authorizeRequests()
+            .antMatchers("/criarconta/**").permitAll()
+            .antMatchers("/credenciais/**").permitAll()
             .and()
           .authorizeRequests()
             .antMatchers("/flyer").hasAnyAuthority("CADASTRAR")
