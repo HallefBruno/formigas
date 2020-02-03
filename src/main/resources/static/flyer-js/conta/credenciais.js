@@ -8,8 +8,7 @@ var qtdVezesCodErrado;
 $(document).ready(function () {
     event.preventDefault();
     context = $("input[name='context-app']").val();
-    //inputEmailButtonEnviarEmail();
-    visibleInputButtonValidaCod();
+    inputEmailButtonEnviarEmail();
     qtdVezesCodErrado = 1;
 
 });
@@ -88,7 +87,7 @@ function verificarCod() {
     
     var codEmail = {
         "cod":cod,
-        "emailDigitado":"brunohallef@gmail.com"//80660//emailDigitado.toString().trim()
+        "emailDigitado":emailDigitado.toString().trim();//80660//emailDigitado.toString().trim()
     };
     
     if(codEmail.cod && codEmail.emailDigitado) {
