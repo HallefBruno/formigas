@@ -26,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/webjars/**");
         web.ignoring().antMatchers("/stylesheet/**");
         web.ignoring().antMatchers("/font/**");
+        web.ignoring().antMatchers("/fonts/**");
         web.ignoring().antMatchers("/imagens/**");
         web.ignoring().antMatchers("/vendor-js/**");
         web.ignoring().antMatchers("/flyer-js/**");
@@ -42,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .authorizeRequests()
             .antMatchers("/criarconta/**").permitAll()
             .antMatchers("/credenciais/**").permitAll()
+            .antMatchers("/500").permitAll()
             .and()
           .authorizeRequests()
             .antMatchers("/flyer").hasAnyAuthority("CADASTRAR")

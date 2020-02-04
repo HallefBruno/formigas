@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
+    
     Optional<Usuario> findByEmailIgnoreCaseAndAtivoTrue(String email);
     
     @Query(value = "select distinct p.nome from Usuario u inner join u.grupos g inner join g.permissoes p where u = :usuario ")

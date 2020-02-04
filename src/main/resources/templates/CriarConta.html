@@ -14,8 +14,9 @@
         
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
         <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
+        <input type="hidden" name="context-app" th:value="@{/}"/>
         
-        <div class="container-fluid">
+        <div class="container-fluid col-sm-6 col-sm-offset-3">
 
             <div class="jumbotron" >
                 <div class="alert alert-info alert-dismissible fade in " role="alert">
@@ -28,7 +29,7 @@
                         
                         <div class="row">
                             <div class="campo-vazio">
-                                <div class="form-group col-sm-12">
+                                <div class="form-group ">
                                     <div id="divInputButtonEnviarEmail" style="display: flex;">
                                     </div>
                                 </div>

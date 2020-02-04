@@ -61,12 +61,7 @@ function save() {
             },
             success: function (data, textStatus, jqXHR) {
                 responseMensage(0,data);
-            },
-            
-            beforeSend: start_request,
-            complete: finalize_request
-
-
+            }
         });
     } else {
         
@@ -122,12 +117,4 @@ function initMessage() {
     $(".alert-danger-flyer").html("");
     $(".alert-danger-flyer").append(add_msg_danger);
     $(".response-error-flyer").text(" Todos os campos são obrigatórios!");
-}
-
-function start_request() {
-    $("#divLoading").addClass("show");
-}
-
-function finalize_request() {
-    $("#divLoading").removeClass("show");
 }

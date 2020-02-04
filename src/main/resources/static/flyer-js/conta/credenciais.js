@@ -10,6 +10,7 @@ $(document).ready(function () {
     context = $("input[name='context-app']").val();
     inputEmailButtonEnviarEmail();
     qtdVezesCodErrado = 1;
+    $("#dadosCadastrais").html(htmlDadosCadastrais());
 
 });
 
@@ -87,7 +88,7 @@ function verificarCod() {
     
     var codEmail = {
         "cod":cod,
-        "emailDigitado":emailDigitado.toString().trim();//80660//emailDigitado.toString().trim()
+        "emailDigitado":emailDigitado.toString().trim()//80660//emailDigitado.toString().trim()
     };
     
     if(codEmail.cod && codEmail.emailDigitado) {

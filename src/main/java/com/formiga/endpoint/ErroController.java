@@ -25,7 +25,7 @@ public class ErroController implements ErrorController {
  
     @Override
     public String getErrorPath() {
-        return "";
+        return "404";
     }
 
 }

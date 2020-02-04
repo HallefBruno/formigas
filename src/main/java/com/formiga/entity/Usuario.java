@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,6 +45,8 @@ public class Usuario implements Serializable {
               inverseJoinColumns = @JoinColumn(name = "id_grupo"))
     private List<Grupo> grupos;
     
+    @Enumerated(EnumType.STRING)
+    private TipoDeVersoes tipoDeVersoes;
     
     public Long getId() {
         return id;
@@ -106,6 +110,14 @@ public class Usuario implements Serializable {
 
     public void setGrupos(List<Grupo> grupos) {
         this.grupos = grupos;
+    }
+
+    public TipoDeVersoes getTipoDeVersoes() {
+        return tipoDeVersoes;
+    }
+
+    public void setTipoDeVersoes(TipoDeVersoes tipoDeVersoes) {
+        this.tipoDeVersoes = tipoDeVersoes;
     }
 
     
