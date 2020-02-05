@@ -4,6 +4,7 @@ package com.formiga.endpoint;
 import com.formiga.entity.Usuario;
 import com.formiga.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,11 @@ public class CriarContaController {
     
     @PostMapping("save")
     public ResponseEntity<?> save(@RequestBody Usuario u) {
-        return ResponseEntity.ok(usuarioService.save(u));
+        try {
+            return ResponseEntity.ok(usuarioService.save(u));
+        } catch (Throwable e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
     
 }

@@ -18,8 +18,8 @@ Formiga.Usuario = (function() {
     Usuario.prototype.enable = function() {
         
         this.navUsuario.html(this.nome.val()+"   "+" <span class='glyphicon glyphicon-user pull-right'> </span>");
-        
-        if(this.ativo.val() === true) {
+
+        if(this.ativo.val() === "true") {
             this.navAtivo.html("<label class='label label-success '>Online</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
         } else {
             this.navAtivo.html("<label class='label label-success' >OFF</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
@@ -36,10 +36,13 @@ Formiga.InternalError = (function() {
     
     InternalError.prototype.enable = function () {
         $(document).ajaxError(function (event, jqxhr, settings) {
-            var erro = new Array();
-            erro.push(jqxhr.responseText);
-            sessionStorage.setItem("erro", erro);
-            window.open("500");
+            alert(jqxhr.status);
+            if(jqxhr.status === 500) {
+                var erro = new Array();
+                erro.push(jqxhr.responseText);
+                sessionStorage.setItem("erro", erro);
+                window.open("500");
+            }
         }.bind(this));
     };
     

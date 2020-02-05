@@ -9,6 +9,49 @@
         <link th:href="@{/stylesheet/bootstrap-toggle.min.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+        
+        <style>
+            input[type="button"] {
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                background-color: #000000;
+                color: #eee;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                height: 33px;
+            }
+
+            input[type="button"]:focus {
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                background-color: #000000;
+                color: #eee;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                height: 33px;
+            }
+            
+            input[type="button"]:hover {
+                background-color: #d44179;
+                color: #eee;
+            }
+            
+            .btn-primary {
+                color: #fff;
+                background-color: black;
+                border-color: black;
+            }
+            
+            .btn-primary:hover {
+                color: #fff;
+                background-color: black;
+                border-color: black;
+            }
+            
+        </style>
+        
     </head>
     <body>
         
@@ -29,7 +72,7 @@
                         
                         <div class="row">
                             <div class="campo-vazio">
-                                <div class="form-group ">
+                                <div class="form-group col-sm-12">
                                     <div id="divInputButtonEnviarEmail" style="display: flex;">
                                     </div>
                                 </div>

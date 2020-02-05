@@ -17,15 +17,15 @@ public class ErroController implements ErrorController {
         if(response.getStatus() == HttpStatus.NOT_FOUND.value()) {
             modelAndView.setViewName("404");
         }
-//        else if(response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-//            modelAndView.setViewName("500");
-//        }       
+        else if(response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+            modelAndView.setViewName("500");
+        }       
         return modelAndView;
     }
  
     @Override
     public String getErrorPath() {
-        return "404";
+        return "/error";
     }
 
 }

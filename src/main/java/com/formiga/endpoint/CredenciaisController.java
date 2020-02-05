@@ -3,9 +3,11 @@ package com.formiga.endpoint;
 
 import com.formiga.entity.CodigoVerificacao;
 import com.formiga.entity.Email;
+import com.formiga.entity.Usuario;
 import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.ICodigoVerificacaoRepository;
 import com.formiga.repository.IEmailRepository;
+import com.formiga.repository.IUsuarioRepository;
 import com.formiga.service.EmailService;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +33,16 @@ public class CredenciaisController {
     
     @Autowired
     private IEmailRepository emailRepository;
+    
+    @Autowired
+    private IUsuarioRepository usuarioRepository;
 
     @PostMapping("send")
     public ResponseEntity<?> enviarEmail(@RequestBody Email email, HttpServletRequest request) {
         try {
+            
             Optional<Email> emailVerificado = emailRepository.findByDescricao(email.getDescricao());
+            Optional<Usuario> exitConta = usuarioRepository.findByEmailIgnoreCase(email.getDescricao());
             
             if(emailVerificado != null && emailVerificado.isPresent()) {
                 
@@ -44,7 +51,7 @@ public class CredenciaisController {
                 if(cv == null) {
                     emailService.sendMailWithInlineResources(email.getDescricao(), "Formigas online","Código de verificação é: ");
                     return ResponseEntity.ok("E-mail enviado com sucesso! ");
-                } else if(emailVerificado.get().getStatus() == true) {
+                } else if(emailVerificado.get().getStatus() == true && exitConta.isPresent()) {
                     return new ResponseEntity(request.getContextPath()+"/login", HttpStatus.OK);
                 } else {
                     codigoVerificacaoRepository.delete(cv);

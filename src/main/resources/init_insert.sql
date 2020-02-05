@@ -68,4 +68,4 @@ INSERT INTO grupo (nome) VALUES ('Administrador');
 INSERT INTO grupo (nome) VALUES ('Atendente');
 INSERT INTO permissao (nome) VALUES ('CADASTRAR');
 INSERT INTO grupo_permissao (id_grupo, id_permissao) VALUES (1, 1);
-INSERT INTO usuario_grupo (id_usuario, id_grupo) VALUES ((SELECT id FROM usuario WHERE email = 'sud@gmail.com'), 1);
+--INSERT INTO usuario_grupo (id_usuario, id_grupo) VALUES ((SELECT id FROM usuario WHERE email = 'sud@gmail.com'), 1);

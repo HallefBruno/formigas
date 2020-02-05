@@ -89,8 +89,7 @@ public class EmailService {
         };
 
         try {
-            codigoVe = getRandomNumberUsingInts(0, 100000);
-            //mailSender.send(preparator);
+            mailSender.send(preparator);
         } catch (MailException ex) {
             throw ex;
         }

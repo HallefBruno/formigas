@@ -5,21 +5,24 @@ import com.formiga.entity.Bairro;
 import com.formiga.entity.Cidade;
 import com.formiga.entity.Estado;
 import com.formiga.entity.Resident;
+import com.formiga.entity.TipoDeVersoes;
 import com.formiga.entity.dto.DefaultAutoCompleteSelect2DTO;
 import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IBairroRepository;
 import com.formiga.repository.ICidadeRepository;
 import com.formiga.repository.IEstadoRepository;
 import com.formiga.repository.IFotoRepository;
-import com.formiga.repository.IResidentRepository;
-import com.formiga.service.FotoService;
+import com.formiga.security.UsuarioSistema;
 import com.formiga.service.ResidentService;
+import com.formiga.service.UsuarioService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,21 +49,21 @@ public class ResidentController {
     private ResidentService residentService;
     
     @Autowired
-    private IResidentRepository residentRepository;
-    
-    @Autowired
     private IFotoRepository fotoRepository;
     
     @Autowired
-    private FotoService fotoService;
-    
+    private UsuarioService usuarioService;
+
     @Value("${app.message}")
     private String ambiente;
     
     @RequestMapping
     public ModelAndView initial() {
         ModelAndView mv = new ModelAndView();
-        if(1==1) {
+        
+        TipoDeVersoes versao = usuarioService.tipoVersao();
+        
+        if(versao == TipoDeVersoes.CASA_NUMERADA) {
             mv.setViewName("resident/ResidentRegistrationCondCasaNumerada");
         } else {
             mv.setViewName("ResidentRegistration");
