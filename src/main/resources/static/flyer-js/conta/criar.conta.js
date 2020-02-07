@@ -57,7 +57,7 @@ function criarConta() {
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
-                Swal.fire("Atenção!",jqXHR.responseText,'warning');
+                Swal.fire("Atenção!",jqXHR.responseText,'error');
             }
 
         });

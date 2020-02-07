@@ -60,7 +60,7 @@ insert into menu_item(nome_menu_item, url_menu_item,id_menu) VALUES('Search Resi
 
 
 --insert usuario
-insert into usuario(ativo,data_nascimento,email, nome,senha) VALUES(true,to_date('2020/01/28', 'YYYY/MM/DD'),'sud@gmail.com','Sud da silva','$2a$10$ovuKfrKPzUamUTpqI30AmOjTrS7CC21zhk6SM4hfbNMs3HxA0x8Zy');
+--insert into usuario(ativo,data_nascimento,email, nome,senha) VALUES(true,to_date('2020/01/28', 'YYYY/MM/DD'),'sud@gmail.com','Sud da silva','$2a$10$ovuKfrKPzUamUTpqI30AmOjTrS7CC21zhk6SM4hfbNMs3HxA0x8Zy');
 
 
 --insert grupo

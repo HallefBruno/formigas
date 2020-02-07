@@ -9,7 +9,10 @@ import com.formiga.repository.ICodigoVerificacaoRepository;
 import com.formiga.repository.IEmailRepository;
 import com.formiga.repository.IUsuarioRepository;
 import com.formiga.service.EmailService;
+import freemarker.template.TemplateException;
+import java.io.IOException;
 import java.util.Optional;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +52,7 @@ public class CredenciaisController {
                 CodigoVerificacao cv = codigoVerificacaoRepository.findByEmailId(emailVerificado.get().getId());
                 
                 if(cv == null) {
-                    emailService.sendMailWithInlineResources(email.getDescricao(), "Formigas online","Código de verificação é: ");
+                    emailService.sendSimpleMessage(email.getDescricao());
                     return ResponseEntity.ok("E-mail enviado com sucesso! ");
                 } else if(emailVerificado.get().getStatus() == true && exitConta.isPresent()) {
                     return new ResponseEntity(request.getContextPath()+"/login", HttpStatus.OK);
@@ -58,10 +61,10 @@ public class CredenciaisController {
                     emailRepository.delete(emailVerificado.get());
                 }
             }
-            emailService.sendMailWithInlineResources(email.getDescricao(), "Formigas online","Código de verificação é: ");
+            emailService.sendSimpleMessage(email.getDescricao());
             emailService.save(email);
 
-        } catch(MailException | MessageException e) {
+        } catch(MailException | MessageException | MessagingException | IOException | TemplateException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok("E-mail enviado com sucesso! ");

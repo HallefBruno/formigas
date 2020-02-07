@@ -36,7 +36,6 @@ Formiga.InternalError = (function() {
     
     InternalError.prototype.enable = function () {
         $(document).ajaxError(function (event, jqxhr, settings) {
-            alert(jqxhr.status);
             if(jqxhr.status === 500) {
                 var erro = new Array();
                 erro.push(jqxhr.responseText);

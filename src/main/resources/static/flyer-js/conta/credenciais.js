@@ -86,7 +86,7 @@ function verificarCod() {
     
     var codEmail = {
         "cod":cod,
-        "emailDigitado":emailDigitado.toString().trim()//80660//emailDigitado.toString().trim()
+        "emailDigitado":emailDigitado.toString().trim()
     };
     
     if(codEmail.cod && codEmail.emailDigitado) {
@@ -160,10 +160,10 @@ function verificarCod() {
 
 function startRequest() {
     if(operacao === "email") {
-        $(".btn-send").prop("title","Enviando e-mail...");
         $(".glyphicon-send").prop("style","display:none");
         $(".btn-send").append("<img src='"+context+"imagens/mini-loading.gif' />");
         $("input[name='email']").prop("disabled", true);
+        $(".btn-send").prop("title","Enviando e-mail...");
         $(".btn-send").prop("disabled", true);
     } else {
         $(".glyphicon-user").prop("style","display:none");
