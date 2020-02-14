@@ -81,7 +81,7 @@ public class CredenciaisController {
                         Email email = cv.getEmail();
                         email.setStatus(Boolean.TRUE);
                         emailService.save(email);
-                        return ResponseEntity.ok().build();
+                        return ResponseEntity.ok(cv.getNumeroGerado());
                     }
                 } else {
                     return new ResponseEntity<>("Email digitado não é válido para o codigo! ",HttpStatus.NOT_FOUND);

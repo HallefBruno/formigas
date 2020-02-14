@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.formiga.repository.IFlyerRepository;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -79,11 +81,12 @@ public class FLyerController {
         try {
             flyerService.delete(Long.valueOf(id));
             return ResponseEntity.ok(flyerRepository.findAllByOrderById());
-        }catch(DataIntegrityViolationException e) {
+        } catch(DataIntegrityViolationException | EmptyResultDataAccessException e) {
             if(e.getMessage().contains("ConstraintViolationException")) {
                 return new ResponseEntity("No presente momento, não será possível excluir esse registro!",HttpStatus.CONFLICT);
+            } else {
+                return new ResponseEntity("Esse registro foi deletado!",HttpStatus.CONFLICT);
             }
-            return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
     
@@ -96,7 +99,7 @@ public class FLyerController {
                 map.add("lista", flyerRepository.findAllByOrderById());
                 map.add("message", "Seu registro foi atualizado!");
             }
-        } catch(MessageException e) {
+        } catch(MessageException | EntityNotFoundException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok(map);

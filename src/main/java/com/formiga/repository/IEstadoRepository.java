@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IEstadoRepository extends JpaRepository<Estado, Long> {
     List<Estado> findByNomeContainingIgnoreCase(String param);
+    List<Estado> findAllByOrderByIdAsc();
 }

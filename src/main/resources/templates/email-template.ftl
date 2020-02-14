@@ -33,9 +33,9 @@
         </tr>
         <tr>
             <td bgcolor="#777777" style="padding: 30px 30px 30px 30px;">
-                <a href="${site}">Site da empresa</a>
                 <p align="center" style="font-size: 21px; font-weight: bold">${logo}</p>
                 <p align="center">${direitos}</p>
+                <a href="${site}">Site da empresa</a>
             </td>
         </tr>
     </table>

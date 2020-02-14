@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.formiga.repository.IFlyerRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class FlyerService {
@@ -121,13 +122,8 @@ public class FlyerService {
     }
     
     //@Transactional
-    public void delete(long cod) {
-        
-        try {
-            flyerRepository.deleteById(cod);
-        } catch(DataIntegrityViolationException e) {
-            throw e;
-        }
+    public void delete(long cod) throws EmptyResultDataAccessException, DataIntegrityViolationException {
+        flyerRepository.deleteById(cod);
     }
 
     public List<Flyer> pesquisaFilipeta(String flyerCod) {

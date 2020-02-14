@@ -6,6 +6,43 @@ function remove_class_swal2() {
     $('.swal2-icon-content').remove();
 }
 
+Formiga.InitMessage = (function() {
+    
+    function InitMessage() {
+        this.componentMsgSuccess = $(".msg-success");
+        this.conponentMsgWarning = $(".msg-warning");
+        this.btn = $(".btn-save");
+        this.emitter = $({});
+	this.on = this.emitter.on.bind(this.emitter);
+    }
+    
+    InitMessage.prototype.enable = function() {
+        this.conponentMsgWarning.html("");
+        this.conponentMsgWarning.attr("style","display:block;");
+        this.conponentMsgWarning.html("<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='msg-text-warning'> Todos os campos são obrigatórios </span>"+"</div>");
+        this.btn.on("click",tipoMessageMostrar.bind(this));
+    };
+
+    function tipoMessageMostrar() {
+        $(document).ajaxComplete(function (event, jqxhr, settings) {
+            if(jqxhr.status === 200) {
+                this.conponentMsgWarning.attr("style","display:none;");
+                this.componentMsgSuccess.html("");
+                this.componentMsgSuccess.attr("style","display:block;");
+                this.componentMsgSuccess.html("<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button> Registro salvo com sucesso </div>");
+            } else {
+                this.componentMsgSuccess.attr("style","display:none;");
+                this.conponentMsgWarning.attr("style","display:block;");
+                this.conponentMsgWarning.html("");
+                this.conponentMsgWarning.html("<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='msg-text-warning'>  "+jqxhr.responseText+"</span>"+"</div>");
+            }
+        }.bind(this));
+    }
+    
+    return InitMessage;
+    
+}());
+
 Formiga.Usuario = (function() {
     
     function Usuario() {
@@ -17,10 +54,12 @@ Formiga.Usuario = (function() {
     
     Usuario.prototype.enable = function() {
         
-        this.navUsuario.html(this.nome.val()+"   "+" <span class='glyphicon glyphicon-user pull-right'> </span>");
+        this.navUsuario.html("");
+        
+        this.navUsuario.html("<label class='label label-primary' >"+this.nome.val()+" </span>"+"</label>");//+"   "+" <span style='color:black;' class='glyphicon glyphicon-user pull-right'>
 
         if(this.ativo.val() === "true") {
-            this.navAtivo.html("<label class='label label-success '>Online</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
+            this.navAtivo.html("<label class='label label-success '>Ativo</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
         } else {
             this.navAtivo.html("<label class='label label-success' >OFF</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
         }
@@ -40,7 +79,7 @@ Formiga.InternalError = (function() {
                 var erro = new Array();
                 erro.push(jqxhr.responseText);
                 sessionStorage.setItem("erro", erro);
-                window.open("500");
+                window.open("/formiga/500");
             }
         }.bind(this));
     };
@@ -92,10 +131,12 @@ $(function () {
     var internalError = new Formiga.InternalError();
     var usuario = new Formiga.Usuario();
     var loadGif = new Formiga.LoadGif();
+    var initMsg = new Formiga.InitMessage();
     
     security.enable();
     internalError.enable();
     usuario.enable();
     loadGif.enable();
+    initMsg.enable();
     
 });

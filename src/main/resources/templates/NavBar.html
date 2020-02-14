@@ -9,6 +9,9 @@
         
         <input type="hidden" name="usuarioNome" th:value="${#authentication.principal.usuario.nome}" />
         <input type="hidden" name="ativoUsuario" th:value="${#authentication.principal.usuario.ativo}" />
+        <input type="hidden" name="su" th:value="${#authentication.principal.usuario.id}" />
+        <input type="hidden" name="tipo" th:value="${#authentication.principal.usuario.tipoUsuario}" />
+        <input type="hidden" name="tipoV" th:value="${#authentication.principal.usuario.tipoDeVersoes}" />
         
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
         <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
@@ -41,14 +44,14 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navUsuarioNome" > </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><span style="color: #337ab7;" class="glyphicon glyphicon-wrench pull-right"></span> Configurações </a></li>
-                            <li class="divider"></li>
                             <li><a id="navUsuarioAtivo" href="#" >Status</a></li>
                             <li class="divider"></li>
                             <li><a href="#"><span class="badge pull-right"> 0 </span>Messagens</a></li>
                             <li class="divider"></li>
-                            <li><a href="#"><span style="color: red;" class="glyphicon glyphicon-heart pull-right"></span>Favoritos</a></li>
+                            <li><a href="#"><span style="color: #337ab7;" class="glyphicon glyphicon-wrench pull-right"></span> Configurações </a></li>
                             <li class="divider"></li>
+<!--                            <li><a href="#"><span style="color: red;" class="glyphicon glyphicon-heart pull-right"></span>Favoritos</a></li>
+                            <li class="divider"></li>-->
                             <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out pull-right"></span>Sair</a></li>
                         </ul>
                     </li>
@@ -85,6 +88,52 @@
 
                             <li role="separator" class="divider"></li>
                             <li><a th:href="@{/flyer/link}">Link Flyer</a></li>
+                            
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Usuario</a>
+                                <ul class="dropdown-menu">
+                                    <li sec:authorize="hasAnyAuthority('CADASTRAR')"><a th:href="@{/newuser}">User New</a>
+                                        <li role="separator" class="divider"></li>
+                                    </li>
+                                    <li><a th:href="@{/user/page/search}">User Search</a></li>
+                                </ul>
+                            </li>
+                            
+                            
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">UF | Cidade | Bairro</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Estado</a>
+                                        <ul class="dropdown-menu">
+                                            <li sec:authorize="hasAnyAuthority('CADASTRAR')"><a th:href="@{/estado}">Estado New</a>
+                                                <li role="separator" class="divider"></li>
+                                            </li>
+                                            <li><a th:href="@{/estado/page/search}">Estado Search</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Cidade</a>
+                                        <ul class="dropdown-menu">
+                                            <li sec:authorize="hasAnyAuthority('CADASTRAR')"><a th:href="@{/cidade}">Cidade New</a>
+                                                <li role="separator" class="divider"></li>
+                                            </li>
+                                            <li><a th:href="@{/user/page/search}">Cidade Search</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">Bairro</a>
+                                        <ul class="dropdown-menu">
+                                            <li sec:authorize="hasAnyAuthority('CADASTRAR')"><a th:href="@{/bairro}">Bairro New</a>
+                                                <li role="separator" class="divider"></li>
+                                            </li>
+                                            <li><a th:href="@{/user/page/search}">Bairro Search</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
                             
                         </ul>
                     </li>

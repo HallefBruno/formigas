@@ -3,28 +3,29 @@ package com.formiga.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+//import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Size;
 
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"nome" , "uf"})})
 public class Estado implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    //@Column(unique = true)
+    @Size(max = 15, message = "O tamanho da descrição deve estar entre 5 e 15", min = 5)
     private String nome;
     
+    //@Column(unique = true)
     private String uf;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pais")
-    private Pais pais;
 
     public Long getId() {
         return id;
@@ -50,14 +51,6 @@ public class Estado implements Serializable {
         this.uf = uf;
     }
 
-    public Pais getPais() {
-        return pais;
-    }
-
-    public void setPais(Pais pais) {
-        this.pais = pais;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -77,10 +70,7 @@ public class Estado implements Serializable {
             return false;
         }
         final Estado other = (Estado) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
     
     

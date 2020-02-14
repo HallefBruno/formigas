@@ -189,11 +189,7 @@ function update(flyer) {
             success: function (data, textStatus, jqXHR) {
                 Swal.fire('Pronto!', data.message[0], 'success');
                 table(data.lista[0]);
-            },
-
-            beforeSend: startRequest,
-            complete: finalizeRequest
-
+            }
         });
     } else {
         Swal.fire("Ocorreu um erro!","Todos os campos são obrigatorios!","error");
@@ -222,10 +218,7 @@ function searching_flyer() {
             },
             success: function (data, textStatus, jqXHR) {
                 table(data);
-            },
-
-            beforeSend: startRequest,
-            complete: finalizeRequest
+            }
         });
         
     } else {

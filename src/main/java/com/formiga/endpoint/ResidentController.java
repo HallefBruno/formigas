@@ -12,7 +12,6 @@ import com.formiga.repository.IBairroRepository;
 import com.formiga.repository.ICidadeRepository;
 import com.formiga.repository.IEstadoRepository;
 import com.formiga.repository.IFotoRepository;
-import com.formiga.security.UsuarioSistema;
 import com.formiga.service.ResidentService;
 import com.formiga.service.UsuarioService;
 import java.util.ArrayList;
@@ -21,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +61,7 @@ public class ResidentController {
         TipoDeVersoes versao = usuarioService.tipoVersao();
         
         if(versao == TipoDeVersoes.CASA_NUMERADA) {
-            mv.setViewName("resident/ResidentRegistrationCondCasaNumerada");
+            mv.setViewName("resident/ResidentRegistrationCondCasaNumerada");//resident/ResidentRegistrationCondCasaNumerada
         } else {
             mv.setViewName("ResidentRegistration");
         }

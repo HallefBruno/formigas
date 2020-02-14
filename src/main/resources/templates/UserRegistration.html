@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <meta charset="UTF-8">
+        <title>User New</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/stylesheet/bootstrap-toggle.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet">
+        <link th:href="@{/stylesheet/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/stylesheet/checkbox-css.css}" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+        
+        <style>
+            input[type="button"] {
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                background-color: #000000;
+                color: #eee;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                height: 33px;
+            }
+
+            input[type="button"]:focus {
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                background-color: #000000;
+                color: #eee;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                height: 33px;
+            }
+            
+            input[type="button"]:hover {
+                background-color: #d44179;
+                color: #eee;
+            }
+            
+            .btn-primary {
+                color: #fff;
+                background-color: black;
+                border-color: black;
+            }
+            
+            .btn-primary:hover {
+                color: #fff;
+                background-color: black;
+                border-color: black;
+            }
+            
+        </style>
+        
+    </head>
+
+    <body>
+        
+        <div class="container">
+            
+            <input type="hidden" id="context-app" name="context-app" th:value="@{/}" />
+            
+            <div th:replace="NavBar :: navbar"></div>
+
+            <div class="jumbotron">
+                
+                <form th:action="@{/criarconta/save}" method="post">
+                    
+                    <div class="col-sm-6" >
+                        
+                        <div class="form-group has-feedback">
+                            <label for="nome" >Nome completo</label>
+                            <input class="form-control" name="nome" id="nome" type="text" required/>
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <label for="email" >Email</label>
+                            <input class="form-control" name="email" id="email" type="email" required/>
+                            <span class="glyphicon glyphicon-envelope form-control-feedback" ></span>
+                        </div>
+                        
+                        <div class="row ">
+                            <div class="col-xs-3" style="margin-top: 30px;">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-success checkbox-inline">
+                                        <input checked name="ativo" id="ativo" type="checkbox" />
+                                        <label class="control-label" for="ativo" >Ativo</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="div-grupos">
+                                <th:block th:each="grupo : ${grupos}">
+                                    <div class="col-xs-4" style="margin-top: 30px;">
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-inline">
+                                                <input type="checkbox" th:value="${grupo.id}" th:id="${grupo.id}" th:name="${grupo.nome}">
+                                                <label th:for="${grupo.id}" th:text="${grupo.nome}">Administrador</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        
+                        <div class="form-group  has-feedback">
+                            <label for="senha" >Senha</label>
+                            <input class="form-control" name="senha" id="senha" type="password" required/>
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+
+                        <div class="form-group  has-feedback">
+                            <label for="confirmaSenha" >Confirma senha</label>
+                            <input class="form-control" name="confirmaSenha" id="confirmaSenha" type="password" required/>
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <label for="dataNascimento" >Data nascimento</label>
+                            <input class="form-control" name="dataNascimento" id="dataNascimento" type="date" required/>
+                            <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                        </div>
+
+                    </div>
+                    
+                    <div class="container-fluid"> 
+                        <div class="row" >
+                            <div class="col-sm-6" style="text-align: left;">
+                                <input type="button" class="btn btn-lg btn-save" value="Criar conta"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            
+        </div>
+
+        <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+        <script th:src="@{/vendor-js/sweetalert2.all.min.js}" type="text/javascript"></script>
+        <script th:src="@{/flyer-js/formiga.js}" type=text/javascript></script>
+        <script th:src="@{/flyer-js/user/save.user.js}" type="text/javascript"></script>
+        
+    </body>
+    
+</html>

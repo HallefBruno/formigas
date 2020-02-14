@@ -38,7 +38,8 @@ function criarConta() {
                 ]
             }
         ],
-        tipoDeVersoes: "CASA_NUMERADA"
+        tipoDeVersoes: "CASA_NUMERADA",
+        tipoUsuario: 0
     };
         
     if(validacaoSalvar(usuario)) {

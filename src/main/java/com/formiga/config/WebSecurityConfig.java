@@ -53,19 +53,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .formLogin().loginPage("/login").permitAll()
             .and()
           .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll()
+            .deleteCookies("JSESSIONID")
             .and()
           .exceptionHandling()
             .accessDeniedPage("/403")
             .and()
-          .rememberMe()
-            .userDetailsService(userDetailsService)
-            .and()
-          .sessionManagement()
-            .maximumSessions(1).expiredUrl("/login")
-            .and()
-          .invalidSessionUrl("/login");
-            
-          
+          .userDetailsService(userDetailsService)
+            .sessionManagement()
+            .invalidSessionUrl("/login")
+            .sessionFixation().newSession()    
+            .maximumSessions(1)
+            .maxSessionsPreventsLogin(false)
+            .expiredUrl("/login");
     }
     
     @Bean

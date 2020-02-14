@@ -16,7 +16,6 @@ public interface IFotoRepository extends JpaRepository<Foto, String>{
             + "INNER JOIN foto.resident.bairro "
             + "INNER JOIN foto.resident.bairro.cidade "
             + "INNER JOIN foto.resident.bairro.cidade.estado "
-            + "INNER JOIN foto.resident.bairro.cidade.estado.pais "
             + "WHERE foto.resident.id = :idResident ")
     List<Foto> getListPhtoResident(@Param("idResident") Long idResident);
 }

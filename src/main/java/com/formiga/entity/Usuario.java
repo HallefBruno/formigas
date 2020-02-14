@@ -42,11 +42,13 @@ public class Usuario implements Serializable {
     
     @ManyToMany
     @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "id_usuario"),
-              inverseJoinColumns = @JoinColumn(name = "id_grupo"))
+                inverseJoinColumns = @JoinColumn(name = "id_grupo"))
     private List<Grupo> grupos;
     
     @Enumerated(EnumType.STRING)
     private TipoDeVersoes tipoDeVersoes;
+    
+    private Integer tipoUsuario;
     
     public Long getId() {
         return id;
@@ -120,8 +122,14 @@ public class Usuario implements Serializable {
         this.tipoDeVersoes = tipoDeVersoes;
     }
 
-    
-    
+    public Integer getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(Integer tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

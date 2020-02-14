@@ -140,10 +140,12 @@ function verificarCod() {
                 },
 
                 200: function (data, textStatus, jqXHR) {
-                    $("#divInputButtonVerificaCod").html("");
-                    $(".jumbotron").prop("style","display:none;");
-                    $("#dadosCadastrais").html(htmlDadosCadastrais());
-                    initCheck();
+                    if(data === Number(codEmail.cod)) {
+                        $("#divInputButtonVerificaCod").html("");
+                        $(".jumbotron").prop("style","display:none;");
+                        $("#dadosCadastrais").html(htmlDadosCadastrais());
+                        initCheck();
+                    }
                 }
             },
 
@@ -372,15 +374,28 @@ return"<h3 class='head text-center' style='color: #b3b3b3'>Vamos começar nossa 
         
         "<div class='col-sm-6' style='margin-top: 50px; height:560px;overflow-y:scroll;'>"+
 
-            "<div class='panel panel-default'>"+
-                "<div class='panel-heading text-center' style='background-color:#1C1C1C; color:white'>Casa numerada</div>"+
-                "<div class='panel-body'>"+
-                    "<ul class='list-group'>"+
-                        "<li class='list-group-item'><b>Descrição: </b>Esse tipo de condominio, as casa não tem quadra e lote, apenas o numero que a identifica.</li>"+
-                        "<li class='list-group-item'><input type='checkbox' id='checkcn' /></li>"+
-                    "</ul>"+
-                "</div>"+
-            "</div>"+
+//            "<div class='panel panel-default'>"+
+//                "<div class='panel-heading text-center' style='background-color:#1C1C1C; color:white'>Casa numerada</div>"+
+//                "<div class='panel-body'>"+
+//                    "<ul class='list-group'>"+
+//                        "<li class='list-group-item'><b>Descrição: </b>Esse tipo de condominio, as casa não tem quadra e lote, apenas o numero que a identifica.</li>"+
+//                        "<li class='list-group-item'><input type='checkbox' id='checkcn' /></li>"+
+//                    "</ul>"+
+//                "</div>"+
+//            "</div>"+
+            
+            
+            "<article class='col-md-12 well'>" +
+                " <h4 class='page-header text-center'>Condomínio de casas numerada<br>" +
+                    "<small>Esse tipo de condominio, as casa não tem quadra e lote, apenas o numero que a identifica.</small>" +
+                "</h4>" +
+                "<br><hr>" +
+                "<div class='text-center'>" +
+                    "<input type='checkbox' id='checkcn' />"+
+                    //"<a class='btn btn-success' href='#successModal' data-toggle='modal'><i class='glyphicon glyphicon-eye-open'></i> Start Quiz</a>" +
+                "</div>" +
+            "</article>"+
+            
 
             "<div class='panel panel-default '>"+
                 "<div class='panel-heading text-center'style='background-color:#DC143C; color: white'>Casa com rua nomeada com quadra e lote</div>"+

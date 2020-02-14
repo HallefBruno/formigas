@@ -58,7 +58,6 @@ public class ResidentService {
             pais.setId(Long.valueOf(row[5].toString()));
             pais.setNome(row[6].toString());
             cidade.setEstado(estado);
-            estado.setPais(pais);
             cidades.add(cidade);
         }
         return cidades;
@@ -86,7 +85,6 @@ public class ResidentService {
             pais.setId(Long.valueOf(row[7].toString()));
             pais.setNome(row[8].toString());
             cidade.setEstado(estado);
-            estado.setPais(pais);
             bairro.setCidade(cidade);
             bairros.add(bairro);
         }

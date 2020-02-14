@@ -10,6 +10,7 @@ var celula1;
 
 
 $(document).ready(function () {
+    event.preventDefault();
     telefones = [];
     $("#modaltelefoneResident").on('hidden.bs.modal', function () {
         verTodos();
@@ -42,7 +43,7 @@ function addNewPhone(idTabela) {
             celula1 = linha.insertCell(1);
             telefones.push(number);
             celula0.innerHTML = document.getElementById("lista_telefone").value;
-            celula1.innerHTML = "<button class='btn btn-danger' onclick='removeLinha(this)'><span class='glyphicon glyphicon-trash' ></span></button>";
+            celula1.innerHTML = "<button class='btn btn-danger btn-sm' onclick='removeLinha(this)'><span class='glyphicon glyphicon-trash' ></span></button>";
             celula1.style = "text-align: center;";
         } else {
             $(".tel-adicionado").prop('style','display: block;').fadeOut(3000);
@@ -70,7 +71,7 @@ function refreshTable(idTable) {
         celula0 = linha.insertCell(0);
         celula1 = linha.insertCell(1);
         celula0.innerHTML = telefones[i];
-        celula1.innerHTML = "<button class='btn btn-danger' onclick='removeLinha(this)'><span class='glyphicon glyphicon-trash' ></span></button>";
+        celula1.innerHTML = "<button class='btn btn-danger btn-sm' onclick='removeLinha(this)'><span class='glyphicon glyphicon-trash' ></span></button>";
         celula1.style = "text-align: center;";
     }
 }
