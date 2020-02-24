@@ -125,6 +125,100 @@ Formiga.LoadGif = (function () {
     
 }());
 
+Formiga.AssembleDataTable = (function () {
+    
+    function AssembleDataTable() {
+        
+    }
+    
+    /**
+     * @param {String} messageIsEmpty
+     * @param {JSON} jsonData
+     * @param {Boolean} action -> edit && delete
+     * @returns {void}
+     */
+    AssembleDataTable.prototype.enable = function (messageIsEmpty,jsonData,action) {
+        assembleDataTable(messageIsEmpty,jsonData,action);
+    };
+    
+    /**
+     * @param {String} messageIsEmpty
+     * @param {JSON} jsonData
+     * @param {Boolean} action -> edit && delete
+     * @returns {undefined}
+     */
+    function assembleDataTable(messageIsEmpty, jsonData, action) {
+        var table = $("table");
+        table.find("tr").remove();
+        var body;
+        var cabecalho = "<tr>";
+
+        if(jsonData !== null && jsonData.length > 0) {
+            var keyColumnName = Object.keys(jsonData[0]);
+            for(var i in keyColumnName) {
+                cabecalho+="<th class='' style=''>"+keyColumnName[i].toUpperCase()+"</th>";
+            };
+            
+            if(action) {
+                cabecalho+="<th class='text-center' style='width: 100px;'>Ação</th>";
+            }
+            
+        } else {
+            cabecalho+="<th class=''>formiga</th>";
+        }
+
+        cabecalho+="</tr>";
+
+        var listaVazia = "<tr class='lista-vazia'>" +
+                            "<td colspan='7' style='color:green'>" +
+                            "<b>"+messageIsEmpty+"</b>" +
+                            "</td>" +
+                         "</tr>";
+
+        table.find("thead").append(cabecalho);
+
+        if (typeof jsonData === "undefined" || jsonData.length === 0) {
+            table.find("tbody").append(listaVazia);
+        }
+        
+        var array = [];
+        
+        jsonData.forEach(obj => {
+            
+            body += "<tr style='background-color: white'>";
+
+            Object.entries(obj).forEach(([key, value]) => {
+               
+                body+="<td class='' >" + value + "</td>";
+
+                array.push("data-"+key+"='"+value+"'");
+                
+            });
+
+            body+=  "<td class='text-center'>"+
+                        "<a class='btn btn-link btn-xs' id='btn-edit' style='width:30px;' onclick='openWindowEstado();' "+array.join(" ")+" title='Editar'> "+
+                            "<i class='glyphicon glyphicon-pencil'></i>"+
+                        "</a>"+
+                        "<a class='btn btn-link btn-xs' title='Excluir'>"+
+                            "<i class='glyphicon glyphicon-remove'></i>"+
+                        "</a>"+
+                    "</td>";
+            
+            body+="</tr>";
+            
+            array = [];
+            
+        });
+        
+        table.find("tbody").append(body);
+
+    }
+    
+    return AssembleDataTable;
+
+    
+}());
+
 $(function () {
     
     var security = new Formiga.Security();

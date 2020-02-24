@@ -3,7 +3,7 @@
 <html>
 
     <head>
-        <title>Estado search</title>
+        <title>Search State</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet">
@@ -42,9 +42,9 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th class="text-center">Id</th>
-                                <th class="text-center">UF</th>
-                                <th class="text-left">Nome</th>
+                                <th class="">ID</th>
+                                <th class="">UF</th>
+                                <th class="">NOME</th>
                                 <th class="text-center" style="width: 100px;">Ação</th>
                             </tr>
                         </thead>
@@ -52,8 +52,8 @@
                         <tbody>
                             <tr th:each="estado : ${lista}" style="background-color: white">
                                 
-                                <td class="text-center" th:text="${estado.id}"></td>
-                                <td class="text-center" th:text="${estado.uf}"></td>
+                                <td class="" th:text="${estado.id}"></td>
+                                <td class="" th:text="${estado.uf}"></td>
                                 <td th:text="${estado.nome}" ></td>
                                 
                                 <td class="text-center">
@@ -86,6 +86,7 @@
         <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
         <script th:src="@{/flyer-js/formiga.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/estadocidadebairro/estado.edit.js}" type="text/javascript"></script>
-
+        <script th:src="@{/flyer-js/estadocidadebairro/estado.search.js}" type="text/javascript"></script>
+        
     </body>
 </html>

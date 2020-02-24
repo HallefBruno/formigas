@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("estado")
@@ -37,7 +39,7 @@ public class EstadoController {
     @RequestMapping("page/search")
     public ModelAndView pageSearch() {
         ModelAndView mv = new ModelAndView("estadobairrocidade/EstadoSearch");
-        mv.addObject("lista", estadoRepository.findAll());
+        mv.addObject("lista", estadoRepository.findAllByOrderByIdAsc());
         return mv;
     }
 
@@ -67,6 +69,11 @@ public class EstadoController {
     @GetMapping("list")
     public List<Estado> getAll() {
         return estadoRepository.findAllByOrderByIdAsc();
+    }
+    
+    @GetMapping("search")
+    public List<Estado> getListEstado(@RequestParam(required = false, defaultValue = "", name = "param") String param) {
+        return estadoRepository.findByNomeContainingIgnoreCase(param);
     }
 
 }

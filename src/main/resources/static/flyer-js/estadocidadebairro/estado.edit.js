@@ -1,4 +1,4 @@
-/* global Swal */
+/* global Swal, Formiga, comboUF */
 
 var btnEdit;
 var context;
@@ -10,7 +10,7 @@ $(function () {
     
     vis(function () {
         
-        document.title = vis() ? 'Visible' : 'Not visible';
+        document.title = vis() ? 'Search State' : 'Registration State';
         
         if (vis()) {
             
@@ -25,22 +25,19 @@ $(function () {
                 dataType: "json",
                 url: $("#context-app").val() + "estado/list",
                 statusCode: {
-
                     200: function (data, textStatus, jqXHR) {
-                        table(data);
+                        var datatb = new Formiga.AssembleDataTable();
+                        datatb.enable("Nenhum registro encontrado", data,true);
                     },
                     500: function (jqXHR, textStatus, errorThrown) {
                         Swal.fire('Atenção!', jqXHR.responseText, 'error');
                     }
-
                 }
             });
         }
         
     });
-    
 
-    
 });
 
 
@@ -70,53 +67,5 @@ function openWindowEstado() {
     sessionStorage.setItem("id",es.data("id"));
     sessionStorage.setItem("uf",es.data("uf"));
     sessionStorage.setItem("nome",es.data("nome"));
-
     window.open(context.val()+"estado");
-}
-
-function table(data) {
-    
-    var table = $('table');
-    table.find("tr").remove();
-    var body;
-    
-    var cabecalho = "<tr>"+
-                        "<th class='text-center'>Id</th>"+
-                        "<th class='text-center'>UF</th>"+
-                        "<th class='text-left'>Nome</th>"+
-                        "<th class='text-center' style='width: 100px;'>Ação</th>"+
-                    "</tr>";
-            
-    var listaVazia = "<tr class='lista-vazia'>"+
-                        "<td colspan='7' style='color:green'>"+
-                            "<b>Nenhum estado encontrado</b>"+
-                        "</td>"+
-                    "</tr>";
-    
-    table.find("thead").append(cabecalho);
-    
-    if(typeof data === 'undefined' && data.length === 0) {
-        table.find("tbody").append(listaVazia);
-    }
-    
-    $.each(data, function (index, estado) {
-        body += "<tr style='background-color: white'>"+
-
-                    "<td class='text-center' >"+estado.id+"</td>"+
-                    "<td class='text-center' >"+estado.uf+"</td>"+
-                    "<td>"+estado.nome+"</td>"+
-
-                    "<td class='text-center'>"+
-                        "<a class='btn btn-link btn-xs' id='btn-edit' onclick='openWindowEstado();' data-id='"+estado.id+"' data-uf='"+estado.uf+"' data-nome='"+estado.nome+"' title='Editar'> "+
-                            "<i class='glyphicon glyphicon-pencil'></i>"+
-                        "</a>"+
-                        "<a class='btn btn-link btn-xs' title='Excluir'>"+
-                            "<i class='glyphicon glyphicon-remove'></i>"+
-                        "</a>"+
-                    "</td>"+
-
-                "</tr>";
-    });
-    
-    table.find("tbody").append(body);
 }
