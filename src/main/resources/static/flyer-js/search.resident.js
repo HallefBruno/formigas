@@ -58,7 +58,7 @@ $(document).ready(function () {
             var url_photo;
             var qtdSpaces = 0;
             
-            if(name_photo_original !== "Searching…") {
+            if(name_photo_original !== "Searching…" || name_photo_original !== "Buscando…") {
                 
                 for(var i=0; i<name_photo_original.length; i++) {
                     

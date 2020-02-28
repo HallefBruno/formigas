@@ -5,6 +5,8 @@ var context;
 
 $(function () {
     
+    event.preventDefault();
+    
     context = $("#context-app");
     btnEdit = $("#btn-edit");
     
@@ -18,22 +20,43 @@ $(function () {
             sessionStorage.removeItem("uf");
             sessionStorage.removeItem("nome");
             
-            $.ajax({
+            if($("input[name='nome']").val()) {
 
-                type: "GET",
-                contentType: "application/json",
-                dataType: "json",
-                url: $("#context-app").val() + "estado/list",
-                statusCode: {
-                    200: function (data, textStatus, jqXHR) {
+                $.ajax({
+
+                    url: $("#context-app").val() + "estado/search?param=" + $("input[name='nome']").val(),
+                    dataType: "json",
+                    type: "GET",
+                    contentType: "application/json",
+
+                    success: function (data, textStatus, jqXHR) {
                         var datatb = new Formiga.AssembleDataTable();
-                        datatb.enable("Nenhum registro encontrado", data,true);
-                    },
-                    500: function (jqXHR, textStatus, errorThrown) {
-                        Swal.fire('Atenção!', jqXHR.responseText, 'error');
+                        datatb.enable("Nenhum registro encontrado", data, true);
                     }
-                }
-            });
+            
+                });
+                
+            } else {
+            
+                $.ajax({
+
+                    type: "GET",
+                    contentType: "application/json",
+                    dataType: "json",
+                    url: $("#context-app").val() + "estado/list",
+                    statusCode: {
+                        200: function (data, textStatus, jqXHR) {
+                            var datatb = new Formiga.AssembleDataTable();
+                            datatb.enable("Nenhum registro encontrado", data,true);
+                        },
+                        500: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire('Atenção!', jqXHR.responseText, 'error');
+                        }
+                    }
+                });
+                
+            }
+            
         }
         
     });

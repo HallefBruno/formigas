@@ -1,91 +1,100 @@
 <!DOCTYPE html>
 
 <html>
+
     <head>
-        <title>Registration State</title>
+        <title>Registration City</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}" rel="stylesheet">
         <link th:href="@{/stylesheet/select2.min.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/stylesheet/select2-bootstrap.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet">
         <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+
     </head>
 
     <body>
-        
+
         <div class="container">
 
             <div th:replace="NavBar :: navbar"></div>
 
-            <div class="jumbotron " >
+            <div class="jumbotron">
 
-                <div class="container-fluid">
+                <div class="container">
+                    
                     <div class="col-sm-6 col-sm-offset-4" >
-                        
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-8" >
+                                
                                 <div style="display: none;" class="msg-success"></div>
                                 <div style="display: none;" class="msg-warning"></div>
                             </div>
                         </div>
-
-                        <p>Registration State</p>
+                        
+                        <p>Registration City</p>
 
                         <form>
 
                             <div class="row">
                                 <div class="col-sm-8" >
-                                    <div class="uf form-group has-feedback">
-                                        <label class="control-label" for="uf">UF</label>
 
+                                    <div class="uf form-group has-feedback">
+                                        <label class="control-label" for="uf">Estado</label>
                                         <div id="divUf">
                                             <select class="form-control" id="uf" name="uf" data-live-search="true">
                                             </select>
                                         </div>
-
                                     </div>
+
                                     <div class="nome form-group has-feedback">
                                         <label class="control-label" for="nome">Nome</label> 
-                                        <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome do estado" autocomplete="">
+                                        <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da cidade" autocomplete="">
                                         <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
                                     </div>
+
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-8">
+
+                                <div class="col-sm-8" style="margin-top: 10px;">
                                     
                                     <div style="display: flex;">
-
                                         <button type="button" class="btn btn-primary btn-save">
                                             <span class="glyphicon glyphicon-floppy-saved"></span> Salvar
                                         </button>
-                                        
-                                        
+
                                         <div style="margin: 0 0 0 5px;">
                                             <button type="reset" class="btn btn-warning" onclick="clearForRegisterNew();">
                                                 <span class="glyphicon glyphicon-refresh"></span> Limpar
                                             </button>
                                         </div>
-                                        
+
                                         <div style="margin: 0 0 0 5px;">
-                                            <a type="button" class="btn btn-default" th:href="@{estado/page/search}">
+                                            <a th:href="@{/city/page/search}" type="button" class="btn btn-default btn-page-search">
                                                 <span class="glyphicon glyphicon-search"></span> Search
                                             </a>
                                         </div>
-                                        
+
                                     </div>
-                                    
+
                                 </div>
+
                             </div>
 
                         </form>
+
                     </div>
+
                     <div id="divLoading"></div>
                 </div>
+
             </div>
+
         </div>
+
 
         <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
@@ -93,8 +102,6 @@
         <script th:src="@{/vendor-js/select2.full.min.js}" type="text/javascript"></script>
         <script th:src="@{/vendor-js/pt-BR.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/formiga.js}" type="text/javascript"></script>
-        <script th:src="@{/flyer-js/estadocidadebairro/estado.save.js}" type="text/javascript"></script>
-
+        <script th:src="@{/flyer-js/estadocidadebairro/city.save.js}" type="text/javascript"></script>
     </body>
-
 </html>

@@ -53,7 +53,7 @@ public class FlyerService {
                 Optional<StatusFlyer> existStausFlyerIdFlyer = statusFlyerRepository.findByFlyerId(flyer.getId());
                 if (!existStausFlyerIdFlyer.isPresent()) {
                     statusFlyer.setFlyer(flyer);
-                    statusFlyer.setStatus(Status.ONLINE);
+                    statusFlyer.setStatus(Status.OFFLINE);
                     statusFlyerRepository.save(statusFlyer);
                 }
             }
@@ -86,7 +86,7 @@ public class FlyerService {
                         Optional<StatusFlyer> exist = statusFlyerRepository.findByFlyerId(flyer.getId());
                         if(!exist.isPresent()) {
                             statusFlyer.setFlyer(flyer);
-                            statusFlyer.setStatus(Status.ONLINE);
+                            statusFlyer.setStatus(Status.OFFLINE);
                             statusFlyerRepository.save(statusFlyer);
                         }
                     } else if(!flyer.getCodFlyer().equalsIgnoreCase(folheto.getCodFlyer())) {
@@ -98,7 +98,7 @@ public class FlyerService {
                             Optional<StatusFlyer> exist = statusFlyerRepository.findByFlyerId(flyer.getId());
                             if(!exist.isPresent()) {
                                 statusFlyer.setFlyer(flyer);
-                                statusFlyer.setStatus(Status.ONLINE);
+                                statusFlyer.setStatus(Status.OFFLINE);
                                 statusFlyerRepository.save(statusFlyer);
                             }
                             

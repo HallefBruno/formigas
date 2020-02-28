@@ -13,9 +13,7 @@ public class DefaultAutoCompleteSelect2DTO {
         this.id = id;
         this.text = text;
     }
-    
-    
-    
+
     public String getId() {
         return id;
     }

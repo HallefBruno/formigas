@@ -5,7 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
       
-    <nav class="navbar navbar-default navbar-top " th:fragment="navbar">
+    <nav class="navbar navbar-default navbar-top " th:fragment="navbar"> <!-- navbar navbar-default navbar-fixed-top -->
         
         <input type="hidden" name="usuarioNome" th:value="${#authentication.principal.usuario.nome}" />
         <input type="hidden" name="ativoUsuario" th:value="${#authentication.principal.usuario.ativo}" />
@@ -17,7 +17,7 @@
         <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
 
         
-        <div class="container-fluid">
+        <!--<div class="container-fluid">-->
             
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -62,10 +62,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li class="dropdown-header">opções</li>
-
-                            <li role="separator" class="divider"></li> 
-
+                            
                             <li class="dropdown-submenu">
                                 <a tabindex="-1" href="#">Flyer</a>
                                 <ul class="dropdown-menu">
@@ -117,10 +114,10 @@
                                     <li class="dropdown-submenu">
                                         <a tabindex="-1" href="#">Cidade</a>
                                         <ul class="dropdown-menu">
-                                            <li sec:authorize="hasAnyAuthority('CADASTRAR')"><a th:href="@{/cidade}">Cidade New</a>
+                                            <li sec:authorize="hasAnyAuthority('CADASTRAR')"><a th:href="@{/city}">Cidade New</a>
                                                 <li role="separator" class="divider"></li>
                                             </li>
-                                            <li><a th:href="@{/user/page/search}">Cidade Search</a></li>
+                                            <li><a th:href="@{/city/page/search}">Cidade Search</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
@@ -148,13 +145,6 @@
                     .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
                     .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
                     .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-
-/*                    ul li:hover{
-                        cursor:pointer;
-                        background-color:#c83025;
-                        color:white;
-                    }*/
-                    
                 </style>
                 
                 <form style="display: none" class="navbar-form navbar-right">
@@ -165,7 +155,7 @@
                 </form>
                 
             </div>
-        </div>
+        <!--</div>-->
     </nav>
     
 </html>

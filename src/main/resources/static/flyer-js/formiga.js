@@ -25,17 +25,25 @@ Formiga.InitMessage = (function() {
 
     function tipoMessageMostrar() {
         $(document).ajaxComplete(function (event, jqxhr, settings) {
-            if(jqxhr.status === 200) {
-                this.conponentMsgWarning.attr("style","display:none;");
-                this.componentMsgSuccess.html("");
-                this.componentMsgSuccess.attr("style","display:block;");
-                this.componentMsgSuccess.html("<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button> Registro salvo com sucesso </div>");
-            } else {
-                this.componentMsgSuccess.attr("style","display:none;");
-                this.conponentMsgWarning.attr("style","display:block;");
-                this.conponentMsgWarning.html("");
-                this.conponentMsgWarning.html("<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='msg-text-warning'>  "+jqxhr.responseText+"</span>"+"</div>");
+            
+            var arrayUrls = [];
+            arrayUrls.push("/formiga/city/list/estado");
+            
+            if((arrayUrls.indexOf(settings.url) === -1) && (!settings.url.includes("term"))) {
+            
+                if(jqxhr.status === 200) {
+                    this.conponentMsgWarning.attr("style","display:none;");
+                    this.componentMsgSuccess.html("");
+                    this.componentMsgSuccess.attr("style","display:block;");
+                    this.componentMsgSuccess.html("<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button> Registro salvo com sucesso </div>");
+                } else {
+                    this.componentMsgSuccess.attr("style","display:none;");
+                    this.conponentMsgWarning.attr("style","display:block;");
+                    this.conponentMsgWarning.html("");
+                    this.conponentMsgWarning.html("<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='msg-text-warning'>  "+jqxhr.responseText+"</span>"+"</div>");
+                }
             }
+            
         }.bind(this));
     }
     
@@ -56,7 +64,7 @@ Formiga.Usuario = (function() {
         
         this.navUsuario.html("");
         
-        this.navUsuario.html("<label class='label label-primary' >"+this.nome.val()+" </span>"+"</label>");//+"   "+" <span style='color:black;' class='glyphicon glyphicon-user pull-right'>
+        this.navUsuario.html("<label class='label' style='background-color: #705a91;'>"+this.nome.val()+" </span>"+"</label>");//+"   "+" <span style='color:black;' class='glyphicon glyphicon-user pull-right'>
 
         if(this.ativo.val() === "true") {
             this.navAtivo.html("<label class='label label-success '>Ativo</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
@@ -111,13 +119,30 @@ Formiga.LoadGif = (function () {
     
     function LoadGif() {}
     
-    LoadGif.prototype.enable = function () {
+    LoadGif.prototype.enable = function (event, jqxhr, settings) {
+        
+        
+        
+        var arrayUrls = [];
+        
+        arrayUrls.push($("#context-app").val()+"city/list/estado");
+
         $(document).ajaxSend(function (event, jqxhr, settings) {
-            $("#divLoading").addClass("show");
+            
+            console.log(event, jqxhr, settings);
+            
+            if((arrayUrls.indexOf(settings.url) === -1) && (!settings.url.includes("term"))) {
+                $("#divLoading").addClass("show");
+            }
+
         }.bind(this));
         
         $(document).ajaxComplete(function (event, jqxhr, settings) {
-            $("#divLoading").removeClass("show");
+
+            if((arrayUrls.indexOf(settings.url) === -1) && (!settings.url.includes("term"))) {
+                $("#divLoading").removeClass("show");
+            }
+            
         }.bind(this));
     };
     
@@ -152,9 +177,13 @@ Formiga.AssembleDataTable = (function () {
         table.find("tr").remove();
         var body;
         var cabecalho = "<tr>";
-
+        var footer;
+        var keyColumnName;
+        
         if(jsonData !== null && jsonData.length > 0) {
-            var keyColumnName = Object.keys(jsonData[0]);
+            
+            keyColumnName = Object.keys(jsonData[0]);
+            
             for(var i in keyColumnName) {
                 cabecalho+="<th class='' style=''>"+keyColumnName[i].toUpperCase()+"</th>";
             };
@@ -163,21 +192,19 @@ Formiga.AssembleDataTable = (function () {
                 cabecalho+="<th class='text-center' style='width: 100px;'>Ação</th>";
             }
             
+            footer = "<tr><th colspan='"+keyColumnName.length+1+"' >"+"Total: "+jsonData.length+"</th></tr>";
+            table.find("tfoot").append(footer);
+            
         } else {
             cabecalho+="<th class=''>formiga</th>";
         }
 
         cabecalho+="</tr>";
 
-        var listaVazia = "<tr class='lista-vazia'>" +
-                            "<td colspan='7' style='color:green'>" +
-                            "<b>"+messageIsEmpty+"</b>" +
-                            "</td>" +
-                         "</tr>";
-
         table.find("thead").append(cabecalho);
 
         if (typeof jsonData === "undefined" || jsonData.length === 0) {
+            var listaVazia = "<tr class='lista-vazia'>" +"<td colspan='5' style='color:green'>" +"<b>"+messageIsEmpty+"</b>" + "</td>" + "</tr>";
             table.find("tbody").append(listaVazia);
         }
         
@@ -211,7 +238,6 @@ Formiga.AssembleDataTable = (function () {
         });
         
         table.find("tbody").append(body);
-
     }
     
     return AssembleDataTable;

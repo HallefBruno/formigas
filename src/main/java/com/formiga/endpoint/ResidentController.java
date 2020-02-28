@@ -100,7 +100,7 @@ public class ResidentController {
             
             if(qual.equalsIgnoreCase("estado") && cod.equals("0")) {
 
-                for(Estado estado : estadoRepository.findByNomeContainingIgnoreCase(keywork)) {
+                for(Estado estado : estadoRepository.findByNomeContainsIgnoreCaseOrderByIdAsc(keywork)) {
                     defaultDTO = new DefaultAutoCompleteSelect2DTO();
                     defaultDTO.setText(estado.getNome());
                     defaultDTO.setId(estado.getId().toString());

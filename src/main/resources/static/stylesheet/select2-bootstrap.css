@@ -137,8 +137,10 @@
 }
 
 .select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
-  background-color: #337ab7;
-  color: #fff;
+    background-color: black;
+    color: #fff;
+/*  background-color: #337ab7;
+  color: #fff;*/
 }
 
 .select2-container--bootstrap .select2-results__option .select2-results__option {

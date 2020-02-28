@@ -5,18 +5,19 @@ var EstadoSearch = EstadoSearch || {};
 EstadoSearch.Pesquisar = (function () {
 
     function Pesquisar() {
+        
         this.parametro = $("input[name='nome']");
         this.btnSearch = $(".search");
+        this.form = $("form");
     }
 
     Pesquisar.prototype.enable = function () {
+        this.form.on('submit', function(event) { event.preventDefault(); });
         this.btnSearch.on("click", search.bind(this));
     };
     
     function search() {
-        
-        console.log(this.parametro.val());
-        
+
         $.ajax({
             
             url: $("#context-app").val()+"estado/search?param="+this.parametro.val(),

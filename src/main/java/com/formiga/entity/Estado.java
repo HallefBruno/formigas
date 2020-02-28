@@ -22,7 +22,7 @@ public class Estado implements Serializable {
     private String uf;
     
     @Column(unique = true)
-    @Size(max = 15, message = "O tamanho da descrição deve estar entre 5 e 15", min = 5)
+    @Size(max = 15, message = "O tamanho da descrição deve estar entre 5 e 15", min = 4)
     private String nome;
     
     public Long getId() {
