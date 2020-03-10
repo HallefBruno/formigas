@@ -68,5 +68,10 @@ public class CityController {
     public List<DefaultAutoCompleteSelect2DTO> listEstado(@RequestParam(defaultValue = "", required = false, name = "term") String term) {
         return estadoService.listEstadoSelect2(term);
     }
+    
+    @GetMapping("list/city")
+    public List<Cidade> listCity(@RequestParam(defaultValue = "", required = false, name = "param") String param) {
+        return cidadeRepository.getListCityParam(param);
+    }
 
 }

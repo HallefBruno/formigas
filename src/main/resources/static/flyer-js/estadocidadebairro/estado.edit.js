@@ -10,11 +10,11 @@ $(function () {
     context = $("#context-app");
     btnEdit = $("#btn-edit");
     
-    vis(function () {
+    eventAbaVisible(function () {
         
-        document.title = vis() ? 'Search State' : 'Registration State';
+        document.title = eventAbaVisible() ? 'Search State' : 'Registration State';
         
-        if (vis()) {
+        if (eventAbaVisible()) {
             
             sessionStorage.removeItem("id");
             sessionStorage.removeItem("uf");
@@ -62,27 +62,6 @@ $(function () {
     });
 
 });
-
-
-var vis = (function () {
-    var stateKey, eventKey, keys = {
-        hidden: "visibilitychange",
-        webkitHidden: "webkitvisibilitychange",
-        mozHidden: "mozvisibilitychange",
-        msHidden: "msvisibilitychange"
-    };
-    for (stateKey in keys) {
-        if (stateKey in document) {
-            eventKey = keys[stateKey];
-            break;
-        }
-    }
-    return function (c) {
-        if (c)
-            document.addEventListener(eventKey, c);
-        return !document[stateKey];
-    };
-})();
 
 function openWindowEstado() {
    

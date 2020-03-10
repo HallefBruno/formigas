@@ -231,10 +231,10 @@ function searching_flyer() {
 
 function table(data) {
     
-    var table = $('table').find('tbody');
+    var table = $('table');
     
-    $('table tr').remove();
-    table.append("<tr>"+
+    table.find("tr").remove();
+    table.find("thead").append("<tr>"+
                     "<th>Id</th>"+
                     "<th>Condominio</th>"+
                     "<th class='text-center'>Portaria</th>"+

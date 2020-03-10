@@ -86,6 +86,9 @@ function save() {
                 
                 200: function (data, textStatus, jqXHR) {
                     idEstado = data.id;
+                    sessionStorage.removeItem("id");
+                    sessionStorage.removeItem("uf");
+                    sessionStorage.removeItem("nome");
                 },
                 500: function (jqXHR, textStatus, errorThrown) {
                     Swal.fire('Atenção!', jqXHR.responseText, 'error');
@@ -113,6 +116,8 @@ function updateEstado() {
         nome:nome
     };
     if(estado.id && estado.uf && estado.nome) {
+        
+        $(".btn-search").css("display","none");
 
         $comboUF.select2({
             initSelection : function (element, callback) {

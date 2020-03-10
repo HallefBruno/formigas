@@ -6,6 +6,26 @@ function remove_class_swal2() {
     $('.swal2-icon-content').remove();
 }
 
+var eventAbaVisible = (function () {
+    var stateKey, eventKey, keys = {
+        hidden: "visibilitychange",
+        webkitHidden: "webkitvisibilitychange",
+        mozHidden: "mozvisibilitychange",
+        msHidden: "msvisibilitychange"
+    };
+    for (stateKey in keys) {
+        if (stateKey in document) {
+            eventKey = keys[stateKey];
+            break;
+        }
+    }
+    return function (c) {
+        if (c)
+            document.addEventListener(eventKey, c);
+        return !document[stateKey];
+    };
+})();
+
 Formiga.InitMessage = (function() {
     
     function InitMessage() {
@@ -35,12 +55,12 @@ Formiga.InitMessage = (function() {
                     this.conponentMsgWarning.attr("style","display:none;");
                     this.componentMsgSuccess.html("");
                     this.componentMsgSuccess.attr("style","display:block;");
-                    this.componentMsgSuccess.html("<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span>"+ "</button> Registro salvo com sucesso </div>");
+                    this.componentMsgSuccess.html("<div class='alert-dismissible alert alert-success' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>"+"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"+ "<span aria-hidden='true'>&times;</span></button><span class='msg-text-info'> Registro salvo com sucesso </span> </div>");
                 } else {
                     this.componentMsgSuccess.attr("style","display:none;");
                     this.conponentMsgWarning.attr("style","display:block;");
                     this.conponentMsgWarning.html("");
-                    this.conponentMsgWarning.html("<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+"<span class='msg-text-warning'>  "+jqxhr.responseText+"</span>"+"</div>");
+                    this.conponentMsgWarning.html("<div class='alert-dismissible alert alert-danger' role='alert'>"+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>"+"</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><span class='msg-text-warning'>  "+jqxhr.responseText+" </span> </div>");
                 }
             }
             
@@ -62,9 +82,9 @@ Formiga.Usuario = (function() {
     
     Usuario.prototype.enable = function() {
         
-        this.navUsuario.html("");
+        //this.navUsuario.html("");
         
-        this.navUsuario.html("<label class='label' style='background-color: #705a91;'>"+this.nome.val()+" </span>"+"</label>");//+"   "+" <span style='color:black;' class='glyphicon glyphicon-user pull-right'>
+        //this.navUsuario.html("<label class='label' style='background-color: #705a91;'>"+this.nome.val()+" </span>"+"</label>");//+"   "+" <span style='color:black;' class='glyphicon glyphicon-user pull-right'>
 
         if(this.ativo.val() === "true") {
             this.navAtivo.html("<label class='label label-success '>Ativo</label>"+" <span class='glyphicon glyphicon-signal pull-right' > </span>");
@@ -120,16 +140,14 @@ Formiga.LoadGif = (function () {
     function LoadGif() {}
     
     LoadGif.prototype.enable = function (event, jqxhr, settings) {
-        
-        
-        
+
         var arrayUrls = [];
         
         arrayUrls.push($("#context-app").val()+"city/list/estado");
 
         $(document).ajaxSend(function (event, jqxhr, settings) {
             
-            console.log(event, jqxhr, settings);
+            //console.log(event, jqxhr, settings);
             
             if((arrayUrls.indexOf(settings.url) === -1) && (!settings.url.includes("term"))) {
                 $("#divLoading").addClass("show");
@@ -173,6 +191,7 @@ Formiga.AssembleDataTable = (function () {
      * @returns {undefined}
      */
     function assembleDataTable(messageIsEmpty, jsonData, action) {
+
         var table = $("table");
         table.find("tr").remove();
         var body;

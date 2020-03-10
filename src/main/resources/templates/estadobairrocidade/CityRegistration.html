@@ -11,7 +11,14 @@
         <link th:href="@{/stylesheet/select2-bootstrap.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet">
         <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
-
+        <style>
+            .msg-text-warning {
+                font-size: 10px;
+            }
+            .msg-text-info {
+                font-size: 11px;
+            }
+        </style>
     </head>
 
     <body>
@@ -23,16 +30,16 @@
             <div class="jumbotron">
 
                 <div class="container">
-                    
-                    <div class="col-sm-6 col-sm-offset-4" >
+
+                    <div class="col-sm-5 col-sm-offset-4" >
                         <div class="row">
                             <div class="col-sm-8" >
-                                
+
                                 <div style="display: none;" class="msg-success"></div>
                                 <div style="display: none;" class="msg-warning"></div>
                             </div>
                         </div>
-                        
+
                         <p>Registration City</p>
 
                         <form>
@@ -40,17 +47,31 @@
                             <div class="row">
                                 <div class="col-sm-8" >
 
-                                    <div class="uf form-group has-feedback">
+                                    <div class="uf form-group">
+
                                         <label class="control-label" for="uf">Estado</label>
-                                        <div id="divUf">
-                                            <select class="form-control" id="uf" name="uf" data-live-search="true">
-                                            </select>
+
+                                        <div style="display: flex;">
+
+                                            <div id="divUf">
+                                                <select style="width: 200px;" class="form-control" id="uf" name="uf" data-live-search="true">
+                                                </select>
+                                            </div>
+
+                                            <div id="div-btn-mark" style="margin: 0 0 0 5px;">
+                                                
+                                                <button type="button" title="Estado marcado" class="new-button btnmark">
+                                                    <span class="glyphicon glyphicon-bookmark"></span>
+                                                </button>
+
+                                            </div>
+
                                         </div>
                                     </div>
 
                                     <div class="nome form-group has-feedback">
                                         <label class="control-label" for="nome">Nome</label> 
-                                        <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da cidade" autocomplete="">
+                                        <input onclick="this.select()" type="text" class="form-control" name="nome" id="nome" placeholder="Nome da cidade" autocomplete>
                                         <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
                                     </div>
 
@@ -60,15 +81,15 @@
                             <div class="row">
 
                                 <div class="col-sm-8" style="margin-top: 10px;">
-                                    
+
                                     <div style="display: flex;">
                                         <button type="button" class="btn btn-primary btn-save">
-                                            <span class="glyphicon glyphicon-floppy-saved"></span> Salvar
+                                            <span class="glyphicon glyphicon-floppy-saved"></span> Save
                                         </button>
 
                                         <div style="margin: 0 0 0 5px;">
-                                            <button type="reset" class="btn btn-warning" onclick="clearForRegisterNew();">
-                                                <span class="glyphicon glyphicon-refresh"></span> Limpar
+                                            <button type="reset" class="btn btn-warning btn-new" >
+                                                <span class="glyphicon glyphicon-refresh"></span> New
                                             </button>
                                         </div>
 
@@ -77,7 +98,6 @@
                                                 <span class="glyphicon glyphicon-search"></span> Search
                                             </a>
                                         </div>
-
                                     </div>
 
                                 </div>
@@ -103,5 +123,6 @@
         <script th:src="@{/vendor-js/pt-BR.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/formiga.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/estadocidadebairro/city.save.js}" type="text/javascript"></script>
+        <!--<script th:src="@{/flyer-js/estadocidadebairro/city.salvar.js}" type="text/javascript"></script>-->
     </body>
 </html>

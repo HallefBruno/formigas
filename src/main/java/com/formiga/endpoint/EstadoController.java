@@ -44,8 +44,7 @@ public class EstadoController {
 
     @PostMapping("save")
     public ResponseEntity<?> save(@RequestBody @Valid Estado estado, BindingResult result) {
-        
-        
+
         if (result.hasErrors()) {
             List<String> msgErrosFields = new LinkedList<>();
             result.getAllErrors().forEach((t) -> {

@@ -24,9 +24,7 @@ public interface ICidadeRepository extends JpaRepository<Cidade, Long> {
     
     @Query("FROM Cidade cid INNER JOIN  cid.estado ORDER BY cid.id")
     List<Cidade> getListCity();
-
+    
+    @Query("FROM Cidade cidade INNER JOIN cidade.estado WHERE LOWER(cidade.nome) LIKE LOWER(concat('%',?1,'%')) ORDER BY cidade.id ")
+    List<Cidade> getListCityParam(@Param(value = "param") String param);
 }
-
-//@Query(value = "FROM Cidade cid INNER JOIN cid.estado WHERE cid.estado.id = :idEstado AND lower(cid.nome) like %:city%")// LOWER(cid.nome) LIKE LOWER(%:city%)
-//List<Cidade> getListCity(@Param("idEstado") Long idEstado, @Param("city") String city);
-//List<User> findByNameContainingIgnoreCase(String name);

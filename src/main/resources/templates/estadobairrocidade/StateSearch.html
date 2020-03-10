@@ -17,19 +17,26 @@
             <div th:replace="NavBar :: navbar"></div>
 
             <div class="jumbotron " >
-
+                <p>State Search</p>
                 <form>
                     <div class="row">
 
-                        <div class="col-sm-5  form-group">
+                        <div class="col-sm-6  form-group">
 
                             <div style="display: flex;">
                                 <input type="text" class="form-control" placeholder="nome..." name="nome" id="nome" >
                                 <div style="margin: 0 0 0 5px;">
                                     <button type="button" class="btn btn-primary search" >
-                                        <span class="glyphicon glyphicon-search"></span> Search
+                                        <span class="glyphicon glyphicon-search"></span>
                                     </button>
                                 </div>
+                                
+                                <div style="margin: 0 0 0 5px;">
+                                    <a type="button" th:href="@{/estado}" class="btn btn-default" >
+                                        <span class="glyphicon glyphicon-plus-sign"></span> New
+                                    </a>
+                                </div>
+                                
                             </div>
                         </div>
 
@@ -37,7 +44,7 @@
                 </form>
                 
                 
-                <div style="padding-top: 20px;" class="table-responsive">
+                <div id="teste" style="padding-top: 20px;" class="table-responsive">
 
                     <table class="table table-bordered">
                         <thead>
@@ -92,6 +99,7 @@
 
         <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+        <script th:src="@{/vendor-js/jquery.blockUI.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/formiga.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/estadocidadebairro/estado.edit.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/estadocidadebairro/estado.search.js}" type="text/javascript"></script>
