@@ -45,11 +45,8 @@ Formiga.InitMessage = (function() {
 
     function tipoMessageMostrar() {
         $(document).ajaxComplete(function (event, jqxhr, settings) {
-            
-            var arrayUrls = [];
-            arrayUrls.push("/formiga/city/list/estado");
-            
-            if((arrayUrls.indexOf(settings.url) === -1) && (!settings.url.includes("term"))) {
+
+            if((!settings.url.includes("term")) && (!settings.processResults)) {
             
                 if(jqxhr.status === 200) {
                     this.conponentMsgWarning.attr("style","display:none;");
@@ -141,15 +138,9 @@ Formiga.LoadGif = (function () {
     
     LoadGif.prototype.enable = function (event, jqxhr, settings) {
 
-        var arrayUrls = [];
-        
-        arrayUrls.push($("#context-app").val()+"city/list/estado");
-
         $(document).ajaxSend(function (event, jqxhr, settings) {
-            
-            //console.log(event, jqxhr, settings);
-            
-            if((arrayUrls.indexOf(settings.url) === -1) && (!settings.url.includes("term"))) {
+
+            if((!settings.url.includes("term")) && (!settings.processResults)) {
                 $("#divLoading").addClass("show");
             }
 
@@ -157,7 +148,7 @@ Formiga.LoadGif = (function () {
         
         $(document).ajaxComplete(function (event, jqxhr, settings) {
 
-            if((arrayUrls.indexOf(settings.url) === -1) && (!settings.url.includes("term"))) {
+            if((!settings.url.includes("term")) && (!settings.processResults)) {
                 $("#divLoading").removeClass("show");
             }
             

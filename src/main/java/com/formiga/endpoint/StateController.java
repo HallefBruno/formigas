@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("estado")
-public class EstadoController {
+public class StateController {
     
     @Autowired
     private IEstadoRepository estadoRepository;
@@ -31,13 +31,13 @@ public class EstadoController {
     
     @RequestMapping
     public ModelAndView init() {
-        ModelAndView mv = new ModelAndView("estadobairrocidade/StateRegistration");
+        ModelAndView mv = new ModelAndView("estadocidadebairro/StateRegistration");
         return mv;
     }
     
     @RequestMapping("page/search")
     public ModelAndView pageSearch() {
-        ModelAndView mv = new ModelAndView("estadobairrocidade/StateSearch");
+        ModelAndView mv = new ModelAndView("estadocidadebairro/StateSearch");
         mv.addObject("lista", estadoRepository.findAllByOrderByIdAsc());
         return mv;
     }

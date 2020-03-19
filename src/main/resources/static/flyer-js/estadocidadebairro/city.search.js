@@ -1,4 +1,4 @@
-/* global Formiga, CityEdit */
+/* global Formiga, CityEdit, Swal */
 
 var CitySearch = CitySearch || {};
 
@@ -102,9 +102,9 @@ CitySearch.Pesquisar = (function () {
         if(json !== null && json.length > 0) {
 
             $.each(json, function (index, cidade) {
-                
-                var cidadeNome = cidade.nome.replace(" ","-");
-                var estadoNome = cidade.estado.nome.replace(" ","-");
+
+                var cidadeNome = cidade.nome.split(" ").join("-");
+                var estadoNome = cidade.estado.nome.split(" ").join("-");
 
                 body+="<tr style='background-color: white'>"+
                             "<td>"+cidade.id+"</td>"+

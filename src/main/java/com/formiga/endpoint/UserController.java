@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("newuser")
-public class NovoUsuarioController {
+public class UserController {
     
     @Autowired
     private IGrupoRepository grupoRepository;

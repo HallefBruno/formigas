@@ -147,16 +147,25 @@ Cidade.Save = (function () {
     }
 
     function objectCidade() {
-
+        
+        var nomecid = "";
+        var nomees = "";
+        
+        if(sessionStorage.getItem("cidade")) {
+            nomecid = sessionStorage.getItem("cidade");
+            nomees = sessionStorage.getItem("estado");
+        }
+        
         var cidade = {
 
             id: sessionStorage.getItem("idcidade"),
-            nome: sessionStorage.getItem("cidade"),
+            nome: nomecid.split("-").join(" "),
             estado: {
                 id: sessionStorage.getItem("idestado"),
-                nome: sessionStorage.getItem("estado"),
+                nome: nomees.split("-").join(" "),
                 uf: sessionStorage.getItem("uf")
             }
+            
         };
         
         idCidade = cidade.id;

@@ -39,7 +39,7 @@ public class CityController {
     
     @RequestMapping
     public ModelAndView init() {
-        ModelAndView mv = new ModelAndView("estadobairrocidade/CityRegistration");
+        ModelAndView mv = new ModelAndView("estadocidadebairro/CityRegistration");
         return mv;
     }
 
@@ -59,7 +59,7 @@ public class CityController {
     
     @RequestMapping("page/search")
     public ModelAndView pageSearch() {
-        ModelAndView mv = new ModelAndView("estadobairrocidade/CitySearch");
+        ModelAndView mv = new ModelAndView("estadocidadebairro/CitySearch");
         mv.addObject("todas", cidadeRepository.getListCity());
         return mv;
     }
