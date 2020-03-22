@@ -28,9 +28,9 @@
                     
                     <div th:replace="flyer/UpdateFlyer :: modalUpdate"></div>
                     
-                    <div class="row">
+<!--                    <div class="row">
 
-                        <div class="feed col-sm-4 form-group" > <!--has-success has-feedback--> 
+                        <div class="feed col-sm-4 form-group" >
                             <input type="text" class="form-control" placeholder="Flyer cod..." name="codFlyer" id="codFlyer" aria-describedby="codFlyer">
                         </div>
 
@@ -41,6 +41,26 @@
                             </button>
                         </div>
 
+                    </div>-->
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div style="display: flex; margin-bottom: 15px;">
+                                <input type="text" class="form-control" placeholder="Flyer cod..." name="codFlyer" id="codFlyer" aria-describedby="codFlyer">
+
+                                <div style="margin: 0 0 0 5px;">
+                                    <button type="button" class="btn btn-primary btn-search" >
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </div>
+
+                                <div style="margin: 0 0 0 5px;">
+                                    <a th:href="@{/flyer}" type="button" class="btn btn-default btn-page-search">
+                                        <span class="glyphicon glyphicon-plus-sign"></span> New
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                 </form>

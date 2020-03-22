@@ -31,7 +31,7 @@
                     
                 <a class="navbar-brand">
                     <!--<img alt="Brand" width="26px" height="22px" th:src="@{/imagens/exemplo-bootstrap.png}">-->
-                    <p style="font-family: fantasy; font-size: 23px; color: #000">Formiga</p>
+                    <p style="font-family: fantasy; font-size: 23px; color: #663300">Formiga</p>
                 </a>
 
                 <a class="navbar-brand" th:href="@{/dashboard}" title="Dashboard" >
@@ -131,7 +131,7 @@
                                             <li sec:authorize="hasAnyAuthority('CADASTRAR')"><a th:href="@{/neighborhood}">Bairro New</a>
                                                 <li role="separator" class="divider"></li>
                                             </li>
-                                            <li><a th:href="@{/user/page/search}">Bairro Search</a></li>
+                                            <li><a th:href="@{/neighborhood/page/search}">Bairro Search</a></li>
                                         </ul>
                                     </li>
                                 </ul>

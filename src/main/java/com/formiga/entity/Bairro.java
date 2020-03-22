@@ -75,3 +75,7 @@ public class Bairro implements Serializable {
         return true;
     }
 }
+//@PrePersist
+//@PreUpdate
+//@Embedded
+//@Email

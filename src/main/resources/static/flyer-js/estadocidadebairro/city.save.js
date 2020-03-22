@@ -177,8 +177,6 @@ Cidade.Save = (function () {
     function newCity() {
         this.nomeCidade.val("");
         idCidade = null;
-        //$("#uf").select2("refresh");
-        //$("#uf").select2().val('').trigger("change");
     }
 
     return Save;

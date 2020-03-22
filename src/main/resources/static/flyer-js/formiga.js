@@ -147,7 +147,7 @@ Formiga.LoadGif = (function () {
         }.bind(this));
         
         $(document).ajaxComplete(function (event, jqxhr, settings) {
-
+            
             if((!settings.url.includes("term")) && (!settings.processResults)) {
                 $("#divLoading").removeClass("show");
             }
