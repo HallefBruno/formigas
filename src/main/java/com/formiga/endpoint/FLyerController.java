@@ -1,16 +1,11 @@
 package com.formiga.endpoint;
 
 import com.formiga.entity.Flyer;
-import com.formiga.entity.MarcaCarro;
-import com.formiga.entity.MarcaMoto;
-import com.formiga.entity.dto.MarcaCarroDTO;
-import com.formiga.entity.dto.MarcaMotoDTO;
+
 import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IStatusFlyerRepository;
 import com.formiga.service.FlyerService;
 import com.formiga.service.StatusFlyerService;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -114,37 +109,7 @@ public class FLyerController {
         return mv;
     }
     
-    @GetMapping("search/{marca}")
-    public ResponseEntity<?> listMarca(@PathVariable String marca, @RequestParam("term") final String keywork) {
-        
-        if(marca.equalsIgnoreCase("car")) {
-            MarcaCarroDTO carroDTO;
-            List<MarcaCarroDTO> marcas = new ArrayList<>();
-            for(MarcaCarro marcaCarro : flyerRepository.searchMarcaCar(keywork.toUpperCase())) {
-                if(marcaCarro.getNome().contains(keywork.toUpperCase())) {
-                    carroDTO = new MarcaCarroDTO();
-                    carroDTO.setLabel(marcaCarro.getNome());
-                    carroDTO.setValue(marcaCarro.getId().toString());
-                    marcas.add(carroDTO);
-                }
-            }
-            
-            return ResponseEntity.ok(marcas);
-        } else {
-            MarcaMotoDTO motoDTO;
-            List<MarcaMotoDTO> marcas = new ArrayList<>();
-            
-            for(MarcaMoto marcaMoto : flyerRepository.searchMarcaMoto(keywork.toUpperCase())) {
-                if(marcaMoto.getNome().contains(keywork.toUpperCase())) {
-                    motoDTO = new MarcaMotoDTO();
-                    motoDTO.setLabel(marcaMoto.getNome());
-                    motoDTO.setValue(marcaMoto.getId().toString());
-                    marcas.add(motoDTO);
-                }
-            }
-            return ResponseEntity.ok(marcas);
-        }
-    }
+    
     
     @GetMapping("search/{idMarca}/{tipo}")
     public ResponseEntity<?> listModelsCarOrMoto(@PathVariable String idMarca, @PathVariable String tipo, @RequestParam(name = "searchTerm", required = false) String searchTerm) {
@@ -176,3 +141,36 @@ public class FLyerController {
     }
     
 }
+
+
+//@GetMapping("search/{marca}")
+//    public ResponseEntity<?> listMarca(@PathVariable String marca, @RequestParam("term") final String keywork) {
+//        
+//        if(marca.equalsIgnoreCase("car")) {
+//            MarcaCarroDTO carroDTO;
+//            List<MarcaCarroDTO> marcas = new ArrayList<>();
+//            for(MarcaCarro marcaCarro : flyerRepository.searchMarcaCar(keywork.toUpperCase())) {
+//                if(marcaCarro.getNome().contains(keywork.toUpperCase())) {
+//                    carroDTO = new MarcaCarroDTO();
+//                    carroDTO.setLabel(marcaCarro.getNome());
+//                    carroDTO.setValue(marcaCarro.getId().toString());
+//                    marcas.add(carroDTO);
+//                }
+//            }
+//            
+//            return ResponseEntity.ok(marcas);
+//        } else {
+//            MarcaMotoDTO motoDTO;
+//            List<MarcaMotoDTO> marcas = new ArrayList<>();
+//            
+//            for(MarcaMoto marcaMoto : flyerRepository.searchMarcaMoto(keywork.toUpperCase())) {
+//                if(marcaMoto.getNome().contains(keywork.toUpperCase())) {
+//                    motoDTO = new MarcaMotoDTO();
+//                    motoDTO.setLabel(marcaMoto.getNome());
+//                    motoDTO.setValue(marcaMoto.getId().toString());
+//                    marcas.add(motoDTO);
+//                }
+//            }
+//            return ResponseEntity.ok(marcas);
+//        }
+//    }

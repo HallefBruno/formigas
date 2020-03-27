@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ehcache>
-    <defaultCache eternal="true" maxElementsInMemory="100" overflowToDisk="false" />
+    
+    <defaultCache eternal="false" maxElementsInMemory="100" overflowToDisk="false" memoryStoreEvictionPolicy="LRU" />
+    
     <cache name="estado"
            maxElementsInMemory="26" 
            timeToIdleSeconds="40"
            timeToLiveSeconds="40"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU" />
+    
+    <cache name="carros"
+           maxElementsInMemory="26" 
+           timeToIdleSeconds="40"
+           timeToLiveSeconds="40"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU" />
+    
+    <cache name="motos"
+           maxElementsInMemory="26" 
+           timeToIdleSeconds="40"
+           timeToLiveSeconds="40"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU" />
+    
 </ehcache>

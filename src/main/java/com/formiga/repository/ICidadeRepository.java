@@ -15,10 +15,9 @@ public interface ICidadeRepository extends JpaRepository<Cidade, Long> {
     List<Cidade> getListCity(@Param("idEstado") Long idEstado);
     
     @Query(value = " select cidade.id as id_cidade, estado.id as id_estado, cidade.nome as nome_cidade, estado.nome as nome_estado,"
-                 + " estado.uf, pais.id as id_pais, pais.nome as pais_nome"
+                 + " estado.uf "
                  + " from cidade "
                  + " inner join estado on cidade.id_estado = estado.id"
-                 + " inner join pais on pais.id = estado.id_pais "
                  + " where cidade.id_estado = :idEstado and cidade.nome ilike %:city% ",nativeQuery = true)
     List<Object[]> getListCity(@Param("idEstado") Long idEstado, @Param("city") String city);
     

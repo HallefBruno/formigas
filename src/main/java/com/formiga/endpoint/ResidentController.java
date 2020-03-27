@@ -1,17 +1,17 @@
 
 package com.formiga.endpoint;
 
-import com.formiga.entity.Bairro;
-import com.formiga.entity.Cidade;
-import com.formiga.entity.Estado;
+import com.formiga.entity.EstadoCivil;
 import com.formiga.entity.Resident;
+import com.formiga.entity.Sexo;
 import com.formiga.entity.TipoDeVersoes;
 import com.formiga.entity.dto.DefaultAutoCompleteSelect2DTO;
 import com.formiga.entity.exception.MessageException;
-import com.formiga.repository.IBairroRepository;
-import com.formiga.repository.ICidadeRepository;
-import com.formiga.repository.IEstadoRepository;
 import com.formiga.repository.IFotoRepository;
+import com.formiga.service.MarcaCarroService;
+import com.formiga.service.MarcaMotoService;
+import com.formiga.service.ModeloCarService;
+import com.formiga.service.ModeloMotoService;
 import com.formiga.service.ResidentService;
 import com.formiga.service.UsuarioService;
 import java.util.ArrayList;
@@ -32,24 +32,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/resident")
 public class ResidentController {
+
+    @Autowired private ResidentService residentService;
     
-    @Autowired
-    private IEstadoRepository estadoRepository;
+    @Autowired private IFotoRepository fotoRepository;
     
-    @Autowired
-    private ICidadeRepository cidadeRepository;
+    @Autowired private UsuarioService usuarioService;
     
-    @Autowired
-    private IBairroRepository bairroRepository;
+    @Autowired private MarcaCarroService marcaCarroService;
     
-    @Autowired 
-    private ResidentService residentService;
+    @Autowired private ModeloCarService modeloCarService;
     
-    @Autowired
-    private IFotoRepository fotoRepository;
+    @Autowired private MarcaMotoService marcaMotoService;
     
-    @Autowired
-    private UsuarioService usuarioService;
+    @Autowired private ModeloMotoService modeloMotoService;
 
     @Value("${app.message}")
     private String ambiente;
@@ -61,7 +57,7 @@ public class ResidentController {
         TipoDeVersoes versao = usuarioService.tipoVersao();
         
         if(versao == TipoDeVersoes.CASA_NUMERADA) {
-            mv.setViewName("resident/ResidentRegistrationCondCasaNumerada");//resident/ResidentRegistrationCondCasaNumerada
+            mv.setViewName("resident/ResidentRegistrationCondCasaNumerada");
         } else {
             mv.setViewName("ResidentRegistration");
         }
@@ -89,64 +85,42 @@ public class ResidentController {
         return ResponseEntity.status(HttpStatus.OK).body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
     }
     
-    @GetMapping("/lists/{qual}/{cod}")
-    public ResponseEntity getList(@PathVariable String qual, @PathVariable String cod, @RequestParam(name = "term",required = false, defaultValue = "") String keywork) {
-        
-        List<DefaultAutoCompleteSelect2DTO> getList = new ArrayList<>();
-
-        if(qual != null) {
-            
-            DefaultAutoCompleteSelect2DTO defaultDTO;
-            
-            if(qual.equalsIgnoreCase("estado") && cod.equals("0")) {
-
-                for(Estado estado : estadoRepository.findByNomeContainsIgnoreCaseOrderByIdAsc(keywork)) {
-                    defaultDTO = new DefaultAutoCompleteSelect2DTO();
-                    defaultDTO.setText(estado.getNome());
-                    defaultDTO.setId(estado.getId().toString());
-                    getList.add(defaultDTO);
-                }
-            } else if(qual.equalsIgnoreCase("cidade")) {
-                
-                if(cod!=null && (keywork==null || keywork.isEmpty())) {
-                
-                    for(Cidade cidade : cidadeRepository.getListCity(Long.parseLong(cod))) {
-                        defaultDTO = new DefaultAutoCompleteSelect2DTO();
-                        defaultDTO.setText(cidade.getNome());
-                        defaultDTO.setId(cidade.getId().toString());
-                        getList.add(defaultDTO);
-                    }
-                } else if(keywork!=null) {
-
-                    for(Cidade cidade : residentService.getListCity(Long.parseLong(cod),keywork)) {
-                        defaultDTO = new DefaultAutoCompleteSelect2DTO();
-                        defaultDTO.setText(cidade.getNome());
-                        defaultDTO.setId(cidade.getId().toString());
-                        getList.add(defaultDTO);
-                    }
-                }
-            } else {
-                if(cod!=null && (keywork==null || keywork.isEmpty())) {
-                
-                    for(Bairro bairro : bairroRepository.getListBairro(Long.parseLong(cod))) {
-                        defaultDTO = new DefaultAutoCompleteSelect2DTO();
-                        defaultDTO.setText(bairro.getNome());
-                        defaultDTO.setId(bairro.getId().toString());
-                        getList.add(defaultDTO);
-                    }
-                } else if(keywork!=null) {
-
-                    for(Bairro bairro : residentService.getListBairro(Long.parseLong(cod),keywork)) {
-                        defaultDTO = new DefaultAutoCompleteSelect2DTO();
-                        defaultDTO.setText(bairro.getNome());
-                        defaultDTO.setId(bairro.getId().toString());
-                        getList.add(defaultDTO);
-                    }
-                }
-            }
-        }
-
-        return ResponseEntity.ok(getList);
+    @GetMapping("list/marcacar")
+    public List<DefaultAutoCompleteSelect2DTO> getListMarcaCarro(@RequestParam(name = "term",required = false, defaultValue = "") String term) {
+        return marcaCarroService.getListMarcaCarro(term);
     }
     
+    @GetMapping("list/modelo/veiculo/{idMarca}")
+    public List<DefaultAutoCompleteSelect2DTO> getListModeloVeiculo(@PathVariable String idMarca) {
+        return modeloCarService.getListMarcaCarro(idMarca);
+    }
+    
+    @GetMapping("list/marcamoto")
+    public List<DefaultAutoCompleteSelect2DTO> getListMarcaMoto(@RequestParam(name = "term",required = false, defaultValue = "") String term) {
+        return marcaMotoService.getListMarcaMoto(term);
+    }
+    
+    @GetMapping("list/modelomoto/{idMarca}")
+    public List<DefaultAutoCompleteSelect2DTO> getListModeloMoto(@PathVariable String idMarca) {
+        return modeloMotoService.getListModeloMoto(Long.valueOf(idMarca));
+    }
+    
+    @GetMapping("estadocivil")
+    public List<DefaultAutoCompleteSelect2DTO> getListEstadoCivil() {
+        List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
+        for(EstadoCivil e : EstadoCivil.values()) {
+            list.add(new DefaultAutoCompleteSelect2DTO(e.getValue(), e.getValue()));
+        }
+        return list;
+    }
+    
+    @GetMapping("sexo")
+    public List<DefaultAutoCompleteSelect2DTO> getListSexo() {
+        List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
+        for(Sexo e : Sexo.values()) {
+            list.add(new DefaultAutoCompleteSelect2DTO(e.getValue(), e.getValue()));
+        }
+        return list;
+    }
+
 }

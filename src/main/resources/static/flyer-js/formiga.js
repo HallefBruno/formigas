@@ -1,10 +1,39 @@
-/* global Formiga */
+/* global Formiga, Swal */
 
 var Formiga = Formiga || {};
 
 function remove_class_swal2() {
-    $('.swal2-icon-content').remove();
+    $(".swal2-icon-content").remove();
 }
+
+Formiga.MessageToast = (function () {
+    
+    function MessageToast() {}
+    
+    MessageToast.prototype.show = function (message,icon) {
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+
+        Toast.fire({
+            icon: icon,
+            title: "<h4>" + message + "</h4>"
+        });
+        remove_class_swal2();
+    };
+    
+    return MessageToast;
+    
+}());
 
 var eventAbaVisible = (function () {
     var stateKey, eventKey, keys = {

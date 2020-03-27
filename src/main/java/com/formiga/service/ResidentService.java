@@ -4,7 +4,6 @@ package com.formiga.service;
 import com.formiga.entity.Bairro;
 import com.formiga.entity.Cidade;
 import com.formiga.entity.Estado;
-import com.formiga.entity.Pais;
 import com.formiga.entity.Resident;
 import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IBairroRepository;
@@ -45,18 +44,14 @@ public class ResidentService {
         List<Cidade> cidades = new ArrayList<>();
         Cidade cidade;
         Estado estado;
-        Pais pais;
         for (Object[] row : list) {
             cidade = new Cidade();
             estado = new Estado();
-            pais = new Pais();
             cidade.setId(Long.valueOf(row[0].toString()));
             estado.setId(Long.valueOf(row[1].toString()));
             cidade.setNome(row[2].toString());
             estado.setNome(row[3].toString());
             estado.setUf(row[4].toString());
-            pais.setId(Long.valueOf(row[5].toString()));
-            pais.setNome(row[6].toString());
             cidade.setEstado(estado);
             cidades.add(cidade);
         }
@@ -69,12 +64,10 @@ public class ResidentService {
         Bairro bairro;
         Cidade cidade;
         Estado estado;
-        Pais pais;
         for (Object[] row : list) {
             bairro= new Bairro();
             cidade = new Cidade();
             estado = new Estado();
-            pais = new Pais();
             bairro.setId(Long.valueOf(row[0].toString()));
             bairro.setNome(row[1].toString());
             cidade.setId(Long.valueOf(row[2].toString()));
@@ -82,8 +75,6 @@ public class ResidentService {
             estado.setId(Long.valueOf(row[4].toString()));
             estado.setNome(row[5].toString());
             estado.setUf(row[6].toString());
-            pais.setId(Long.valueOf(row[7].toString()));
-            pais.setNome(row[8].toString());
             cidade.setEstado(estado);
             bairro.setCidade(cidade);
             bairros.add(bairro);

@@ -27,22 +27,7 @@
                 <form>
                     
                     <div th:replace="flyer/UpdateFlyer :: modalUpdate"></div>
-                    
-<!--                    <div class="row">
 
-                        <div class="feed col-sm-4 form-group" >
-                            <input type="text" class="form-control" placeholder="Flyer cod..." name="codFlyer" id="codFlyer" aria-describedby="codFlyer">
-                        </div>
-
-                        <div class="form-group col-sm-3">
-                            <button class="btn btn-primary btn-search">
-                                <span class="glyphicon glyphicon-search"></span>
-                                Search
-                            </button>
-                        </div>
-
-                    </div>-->
-                    
                     <div class="row">
                         <div class="col-sm-6">
                             <div style="display: flex; margin-bottom: 15px;">
@@ -119,14 +104,16 @@
                                 </th:block>
                         
                                 <td class="text-center">
-                                    <a data:id="${flyer.id}"
-                                       th:if="${flyer.status.value eq 'Offline'}" title="Salvar" class="btn btn-link btn-xs btn_update_flyer">
+                                    
+                                    <a data:id="${flyer.id}" th:if="${flyer.status.value eq 'Offline'}" title="Salvar" class="btn btn-link btn-xs btn_update_flyer">
                                         <i class="glyphicon glyphicon-ok"></i>
                                     </a>
+                                    
                                     <a th:if="${flyer.status.value eq 'Offline'}" class="btn btn-link btn-xs" onclick="deletar(this.id);" th:id="${flyer.id}"  title="Excluir">
                                         <i class="glyphicon glyphicon-remove"></i>
                                     </a>
-                                    <a th:if="${flyer.status.value eq 'Online'}" class="btn btn-link btn-xs" title="Vinculado">
+                                    
+                                    <a th:if="${flyer.status.value eq 'Online'}" class="btn btn-link btn-xs" title="Vinculável">
                                         <i style="color: #b80b0c" class="glyphicon glyphicon-link"></i>
                                     </a>
                                     
@@ -150,6 +137,7 @@
         </div>
 
     </body>
+    
     <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
     <script th:src="@{/vendor-js/bootstrap-toggle.min.js}" type="text/javascript"></script>
