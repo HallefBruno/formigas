@@ -12,6 +12,7 @@ SaveResCasaNum.Save = (function () {
         this.comboSexo = $("#sexo").select2();
         this.comboMarcasMoto = $("#marcasMoto").select2();
         this.comboModelosMoto = $("#modelosMoto").select2();
+        this.comboCor = $("#cor");
     }
 
     Save.prototype.init = function () {
@@ -222,6 +223,9 @@ SaveResCasaNum.Save = (function () {
             }
 
         });
+        
+        
+       
 
     }
 

@@ -1,6 +1,7 @@
 
 package com.formiga.endpoint;
 
+import com.formiga.entity.Cores;
 import com.formiga.entity.EstadoCivil;
 import com.formiga.entity.Resident;
 import com.formiga.entity.Sexo;
@@ -119,6 +120,15 @@ public class ResidentController {
         List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
         for(Sexo e : Sexo.values()) {
             list.add(new DefaultAutoCompleteSelect2DTO(e.getValue(), e.getValue()));
+        }
+        return list;
+    }
+    
+    @GetMapping("cores")
+    public List<DefaultAutoCompleteSelect2DTO> getListCores() {
+        List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
+        for(Cores c : Cores.values()) {
+            list.add(new DefaultAutoCompleteSelect2DTO(c.getValue(), c.getValue()));
         }
         return list;
     }

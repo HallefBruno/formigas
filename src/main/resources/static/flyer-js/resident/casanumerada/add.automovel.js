@@ -1,15 +1,16 @@
 /* global Swal, Formiga */
 
-var AddCarro = AddCarro || {};
+var AddAutomovel = AddAutomovel || {};
 
-var msgToast;
 var carro = [];
 var moto = [];
 var contadorCarro = 0;
 var contadorMoto = 0;
 
-AddCarro.Adicionar = (function () {
-
+AddAutomovel.Adicionar = (function () {
+    
+    var msgToast;
+    
     function Adicionar() {
         this.btnAddCarro = $(".add-carro");
         this.tblAddCarro = $(".tbl-add-carro");
@@ -24,8 +25,7 @@ AddCarro.Adicionar = (function () {
     };
     
     function eventAddCarro() {
-        
-        
+
         var tds = "";
         var idFabricante = "";
         var nomeFabricante = "";
@@ -40,12 +40,15 @@ AddCarro.Adicionar = (function () {
                 idModelo = $("#id-modelo-carro").val();
                 nomeFabricante = $("#fabri-carro").val();
                 nomeModelo = $("#modelo-carro").val();
-                
+
                 if(contadorCarro > 0) {
-                    if(carro[contadorCarro-1].modelo === nomeModelo) {
-                        msgToast.show("Esse ja foi adicionado!", "info");
-                        return false;
-                    }
+                    $.each(carro, function (index, obj) {
+                        if(obj.modelo === nomeModelo) {
+                            carro.splice(index,1);
+                            msgToast.show("Esse já foi adicionado!", "info");
+                            return false;
+                        }
+                    });
                 }
                 
                 carro.push(
@@ -62,17 +65,7 @@ AddCarro.Adicionar = (function () {
                 return false;
             }
 
-            tds="<tr>"+
-                    "<td>"+carro[contadorCarro].fabricante+"</td>"+
-                    "<td>"+carro[contadorCarro].modelo+"</td>"+
-                    "<td class='text-center'>"+
-                        "<a onclick='deleteRow();' class='btn btn-link btn-xs btn-remove-row' title='Excluir' data-row='"+contadorCarro+"'>"+
-                            "<i class='glyphicon glyphicon-remove'></i>"+
-                        "</a>"+
-                    "</td>"+
-                "</tr>";
-                   
-            this.tblAddCarro.find("tbody").append(tds);
+            bodyTable(this.tblAddCarro,carro,contadorMoto,"data-row");
             
             contadorCarro++;
 
@@ -88,10 +81,13 @@ AddCarro.Adicionar = (function () {
                 nomeModelo = $("#modelo-moto").val();
                 
                 if(contadorMoto > 0) {
-                    if(moto[contadorMoto-1].modelo === nomeModelo) {
-                        msgToast.show("Esse ja foi adicionado!", "info");
-                        return false;
-                    }
+                    $.each(moto, function (index, obj) {
+                        if(obj.modelo === nomeModelo) {
+                            moto.splice(index,1);
+                            msgToast.show("Esse já foi adicionado!", "info");
+                            return false;
+                        }
+                    });
                 }
                 
                 moto.push(
@@ -107,8 +103,7 @@ AddCarro.Adicionar = (function () {
                 msgToast.show("Por favor, selecione o fabricante", "info");
                 return false;
             }
-   
-            //this.tblAddMoto.find("tbody").append(bodyTable(moto,contadorMoto,"data-rowmto"));
+
             bodyTable(this.tblAddMoto,moto,contadorMoto,"data-rowmto");
             contadorMoto++;
  
@@ -120,17 +115,22 @@ AddCarro.Adicionar = (function () {
 }());
 
 function bodyTable(tabela, array, contador, key) {
-    var tds="<tr>"+
-                "<td>"+array[contador].fabricante+"</td>"+
-                "<td>"+array[contador].modelo+"</td>"+
-                "<td class='text-center'>"+
-                    "<a onclick='deleteRow();' class='btn btn-link btn-xs btn-remove-row' title='Excluir' " + key + "='" + contador + "'>" +
-                        "<i class='glyphicon glyphicon-remove'></i>" +
-                    "</a>"+
-                "</td>"+
-            "</tr>";
+    var tds="";
+    $.each(array, function (index, moto) {
+        tds+="<tr>"+
+            "<td><label class='label label-info' style='background-color: #563d7c; color: white;'>"+moto.fabricante+"</label></td>"+
+            "<td><label class='label label-info' style='background-color: #563d7c; color: white;'>"+moto.modelo+"</label></td>"+
+            "<td class='text-center'>"+
+                "<a onclick='deleteRow();' class='btn btn-link btn-xs btn-remove-row' title='Excluir' " + key + "='" + index + "'>" +
+                    "<i class='glyphicon glyphicon-remove'></i>" +
+                "</a>"+
+            "</td>"+
+        "</tr>";
+    });
+    
+    tabela.find("tbody").html("");
     tabela.find("tbody").append(tds);
-
+    
     return tds;
 }
 
@@ -139,16 +139,13 @@ function deleteRow() {
     var row = $(event.currentTarget);
 
     if (typeof row.data("row") !== "undefined") {
-        alert(row.data("row"));
+        var posicao = row.data("row");
+        carro.splice(posicao,1);
+        bodyTable($(".tbl-add-carro"),carro, contadorMoto, "data-row");
     } else if (typeof row.data("rowmto") !== "undefined") {
-        
-        console.log(moto);
-        
-        moto.slice(row.data("rowmto"),1);
-        
-        console.log(moto);
-        
-        bodyTable($(".tbl-add-moto"),moto, contadorMoto, "rowmto");
+        var posicao = row.data("rowmto");
+        moto.splice(posicao,1);
+        bodyTable($(".tbl-add-moto"),moto, contadorMoto, "data-rowmto");
     }
 
 }
@@ -156,6 +153,6 @@ function deleteRow() {
 
 
 $(function () {
-    var run = new AddCarro.Adicionar();
+    var run = new AddAutomovel.Adicionar();
     run.init();
 });

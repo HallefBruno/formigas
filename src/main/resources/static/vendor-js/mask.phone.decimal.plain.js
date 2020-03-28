@@ -1,6 +1,6 @@
-var Brewer = Brewer || {};
+var Formatter = Formatter || {};
 
-Brewer.MaskMoney = (function () {
+Formatter.MaskMoney = (function () {
 
     function MaskMoney() {
         this.decimal = $('.js-decimal');
@@ -16,7 +16,7 @@ Brewer.MaskMoney = (function () {
 
 }());
 
-Brewer.MaskPhoneNumber = (function () {
+Formatter.MaskPhoneNumber = (function () {
 
     function MaskPhoneNumber() {
         this.inputPhoneNumber = $('.js-phone-number');
@@ -40,7 +40,7 @@ Brewer.MaskPhoneNumber = (function () {
 
 }());
 
-Brewer.MaskCep = (function () {
+Formatter.MaskCep = (function () {
 
     function MaskCep() {
         this.inputCep = $('.js-cep');
@@ -54,36 +54,52 @@ Brewer.MaskCep = (function () {
 
 }());
 
-//Brewer.MaskDate = (function () {
-//
-//    function MaskDate() {
-//        this.inputDate = $('.js-date');
-//    }
-//
-//    MaskDate.prototype.enable = function () {
-//        this.inputDate.mask('00/00/0000');
-//        this.inputDate.datepicker({
-//            orientation: 'bottom',
-//            language: 'pt-BR',
-//            autoclose: true
-//        });
-//    };
-//
-//    return MaskDate;
-//
-//}());
+Formatter.MaskPlcaCar = (function () {
+
+    function MaskPlcaCar() {
+        this.inputPlacaCar = $('.js-placa-car');
+    }
+
+    MaskPlcaCar.prototype.enable = function () {
+        
+        var MercoSulMaskBehavior = function (val) {
+            var myMask = 'AAA0A00';
+            var mercosul = /([A-Za-z]{3}[0-9]{1}[A-Za-z]{1})/;
+            var normal = /([A-Za-z]{3}[0-9]{2})/;
+            var replaced = val.replace(/[^\w]/g, '');
+            if (normal.exec(replaced)) {
+                myMask = 'AAA-0000';
+            } else if (mercosul.exec(replaced)) {
+                myMask = 'AAA-0A00';
+            }
+            return myMask;
+        };
+        var mercoSulOptions = {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(MercoSulMaskBehavior.apply({}, arguments), options);
+            }
+        };
+        
+        this.inputPlacaCar.mask(MercoSulMaskBehavior, mercoSulOptions);
+        
+    };
+
+    return MaskPlcaCar;
+
+}());
 
 $(function () {
-    var maskMoney = new Brewer.MaskMoney();
+    var maskMoney = new Formatter.MaskMoney();
     maskMoney.enable();
 
-    var maskPhoneNumber = new Brewer.MaskPhoneNumber();
+    var maskPhoneNumber = new Formatter.MaskPhoneNumber();
     maskPhoneNumber.enable();
 
-    var maskCep = new Brewer.MaskCep();
+    var maskCep = new Formatter.MaskCep();
     maskCep.enable();
+    
+    var maskPlacaCar = new Formatter.MaskPlcaCar();
+    maskPlacaCar.enable();
 
-//    var maskDate = new Brewer.MaskDate();
-//    maskDate.enable();
 
 });
