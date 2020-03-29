@@ -13,12 +13,12 @@ SaveResCasaNum.Save = (function () {
         this.comboMarcasMoto = $("#marcasMoto").select2();
         this.comboModelosMoto = $("#modelosMoto").select2();
         this.comboCor = $("#cor");
+        this.comboCorMoto = $("#cor-moto");
     }
 
     Save.prototype.init = function () {
         this.comboModelo.attr("disabled", true);
         this.comboModelosMoto.attr("disabled", true);
-
         popularCombos.call(this);
     };
 
@@ -223,10 +223,6 @@ SaveResCasaNum.Save = (function () {
             }
 
         });
-        
-        
-       
-
     }
 
     return Save;

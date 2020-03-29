@@ -16,6 +16,7 @@ import com.formiga.service.ModeloMotoService;
 import com.formiga.service.ResidentService;
 import com.formiga.service.UsuarioService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -127,8 +128,11 @@ public class ResidentController {
     @GetMapping("cores")
     public List<DefaultAutoCompleteSelect2DTO> getListCores() {
         List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
+        String[] text = new String[2];
         for(Cores c : Cores.values()) {
-            list.add(new DefaultAutoCompleteSelect2DTO(c.getValue(), c.getValue()));
+            text[0] = c.getValue();
+            text[1] = c.getHexadecimal();
+            list.add(new DefaultAutoCompleteSelect2DTO(c.getValue(), Arrays.toString(text)));
         }
         return list;
     }

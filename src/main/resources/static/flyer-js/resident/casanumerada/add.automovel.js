@@ -4,8 +4,6 @@ var AddAutomovel = AddAutomovel || {};
 
 var carro = [];
 var moto = [];
-var contadorCarro = 0;
-var contadorMoto = 0;
 
 AddAutomovel.Adicionar = (function () {
     
@@ -16,58 +14,69 @@ AddAutomovel.Adicionar = (function () {
         this.tblAddCarro = $(".tbl-add-carro");
         this.btnAddMoto = $(".add-moto");
         this.tblAddMoto = $(".tbl-add-moto");
+        this.comboCorMoto = $("#cor-moto");
+        this.comboCorCarro = $("#cor");
+        this.placa;
     }
 
     Adicionar.prototype.init = function () {
         eventAddCarro.call(this);
+        currentValueComboCorMoto.call(this);
         msgToast = new Formiga.MessageToast();
         
     };
     
     function eventAddCarro() {
 
-        var tds = "";
         var idFabricante = "";
         var nomeFabricante = "";
         var idModelo = "";
         var nomeModelo = "";
-
+        var placa = "";
+        var cor = "";
+        
         this.btnAddCarro.on("click", function (e) {
             
-            if($("#fabri-carro").val()) {
+            idFabricante = $("#id-fabri-carro").val();
+            idModelo = $("#id-modelo-carro").val();
+            nomeFabricante = $("#fabri-carro").val();
+            nomeModelo = $("#modelo-carro").val();
+            placa = $("#placa").val();
+            cor = $("#cor-carro-value").val();
+            var situacao = true;
+            
+            if(nomeFabricante && cor && placa && nomeModelo) {
                 
-                idFabricante = $("#id-fabri-carro").val();
-                idModelo = $("#id-modelo-carro").val();
-                nomeFabricante = $("#fabri-carro").val();
-                nomeModelo = $("#modelo-carro").val();
-
-                if(contadorCarro > 0) {
-                    $.each(carro, function (index, obj) {
-                        if(obj.modelo === nomeModelo) {
-                            carro.splice(index,1);
-                            msgToast.show("Esse já foi adicionado!", "info");
-                            return false;
+                
+                if(carro.length > 0) {
+                    $.each(carro, function (i) {
+                        if(carro[i].placa === placa) {
+                            msgToast.show("Modelo repetido!", "info");
+                            situacao = false;
+                            return situacao;
                         }
                     });
                 }
                 
-                carro.push(
-                    {
-                        idfab:idFabricante,
-                        idmod:idModelo,
-                        fabricante:nomeFabricante,
-                        modelo:nomeModelo
-                    }
-                );
-                
+                if(situacao) {
+                    carro.push(
+                        {
+                            idfab:idFabricante,
+                            idmod:idModelo,
+                            fabricante:nomeFabricante,
+                            modelo:nomeModelo,
+                            placa:placa,
+                            cor:cor
+                        }
+                    );
+                }
+            
             } else {
-                msgToast.show("Por favor, selecione o fabricante", "info");
+                msgToast.show("Por favor, preencha todos os campos", "info");
                 return false;
             }
 
-            bodyTable(this.tblAddCarro,carro,contadorMoto,"data-row");
-            
-            contadorCarro++;
+            bodyTable(this.tblAddCarro,carro,"data-row");
 
         }.bind(this));
         
@@ -79,53 +88,72 @@ AddAutomovel.Adicionar = (function () {
                 idModelo = $("#id-modelo-moto").val();
                 nomeFabricante = $("#fabri-moto").val();
                 nomeModelo = $("#modelo-moto").val();
+                placa = $("#placa-moto").val();
+                cor = $("#cor-moto-value").val();
+                var situacao = true;
                 
-                if(contadorMoto > 0) {
-                    $.each(moto, function (index, obj) {
-                        if(obj.modelo === nomeModelo) {
-                            moto.splice(index,1);
-                            msgToast.show("Esse já foi adicionado!", "info");
-                            return false;
+                if(moto.length > 0) {
+                    
+                    $.each(moto, function (i) {
+                        if(moto[i].placa === placa) {
+                            msgToast.show("Modelo repetido!", "info");
+                            situacao = false;
+                            return situacao;
                         }
                     });
                 }
                 
-                moto.push(
-                    {
-                        idfab:idFabricante,
-                        idmod:idModelo,
-                        fabricante:nomeFabricante,
-                        modelo:nomeModelo
-                    }
-                );
-                
+                if(situacao) {
+                    moto.push(
+                        {
+                            idfab:idFabricante,
+                            idmod:idModelo,
+                            fabricante:nomeFabricante,
+                            modelo:nomeModelo,
+                            placa:placa,
+                            cor:cor
+                        }
+                    );
+                }
+
             } else {
                 msgToast.show("Por favor, selecione o fabricante", "info");
                 return false;
             }
 
-            bodyTable(this.tblAddMoto,moto,contadorMoto,"data-rowmto");
-            contadorMoto++;
- 
+            bodyTable(this.tblAddMoto,moto,"data-rowmto");
+
         }.bind(this));
     }
-
+    
+    function currentValueComboCorMoto() {
+        this.comboCorMoto.change(function (event) {
+            $("#cor-moto-value").val(event.currentTarget.value);
+        });
+        
+        this.comboCorCarro.change(function (event) {
+            $("#cor-carro-value").val(event.currentTarget.value);
+        });
+    }
+    
     return Adicionar;
 
 }());
 
-function bodyTable(tabela, array, contador, key) {
+function bodyTable(tabela, array, key) {
     var tds="";
     $.each(array, function (index, moto) {
-        tds+="<tr>"+
-            "<td><label class='label label-info' style='background-color: #563d7c; color: white;'>"+moto.fabricante+"</label></td>"+
-            "<td><label class='label label-info' style='background-color: #563d7c; color: white;'>"+moto.modelo+"</label></td>"+
-            "<td class='text-center'>"+
-                "<a onclick='deleteRow();' class='btn btn-link btn-xs btn-remove-row' title='Excluir' " + key + "='" + index + "'>" +
-                    "<i class='glyphicon glyphicon-remove'></i>" +
-                "</a>"+
-            "</td>"+
-        "</tr>";
+        tds+="<tr style='font-size:12px;'>"+
+                "<td>"+moto.fabricante+"</td>"+
+                "<td>"+moto.modelo+"</td>"+
+                "<td>"+moto.placa.toUpperCase()+"</td>"+
+                "<td>"+moto.cor+"</td>"+
+                "<td class='text-center'>"+
+                    "<a onclick='deleteRow();' class='btn btn-link btn-xs btn-remove-row' title='Excluir' " + key + "='" + index + "'>" +
+                        "<i class='glyphicon glyphicon-remove'></i>" +
+                    "</a>"+
+                "</td>"+
+            "</tr>";
     });
     
     tabela.find("tbody").html("");
@@ -141,11 +169,11 @@ function deleteRow() {
     if (typeof row.data("row") !== "undefined") {
         var posicao = row.data("row");
         carro.splice(posicao,1);
-        bodyTable($(".tbl-add-carro"),carro, contadorMoto, "data-row");
+        bodyTable($(".tbl-add-carro"),carro, "data-row");
     } else if (typeof row.data("rowmto") !== "undefined") {
         var posicao = row.data("rowmto");
         moto.splice(posicao,1);
-        bodyTable($(".tbl-add-moto"),moto, contadorMoto, "data-rowmto");
+        bodyTable($(".tbl-add-moto"),moto, "data-rowmto");
     }
 
 }
