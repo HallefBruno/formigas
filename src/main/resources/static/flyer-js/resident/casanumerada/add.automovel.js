@@ -2,8 +2,8 @@
 
 var AddAutomovel = AddAutomovel || {};
 
-var carro = [];
-var moto = [];
+var arrayCarro = [];
+var arrayMoto = [];
 
 AddAutomovel.Adicionar = (function () {
     
@@ -47,11 +47,15 @@ AddAutomovel.Adicionar = (function () {
             
             if(nomeFabricante && cor && placa && nomeModelo) {
                 
+                $(".feed-fabricante").removeClass("has-error has-feedback");
+                $(".feed-cor").removeClass("has-error has-feedback");
+                $(".feed-placa").removeClass("has-error has-feedback");
+                $(".feed-modelo").removeClass("has-error has-feedback");
                 
-                if(carro.length > 0) {
-                    $.each(carro, function (i) {
-                        if(carro[i].placa === placa) {
-                            msgToast.show("Modelo repetido!", "info");
+                if(arrayCarro.length > 0) {
+                    $.each(arrayCarro, function (i) {
+                        if(arrayCarro[i].placa === placa) {
+                            msgToast.show("Modelo repetido!", "warning");
                             situacao = false;
                             return situacao;
                         }
@@ -59,7 +63,7 @@ AddAutomovel.Adicionar = (function () {
                 }
                 
                 if(situacao) {
-                    carro.push(
+                    arrayCarro.push(
                         {
                             idfab:idFabricante,
                             idmod:idModelo,
@@ -72,17 +76,43 @@ AddAutomovel.Adicionar = (function () {
                 }
             
             } else {
-                msgToast.show("Por favor, preencha todos os campos", "info");
+                if(idFabricante) {
+                    $(".feed-fabricante").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-fabricante").addClass("has-error has-feedback");
+                }
+                if(cor) {
+                    $(".feed-cor").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-cor").addClass("has-error has-feedback");
+                }
+                if(placa) {
+                    $(".feed-placa").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-placa").addClass("has-error has-feedback");
+                }
+                if(nomeModelo) {
+                    $(".feed-modelo").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-modelo").addClass("has-error has-feedback");
+                }
+
+                msgToast.show("Por favor, preencha todos os campos", "warning");
                 return false;
             }
 
-            bodyTable(this.tblAddCarro,carro,"data-row");
+            bodyTable(this.tblAddCarro,arrayCarro,"data-row");
 
         }.bind(this));
         
         this.btnAddMoto.on("click", function(e) {
             
-            if($("#fabri-moto").val()) {
+            if(nomeFabricante && cor && placa && nomeModelo) {
+                
+                $(".feed-fabricante-moto").removeClass("has-error has-feedback");
+                $(".feed-cor-moto").removeClass("has-error has-feedback");
+                $(".feed-placa-moto").removeClass("has-error has-feedback");
+                $(".fedd-modelo-moto").removeClass("has-error has-feedback");
                 
                 idFabricante = $("#id-fabri-moto").val();
                 idModelo = $("#id-modelo-moto").val();
@@ -92,11 +122,11 @@ AddAutomovel.Adicionar = (function () {
                 cor = $("#cor-moto-value").val();
                 var situacao = true;
                 
-                if(moto.length > 0) {
+                if(arrayMoto.length > 0) {
                     
-                    $.each(moto, function (i) {
-                        if(moto[i].placa === placa) {
-                            msgToast.show("Modelo repetido!", "info");
+                    $.each(arrayMoto, function (i) {
+                        if(arrayMoto[i].placa === placa) {
+                            msgToast.show("Modelo repetido!", "warning");
                             situacao = false;
                             return situacao;
                         }
@@ -104,7 +134,7 @@ AddAutomovel.Adicionar = (function () {
                 }
                 
                 if(situacao) {
-                    moto.push(
+                    arrayMoto.push(
                         {
                             idfab:idFabricante,
                             idmod:idModelo,
@@ -117,11 +147,33 @@ AddAutomovel.Adicionar = (function () {
                 }
 
             } else {
-                msgToast.show("Por favor, selecione o fabricante", "info");
+                
+                if(idFabricante) {
+                    $(".feed-fabricante-moto").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-fabricante-moto").addClass("has-error has-feedback");
+                }
+                if(cor) {
+                    $(".feed-cor-moto").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-cor-moto").addClass("has-error has-feedback");
+                }
+                if(placa) {
+                    $(".feed-placa-moto").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-placa-moto").addClass("has-error has-feedback");
+                }
+                if(nomeModelo) {
+                    $(".feed-modelo-moto").removeClass("has-error has-feedback");
+                } else {
+                    $(".feed-modelo-moto").addClass("has-error has-feedback");
+                }
+                
+                msgToast.show("Por favor, preencha todos os campos", "warning");
                 return false;
             }
 
-            bodyTable(this.tblAddMoto,moto,"data-rowmto");
+            bodyTable(this.tblAddMoto,arrayMoto,"data-rowmto");
 
         }.bind(this));
     }
@@ -143,6 +195,7 @@ AddAutomovel.Adicionar = (function () {
 function bodyTable(tabela, array, key) {
     var tds="";
     $.each(array, function (index, moto) {
+
         tds+="<tr style='font-size:12px;'>"+
                 "<td>"+moto.fabricante+"</td>"+
                 "<td>"+moto.modelo+"</td>"+
@@ -168,12 +221,12 @@ function deleteRow() {
 
     if (typeof row.data("row") !== "undefined") {
         var posicao = row.data("row");
-        carro.splice(posicao,1);
-        bodyTable($(".tbl-add-carro"),carro, "data-row");
+        arrayCarro.splice(posicao,1);
+        bodyTable($(".tbl-add-carro"),arrayCarro, "data-row");
     } else if (typeof row.data("rowmto") !== "undefined") {
         var posicao = row.data("rowmto");
-        moto.splice(posicao,1);
-        bodyTable($(".tbl-add-moto"),moto, "data-rowmto");
+        arrayMoto.splice(posicao,1);
+        bodyTable($(".tbl-add-moto"),arrayMoto, "data-rowmto");
     }
 
 }

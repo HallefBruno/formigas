@@ -19,11 +19,19 @@ public class ModeloMotoService {
     @Autowired
     private IModeloMotoRepository iModeloMotoRepository;
     
-    public List<DefaultAutoCompleteSelect2DTO> getListModeloMoto(Long idMarca) {
+    public List<DefaultAutoCompleteSelect2DTO> getListModeloMoto(Long idMarca, String modelo) {
+        
         List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
-        iModeloMotoRepository.getListModeloMoto(idMarca).forEach((m) -> {
-            list.add(new DefaultAutoCompleteSelect2DTO(m.getId().toString(),m.getNome()));
-        });
+        
+        if(idMarca != null && idMarca > 0 && modelo==null || modelo.isEmpty()) {
+            iModeloMotoRepository.getListModeloMoto(idMarca).forEach((m) -> {
+                list.add(new DefaultAutoCompleteSelect2DTO(m.getId().toString(),m.getNome()));
+            });
+        } else {
+            iModeloMotoRepository.getListModeloMotoParam(modelo,idMarca).forEach((m) -> {
+                list.add(new DefaultAutoCompleteSelect2DTO(m.getId().toString(),m.getNome()));
+            });
+        }
         return list;
     }
     

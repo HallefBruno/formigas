@@ -82,10 +82,10 @@ public class ResidentController {
         return mv;
     }
     
-    @GetMapping("search/{codResident}")
-    public ResponseEntity listOfResidentsWithPhoto(@PathVariable String codResident) {
-        return ResponseEntity.status(HttpStatus.OK).body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
-    }
+//    @GetMapping("search/{codResident}")
+//    public ResponseEntity listOfResidentsWithPhoto(@PathVariable String codResident) {
+//        return ResponseEntity.status(HttpStatus.OK).body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
+//    }
     
     @GetMapping("list/marcacar")
     public List<DefaultAutoCompleteSelect2DTO> getListMarcaCarro(@RequestParam(name = "term",required = false, defaultValue = "") String term) {
@@ -93,8 +93,11 @@ public class ResidentController {
     }
     
     @GetMapping("list/modelo/veiculo/{idMarca}")
-    public List<DefaultAutoCompleteSelect2DTO> getListModeloVeiculo(@PathVariable String idMarca) {
-        return modeloCarService.getListMarcaCarro(idMarca);
+    public List<DefaultAutoCompleteSelect2DTO> getListModeloVeiculo(@PathVariable String idMarca, @RequestParam(name = "term",required = false, defaultValue = "") String term) {
+        if(idMarca!=null&&!idMarca.isEmpty() && term==null || term.isEmpty()) {
+            return modeloCarService.getListModelCar(null,Long.valueOf(idMarca));
+        }
+        return modeloCarService.getListModelCar(term,Long.valueOf(idMarca));
     }
     
     @GetMapping("list/marcamoto")
@@ -103,15 +106,18 @@ public class ResidentController {
     }
     
     @GetMapping("list/modelomoto/{idMarca}")
-    public List<DefaultAutoCompleteSelect2DTO> getListModeloMoto(@PathVariable String idMarca) {
-        return modeloMotoService.getListModeloMoto(Long.valueOf(idMarca));
+    public List<DefaultAutoCompleteSelect2DTO> getListModeloMoto(@PathVariable String idMarca, @RequestParam(name = "term",required = false, defaultValue = "") String term) {
+        if(idMarca!=null&&!idMarca.isEmpty() && term==null || term.isEmpty()) {
+            return modeloMotoService.getListModeloMoto(Long.valueOf(idMarca),null);
+        }
+        return modeloMotoService.getListModeloMoto(Long.valueOf(idMarca),term);
     }
     
     @GetMapping("estadocivil")
     public List<DefaultAutoCompleteSelect2DTO> getListEstadoCivil() {
         List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
         for(EstadoCivil e : EstadoCivil.values()) {
-            list.add(new DefaultAutoCompleteSelect2DTO(e.getValue(), e.getValue()));
+            list.add(new DefaultAutoCompleteSelect2DTO(e.name(), e.getValue()));
         }
         return list;
     }
@@ -120,7 +126,7 @@ public class ResidentController {
     public List<DefaultAutoCompleteSelect2DTO> getListSexo() {
         List<DefaultAutoCompleteSelect2DTO> list = new ArrayList<>();
         for(Sexo e : Sexo.values()) {
-            list.add(new DefaultAutoCompleteSelect2DTO(e.getValue(), e.getValue()));
+            list.add(new DefaultAutoCompleteSelect2DTO(e.name(), e.getValue()));
         }
         return list;
     }

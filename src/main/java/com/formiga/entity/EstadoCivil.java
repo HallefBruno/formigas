@@ -7,10 +7,10 @@ package com.formiga.entity;
  */
 public enum EstadoCivil {
     
-    CASADO("Casado(a)"),
-    SOLTEIRO("Solteiro(a)"),
-    DIVORCIADO("Divorciado(a)"),
-    VIUVO("Viuvo(a)");
+    Casado("Casado(a)"),
+    Solteiro("Solteiro(a)"),
+    Divorciado("Divorciado(a)"),
+    Viuvo("Viuvo(a)");
     
     private String value;
 

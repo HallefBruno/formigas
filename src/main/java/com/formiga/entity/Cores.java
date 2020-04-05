@@ -7,16 +7,16 @@ package com.formiga.entity;
  */
 public enum Cores {
     
-    BRANCA("Branca","#FFFFFF"),
-    PRATA("Prata","#bebfbd"),
-    PRETA("Preta","#000000"),
-    CINZA("Cinza","#C0C0C0"),
-    VERMELHA("Vermelha","#FF0000"),
-    VERDE("Verde","#4F4F2F"),
-    AZUL("Azul","#0000FF"),
-    AMARELA("Amarela","#FFFF00"),
-    MARROM("Marrom","#A62A2A"),
-    OUTRA("Outra","#FFFFFF");
+    Branca("Branca","#FFFFFF"),
+    Prata("Prata","#bebfbd"),
+    Preta("Preta","#000000"),
+    Cinza("Cinza","#C0C0C0"),
+    Vermelha("Vermelha","#FF0000"),
+    Verde("Verde","#4F4F2F"),
+    Azul("Azul","#0000FF"),
+    Amarela("Amarela","#FFFF00"),
+    Marrom("Marrom","#A62A2A"),
+    Outra("Outra","#FFFFFF");
     
     private String value;
     private String hexadecimal;

@@ -11,18 +11,28 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ *
+ * @author hallef
+ */
+
 @Entity
-public class Telefone implements Serializable {
+public class Carro implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String numero;
-
-    @JoinColumn(name = "id_resident")
-    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_modelo_carro")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ModeloCarro modeloCarro;
+    
+    @JoinColumn(name="id_resident")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Resident resident;
+    
+    private String placa;
+    private String cor;
 
     public Long getId() {
         return id;
@@ -32,12 +42,12 @@ public class Telefone implements Serializable {
         this.id = id;
     }
 
-    public String getNumero() {
-        return numero;
+    public ModeloCarro getModeloCarro() {
+        return modeloCarro;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setModeloCarro(ModeloCarro modeloCarro) {
+        this.modeloCarro = modeloCarro;
     }
 
     public Resident getResident() {
@@ -48,10 +58,29 @@ public class Telefone implements Serializable {
         this.resident = resident;
     }
 
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+    
+    
+    
+    
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -66,8 +95,10 @@ public class Telefone implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Telefone other = (Telefone) obj;
+        final Carro other = (Carro) obj;
         return Objects.equals(this.id, other.id);
     }
+    
+    
     
 }

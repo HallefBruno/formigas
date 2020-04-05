@@ -54,6 +54,20 @@ Formatter.MaskCep = (function () {
 
 }());
 
+Formatter.MaskCPF = (function () {
+
+    function MaskCPF() {
+        this.inputCPF = $('.js-cpf');
+    }
+
+    MaskCPF.prototype.enable = function () {
+        this.inputCPF.mask('999.999.999-99');
+    };
+
+    return MaskCPF;
+
+}());
+
 Formatter.MaskPlcaCar = (function () {
 
     function MaskPlcaCar() {
@@ -100,6 +114,8 @@ $(function () {
     
     var maskPlacaCar = new Formatter.MaskPlcaCar();
     maskPlacaCar.enable();
-
+    
+    var maskCPF = new Formatter.MaskCPF();
+    maskCPF.enable();
 
 });

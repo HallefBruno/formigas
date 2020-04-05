@@ -28,13 +28,15 @@ public class ResidentService {
     private IResidentRepository iResidentRepository;
     
     public Resident save(Resident resident) {
-        Optional<Resident> exist = iResidentRepository.findByCpf(resident.getCpf());
+//        Optional<Resident> exist = iResidentRepository.findByCpf(resident.getCpf());
+//        
+//        if(exist.isPresent()) {
+//            throw new MessageException("Essa pessoa ja foi cadastrada");
+//        }
         
-        if(exist.isPresent()) {
-            throw new MessageException("Essa pessoa ja foi cadastrada");
-        }
+        Resident salvo = iResidentRepository.save(resident);
         
-        return iResidentRepository.save(resident);
+        return salvo;
         
     }
     

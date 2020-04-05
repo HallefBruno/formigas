@@ -162,16 +162,20 @@ Formiga.Security = (function () {
 
 
 Formiga.LoadGif = (function () {
-    
+    /**
+     * 
+     * @returns {formigaLoadGif.LoadGif}
+     */
     function LoadGif() {}
     
     LoadGif.prototype.enable = function (event, jqxhr, settings) {
 
         $(document).ajaxSend(function (event, jqxhr, settings) {
-
+            
             if((!settings.url.includes("term")) && (!settings.processResults)) {
                 $("#divLoading").addClass("show");
             }
+            
 
         }.bind(this));
         

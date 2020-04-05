@@ -11,7 +11,19 @@
         <link th:href="@{/stylesheet/formiga-css.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/stylesheet/checkbox-css.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/stylesheet/sweetalert2.min.css}" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>    
+        <link rel="shortcut icon" th:href="@{/imagens/projectavatar.png}"/>
+        
+        <style>
+            .panel-danger>.panel-heading {
+                color:#FFFFFF; 
+                background-color: #FFFFFF; 
+                border-color: #FFFFFF;
+            }
+            .panel-danger {
+                border-color: #FFFFFF;
+            }
+        </style>
+        
     </head>
     
     <body>
@@ -38,48 +50,50 @@
                         <div class="row" >
                             <div class="nome col-sm-4 form-group">
                                 <label class="control-label" for="nome">Nome</label> 
-                                <input type="text" autocomplete class="form-control" id="nome" name="nome">
+                                <input style="text-transform: uppercase" type="text" autocomplete class="form-control" id="nome" name="nome">
                             </div>
 
                             <div style="display: flex;">
 
-                                <div class="meu_cpf col-sm-6 form-group ">
+                                <div class="cpf col-sm-6 form-group ">
                                     <label class="control-label" for="cpf">CPF</label> 
-                                    <input type="text" autocomplete class="form-control cpf" id="cpf" name="cpf">
+                                    <input type="text" autocomplete class="form-control js-cpf" id="cpf" name="cpf">
                                 </div>
 
                                 <div class="rg col-sm-6 form-group">
                                     <label class="control-label" for="rg">RG</label> 
-                                    <input type="text" maxlength="12" minlength="5" autocomplete="" class="form-control" id="rg" name="rg">
+                                    <input style="text-transform: uppercase" type="text" maxlength="12" minlength="5" autocomplete="" class="form-control" id="rg" name="rg">
                                 </div>
 
-                                <div class="emissor col-sm-6 form-group ">
+                                <div class="orgaoEmissor col-sm-6 form-group ">
                                     <label class="control-label" for="emissor">Orgão emissor</label> 
-                                    <input type="text" autocomplete="" maxlength="8" minlength="3" class="form-control emissor" id="emissor" name="emissor">
+                                    <input style="text-transform: uppercase" type="text" autocomplete="" maxlength="8" minlength="3" class="form-control emissor" id="emissor" name="emissor">
                                 </div>
 
                             </div>
                             
-                            <div class="col-sm-4 form-group ">
+                            <div class="dataNascimento col-sm-4 form-group ">
                                 <label class="control-label" for="dataNascimento">Data nascimento</label> 
                                 <input type="date" autocomplete class="form-control" id="dataNascimento" name="dataNascimento">
                             </div>
 
-                            <div class="col-sm-4 form-group">
+                            <div class="naturalidade col-sm-4 form-group">
                                 <label class="control-label" for="natural">Natural</label> 
-                                <input type="text" autocomplete="" class="form-control" id="natural" name="natural">
+                                <input style="text-transform: uppercase" type="text" autocomplete="" class="form-control" id="natural" name="natural">
                             </div>
 
-                            <div class="emissor col-sm-4 form-group ">
+                            <div class="estadoCivil col-sm-4 form-group ">
                                 <label class="control-label" for="estadoCivil">Estado civil</label> 
-                                <select id="estadoCivil"  name="estadoCivil" class="form-control">
+                                <select id="estadoCivil" data-minimum-results-for-search="Infinity" name="estadoCivil" class="form-control">
                                 </select>
+                                <input type="hidden" id="combo-civil-value" />
                             </div>
 
                             <div class="sexo col-sm-2 form-group ">
                                 <label class="control-label" for="sexo">Sexo</label> 
-                                <select id="sexo" name="sexo" class="form-control">
+                                <select id="sexo" data-minimum-results-for-search="Infinity" name="sexo" class="form-control">
                                 </select>
+                                <input type="hidden" id="combo-sexo-value" />
                             </div>
 
                             <div class="telefone col-sm-3  form-group">
@@ -87,7 +101,6 @@
                                 <div style="display: flex;">
                                     <input type="text" autocomplete class="form-control js-phone-number" id="telefone" name="telefone" aria-describedby="telefone">
                                     <select style="display: none;" data-placeholder="Lista de telefone" id="telefones" name="telefones" class="form-control select-telefones" data-live-search="true" >
-                                        <option value="">Lista de telefone</option>
                                     </select>
                                     <div style="margin: 0 0 0 5px;">
                                         <button style="display: none" title="Remover telefone selecionado" type="button" class="btn btn-danger btn-remove-tel">
@@ -100,14 +113,14 @@
                                 </div>
                             </div>
 
-                            <div class="casa col-sm-2 form-group ">
+                            <div class="numeroCasa col-sm-2 form-group ">
                                 <label class="control-label" for="casa">N° Casa</label> 
-                                <input type="text" autocomplete class="form-control casa" id="casa" name="casa">
+                                <input style="text-transform: uppercase" type="text" autocomplete class="form-control casa" id="casa" name="casa">
                             </div>
 
-                            <div class="qtd-morador col-sm-2 form-group ">
+                            <div class="qtdMoradores col-sm-2 form-group ">
                                 <label class="control-label" for="qtdMorador">Qtd Moradores</label> 
-                                <input type="text" autocomplete class="form-control qtd-morador" id="qtdMorador" name="qtdMorador">
+                                <input type="text" maxlength="1" autocomplete class="form-control qtd-morador" id="qtdMorador" name="qtdMorador">
                             </div>
 
                             <div class="col-sm-3">
@@ -139,17 +152,19 @@
                                 <div class="panel panel-danger">
                                     <div class="panel-heading"><b>Carros</b></div>
                                     <div class="panel-body">
-                                        <label class="control-label" for="marcas">Digite as inicias da marca do veículo</label>
-                                        <select class="form-control" id="marcas" name="marcas">
-                                            <option value="-1" label="Marca" >Marca</option>
-                                        </select>
+                                        <div class="feed-fabricante">
+                                            <label class="control-label" for="marcas">Digite as inicias da marca do veículo</label>
+                                            <select class="form-control" id="marcas" name="marcas">
+                                                <option value="-1" label="Marca" >Marca</option>
+                                            </select>
+                                        </div>
                                         <input type="hidden" name="id-fabri-carro" id="id-fabri-carro" />
                                         <input type="hidden" name="fabri-carro" id="fabri-carro" />
 
                                         <div class="row" style="margin-top: 10px;">
-                                            <div class="form-group col-sm-6">
+                                            <div class="feed-cor form-group col-sm-6">
                                                 <label class="control-label" for="cor">Cor</label>
-                                                <select onfocus="" class="form-control" id="cor" name="cor">
+                                                <select class="form-control" id="cor" name="cor">
                                                     <option value="-1" label="-- Cor --" disabled="" selected=""></option>
                                                     <option class="label label-info" style="background-color: #FFFFFF;color:black" label="Branca" id="Branca" value="Branca">Branca</option>
                                                     <option class="label label-info" style="background-color: #bebfbd" label="Prata" id="Prata" value="Prata">Prata</option>
@@ -160,19 +175,19 @@
                                                     <option class="label label-info" style="background-color: #0000FF" label="Azul" id="Azul" value="Azul">Azul</option>
                                                     <option class="label label-info" style="background-color: #FFFF00" label="Amarela" id="Amarela" value="Amarela">Amarela</option>
                                                     <option class="label label-info" style="background-color: #A62A2A" label="Marrom" id="Marrom" value="Marrom">Marrom</option>
-                                                    <option class="label label-info" style="background-color: #FFFFFF" label="Outra" id="Outra" value="Outra">Outra</option>
+                                                    <option class="label label-info" style="background-color: #FFFFFF;color:black" label="Outra" id="Outra" value="Outra">Outra</option>
                                                 </select>
                                                 <input type="hidden" id="cor-carro-value"/>
                                             </div>
 
-                                            <div class="form-group col-sm-6">
+                                            <div class="feed-placa form-group col-sm-6">
                                                 <label class="control-label" for="placa">Placa</label>
-                                                <input style="text-transform: uppercase" class="form-control js-placa-car" id="placa" name="placa"/>
+                                                <input minlength="8" min="8" style="text-transform: uppercase" class="form-control js-placa-car" id="placa" name="placa"/>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="form-group col-sm-12">
+                                            <div class="feed-modelo form-group col-sm-12">
                                                 <label class="control-label" for="modelos">Selecione o modelo</label>
                                                 <div style="display: flex">
                                                     <select class="form-control" id="modelos" name="modelos" >
@@ -204,7 +219,9 @@
                                                                 </thead>
 
                                                                 <tbody>
-
+                                                                    <tr>
+                                                                        <td colspan='7' style='color:green'><b>Nenhum veículo encontrado</b></td>
+                                                                    </tr>
                                                                 </tbody>
 
                                                             </table>
@@ -222,13 +239,14 @@
                                 <div class="panel panel-danger">
                                     <div class="panel-heading"><b>Motos</b></div>
                                     <div class="panel-body">
-                                        <label class="control-label" for="marcasMoto">Digite as iniciais da marca da moto</label>
-                                        <select class="form-control" id="marcasMoto" name="marcasMoto">Marca</select>
-                                        <input type="hidden" name="id-fabri-moto" id="id-fabri-moto" />
-                                        <input type="hidden" name="fabri-moto" id="fabri-moto" />
-
+                                        <div class="feed-fabricante-moto">
+                                            <label class="control-label" for="marcasMoto">Digite as iniciais da marca da moto</label>
+                                            <select class="form-control" id="marcasMoto" name="marcasMoto">Marca</select>
+                                            <input type="hidden" name="id-fabri-moto" id="id-fabri-moto" />
+                                            <input type="hidden" name="fabri-moto" id="fabri-moto" />
+                                        </div>
                                         <div class="row" style="margin-top: 10px;">
-                                            <div class="form-group col-sm-6">
+                                            <div class="feed-cor-moto form-group col-sm-6">
                                                 <label class="control-label" for="cor-moto">Cor</label>
                                                 <select class="form-control" id="cor-moto" name="cor-moto">
                                                     <option value="-1" label="-- Cor --" disabled="" selected=""></option>
@@ -241,19 +259,19 @@
                                                     <option class="label label-info" style="background-color: #0000FF" label="Azul" id="Azul" value="Azul">Azul</option>
                                                     <option class="label label-info" style="background-color: #FFFF00" label="Amarela" id="Amarela" value="Amarela">Amarela</option>
                                                     <option class="label label-info" style="background-color: #A62A2A" label="Marrom" id="Marrom" value="Marrom">Marrom</option>
-                                                    <option class="label label-info" style="background-color: #FFFFFF" label="Outra" id="Outra" value="Outra">Outra</option>
+                                                    <option class="label label-info" style="background-color: #FFFFFF;color:black" label="Outra" id="Outra" value="Outra">Outra</option>
                                                 </select>
                                                 <input type="hidden" id="cor-moto-value"/>
                                             </div>
 
-                                            <div class="form-group col-sm-6">
+                                            <div class="feed-placa-moto form-group col-sm-6">
                                                 <label class="control-label" for="placa-moto">Placa</label>
                                                 <input style="text-transform: uppercase" class="form-control js-placa-car" id="placa-moto" name="placa-moto"/>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="form-group col-sm-12">
+                                            <div class="feed-modelo-moto form-group col-sm-12">
                                                 <label class="control-label" for="modelosMoto">Selecione a moto</label>
                                                 <div style="display: flex">
                                                     <select class="form-control" id="modelosMoto" name="modelosMoto" >
@@ -284,7 +302,9 @@
                                                                 </thead>
 
                                                                 <tbody>
-
+                                                                    <tr>
+                                                                        <td colspan='7' style='color:green'><b>Nenhum veículo encontrado</b></td>
+                                                                    </tr>
                                                                 </tbody>
 
                                                             </table>
@@ -298,7 +318,31 @@
                             </div>
 
                         </div>
+                        <div class="row">
 
+                            <div class="col-sm-5">
+
+                                <div style="display: flex;">
+                                    <button type="button" class="btn btn-primary btn-save">
+                                        <span class="glyphicon glyphicon-floppy-saved"></span> Save
+                                    </button>
+
+                                    <div style="margin: 0 0 0 5px;">
+                                        <button type="reset" class="btn btn-warning btn-new" >
+                                            <span class="glyphicon glyphicon-refresh"></span> New
+                                        </button>
+                                    </div>
+
+                                    <div style="margin: 0 0 0 5px;">
+                                        <a th:href="@{/city/page/search}" type="button" class="btn btn-default btn-page-search">
+                                            <span class="glyphicon glyphicon-search"></span> Search
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
                     </span>
 
                 </form>
@@ -308,7 +352,7 @@
         </div>
 
         <script>
-            var outImage = "imagenFondo";
+            var outImage = "imagenFundo";
             function preview(obj) {
                 if (FileReader) {
                     var reader = new FileReader();

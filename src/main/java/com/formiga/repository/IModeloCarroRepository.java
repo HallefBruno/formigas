@@ -20,5 +20,8 @@ public interface IModeloCarroRepository extends JpaRepository<ModeloCarro, Objec
     @Cacheable(value="carros")
     @Query(value = "FROM ModeloCarro mc INNER JOIN mc.marcaCarro WHERE mc.marcaCarro.id = :idMarca ")
     List<ModeloCarro> getListModelCar(@Param(value = "idMarca") Long idMarca);
+
+    @Query(value = "FROM ModeloCarro mc INNER JOIN mc.marcaCarro WHERE LOWER(mc.nome) LIKE LOWER(concat('%',?1,'%')) AND mc.marcaCarro.id = ?2 ")
+    List<ModeloCarro> getListModelCarParam(@Param(value = "modelo") String modelo, @Param(value = "idMarca") Long idMarca);
     
 }

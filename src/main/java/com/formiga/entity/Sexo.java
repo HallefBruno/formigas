@@ -6,8 +6,8 @@ package com.formiga.entity;
  */
 public enum Sexo {
     
-    MASCULINO("Masculino"),
-    FEMININO("Feminino");
+    Masculino("Masculino"),
+    Feminino("Feminino");
     
     private String value;
 

@@ -21,4 +21,7 @@ public interface IModeloMotoRepository extends JpaRepository<ModeloMoto, Long> {
     @Query(value = "FROM ModeloMoto mm INNER JOIN mm.marcaMoto WHERE mm.marcaMoto.id = :idMarca")
     List<ModeloMoto> getListModeloMoto(@Param(value = "idMarca") Long idMarca);
     
+    @Query(value = "FROM ModeloMoto mm INNER JOIN mm.marcaMoto WHERE LOWER(mm.nome) LIKE LOWER(concat('%',?1,'%')) AND mm.marcaMoto.id = ?2 ")
+    List<ModeloMoto> getListModeloMotoParam(@Param(value = "modelo") String modelo, @Param(value = "idMarca") Long idMarca);
+    
 }

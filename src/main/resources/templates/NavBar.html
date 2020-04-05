@@ -4,7 +4,7 @@
       xmlns:data="http://www.thymeleaf.org/extras/data"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-      
+
     <nav class="navbar navbar-default navbar-fixed-top " th:fragment="navbar"> <!--navbar navbar-default navbar-top  navbar navbar-default navbar-fixed-top -->
         
         <input type="hidden" name="usuarioNome" th:value="${#authentication.principal.usuario.nome}" />
@@ -16,9 +16,6 @@
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
         <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
 
-        
-        <!--<div class="container-fluid">-->
-            
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -29,8 +26,11 @@
                 
                 <input type="hidden" th:value="@{/}" id="context-app">
                     
+                    
                 <a class="navbar-brand">
-                    <!--<img alt="Brand" width="26px" height="22px" th:src="@{/imagens/exemplo-bootstrap.png}">-->
+                    <img alt="Brand" width="26px" height="22px" th:src="@{/imagens/exemplo-bootstrap.png}">
+                </a>
+                <a class="navbar-brand">
                     <p style="font-family: fantasy; font-size: 23px; color: #663300">Formiga</p>
                 </a>
 
@@ -45,7 +45,7 @@
                     <li class="dropdown">
                         
                         <a href="#" style="margin-right:10px;" class="dropdown-toggle" data-toggle="dropdown">
-                            <label class="label label-success" th:text="${#authentication.principal.usuario.nome}" />
+                            <label style="cursor: pointer;" class="label label-success" th:text="${#authentication.principal.usuario.nome}" />
                         </a>
                         
                         <ul class="dropdown-menu">
@@ -90,9 +90,7 @@
                             </li>
 
                             <li role="separator" class="divider"></li>
-                            <li><a th:href="@{/flyer/link}">Link Flyer</a></li>
-                            
-                            <li role="separator" class="divider"></li>
+
                             <li class="dropdown-submenu">
                                 <a tabindex="-1" href="#">Usuario</a>
                                 <ul class="dropdown-menu">
@@ -102,9 +100,9 @@
                                     <li><a th:href="@{/user/page/search}">User Search</a></li>
                                 </ul>
                             </li>
-                            
-                            
+
                             <li role="separator" class="divider"></li>
+                            
                             <li class="dropdown-submenu">
                                 <a tabindex="-1" href="#">UF | Cidade | Bairro</a>
                                 <ul class="dropdown-menu">
@@ -147,8 +145,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" style="color: black;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recepção <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            
-                            
+                            <li><a th:href="@{/flyer/link}">Link Flyer</a></li>
                         </ul>
                     </li>
                 </ul>    
@@ -170,7 +167,6 @@
                 </form>
                 
             </div>
-        <!--</div>-->
     </nav>
     
 </html>

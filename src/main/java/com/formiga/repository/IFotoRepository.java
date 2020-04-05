@@ -11,11 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IFotoRepository extends JpaRepository<Foto, String>{
     
-    @Query(value = "FROM Foto foto "
-            + "INNER JOIN foto.resident "
-            + "INNER JOIN foto.resident.bairro "
-            + "INNER JOIN foto.resident.bairro.cidade "
-            + "INNER JOIN foto.resident.bairro.cidade.estado "
-            + "WHERE foto.resident.id = :idResident ")
-    List<Foto> getListPhtoResident(@Param("idResident") Long idResident);
+//    @Query(value = "FROM Foto foto "
+//            + "INNER JOIN foto.resident "
+//            + "INNER JOIN foto.resident.bairro "
+//            + "INNER JOIN foto.resident.bairro.cidade "
+//            + "INNER JOIN foto.resident.bairro.cidade.estado "
+//            + "WHERE foto.resident.id = :idResident ")
+//    List<Foto> getListPhtoResident(@Param("idResident") Long idResident);
 }

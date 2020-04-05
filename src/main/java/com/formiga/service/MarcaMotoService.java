@@ -1,7 +1,6 @@
 
 package com.formiga.service;
 
-import com.formiga.entity.MarcaMoto;
 import com.formiga.entity.dto.DefaultAutoCompleteSelect2DTO;
 import com.formiga.repository.IMarcaMotoRepository;
 import java.util.ArrayList;
