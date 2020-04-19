@@ -20,7 +20,7 @@
                 border-color: #FFFFFF;
             }
             .panel-danger {
-                border-color: #FFFFFF;
+                border-color:#FFFFFF;
             }
         </style>
         
@@ -48,77 +48,57 @@
                         </div>
 
                         <div class="row" >
-                            <div class="nome col-sm-4 form-group">
+                            <div class="nome col-sm-3 form-group">
                                 <label class="control-label" for="nome">Nome</label> 
                                 <input style="text-transform: uppercase" type="text" autocomplete class="form-control" id="nome" name="nome">
                             </div>
 
-                            <div style="display: flex;">
-
-                                <div class="cpf col-sm-6 form-group ">
-                                    <label class="control-label" for="cpf">CPF</label> 
-                                    <input type="text" autocomplete class="form-control js-cpf" id="cpf" name="cpf">
-                                </div>
-
-                                <div class="rg col-sm-6 form-group">
-                                    <label class="control-label" for="rg">RG</label> 
-                                    <input style="text-transform: uppercase" type="text" maxlength="12" minlength="5" autocomplete="" class="form-control" id="rg" name="rg">
-                                </div>
-
-                                <div class="orgaoEmissor col-sm-6 form-group ">
-                                    <label class="control-label" for="emissor">Orgão emissor</label> 
-                                    <input style="text-transform: uppercase" type="text" autocomplete="" maxlength="8" minlength="3" class="form-control emissor" id="emissor" name="emissor">
-                                </div>
-
+                            <div class="cpf col-sm-3 form-group ">
+                                <label class="control-label" for="cpf">CPF</label> 
+                                <input type="text" autocomplete class="form-control js-cpf" id="cpf" name="cpf">
                             </div>
-                            
-                            <div class="dataNascimento col-sm-4 form-group ">
+
+                            <div class="rg col-sm-3 form-group">
+                                <label class="control-label" for="rg">RG</label> 
+                                <input style="text-transform: uppercase" type="text" maxlength="12" minlength="5" autocomplete="" class="form-control" id="rg" name="rg">
+                            </div>
+
+                            <div class="orgaoEmissor col-sm-3 form-group ">
+                                <label class="control-label" for="emissor">Orgão emissor</label> 
+                                <input style="text-transform: uppercase" type="text" autocomplete="" maxlength="8" minlength="3" class="form-control emissor" id="emissor" name="emissor">
+                            </div>
+
+                            <div class="dataNascimento col-sm-3 form-group ">
                                 <label class="control-label" for="dataNascimento">Data nascimento</label> 
                                 <input type="date" autocomplete class="form-control" id="dataNascimento" name="dataNascimento">
                             </div>
 
-                            <div class="naturalidade col-sm-4 form-group">
+                            <div class="naturalidade col-sm-3 form-group">
                                 <label class="control-label" for="natural">Natural</label> 
                                 <input style="text-transform: uppercase" type="text" autocomplete="" class="form-control" id="natural" name="natural">
                             </div>
 
-                            <div class="estadoCivil col-sm-4 form-group ">
+                            <div class="estadoCivil col-sm-3 form-group ">
                                 <label class="control-label" for="estadoCivil">Estado civil</label> 
                                 <select id="estadoCivil" data-minimum-results-for-search="Infinity" name="estadoCivil" class="form-control">
                                 </select>
                                 <input type="hidden" id="combo-civil-value" />
                             </div>
 
-                            <div class="sexo col-sm-2 form-group ">
+                            <div class="sexo col-sm-3 form-group ">
                                 <label class="control-label" for="sexo">Sexo</label> 
                                 <select id="sexo" data-minimum-results-for-search="Infinity" name="sexo" class="form-control">
                                 </select>
                                 <input type="hidden" id="combo-sexo-value" />
                             </div>
 
-                            <div class="telefone col-sm-3  form-group">
-                                <label for="telefone" class="control-label">Telefone</label>
-                                <div style="display: flex;">
-                                    <input type="text" autocomplete class="form-control js-phone-number" id="telefone" name="telefone" aria-describedby="telefone">
-                                    <select style="display: none;" data-placeholder="Lista de telefone" id="telefones" name="telefones" class="form-control select-telefones" data-live-search="true" >
-                                    </select>
-                                    <div style="margin: 0 0 0 5px;">
-                                        <button style="display: none" title="Remover telefone selecionado" type="button" class="btn btn-danger btn-remove-tel">
-                                            <i class="glyphicon glyphicon-trash"></i>
-                                        </button>
-                                        <button title="Clique aqui se for mais de um" type="button" class="btn btn-info btn-open-modal" data-toggle="modal" data-target="#modaltelefoneResident">
-                                            <i class="glyphicon  glyphicon-plus-sign"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="numeroCasa col-sm-2 form-group ">
+                            <div class="numeroCasa col-sm-3 form-group ">
                                 <label class="control-label" for="casa">N° Casa</label> 
                                 <input style="text-transform: uppercase" type="text" autocomplete class="form-control casa" id="casa" name="casa">
                             </div>
 
-                            <div class="qtdMoradores col-sm-2 form-group ">
+                            <div class="qtdMoradores col-sm-3 form-group ">
                                 <label class="control-label" for="qtdMorador">Qtd Moradores</label> 
                                 <input type="text" maxlength="1" autocomplete class="form-control qtd-morador" id="qtdMorador" name="qtdMorador">
                             </div>
@@ -144,9 +124,54 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="telefones col-sm-3  form-group">
+                                <label for="telefones" class="control-label">Telefone/Telefones</label>
+                                <div style="display: flex;">
+                                    <!--<input type="text" autocomplete class="form-control js-phone-number" id="telefone" name="telefone">-->
+                                    <select data-placeholder="Lista de telefone" id="telefones" name="telefones" class="form-control select-telefones" data-live-search="true" >
+                                    </select>
+                                    <div class="btnAdd" style="margin: 0 0 0 5px;">
+                                        <button style="display: none" title="Remover telefone selecionado" type="button" class="btn btn-danger btn-remove-tel">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </button>
+                                        <button title="Clique para salvar" type="button" class="btn btn-success btn-open-modal" data-toggle="modal" data-target="#modaltelefoneResident">
+                                            <i class="glyphicon glyphicon-ok-sign"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="row">
+
+                            <div class="col-sm-5">
+
+                                <div style="display: flex;">
+                                    <button type="button" class="btn btn-primary btn-save">
+                                        <span class="glyphicon glyphicon-floppy-saved"></span> Save
+                                    </button>
+
+                                    <div style="margin: 0 0 0 5px;">
+                                        <button type="reset" class="btn btn-warning btn-new" >
+                                            <span class="glyphicon glyphicon-refresh"></span> New
+                                        </button>
+                                    </div>
+
+                                    <div style="margin: 0 0 0 5px;">
+                                        <a th:href="@{/city/page/search}" type="button" class="btn btn-default btn-page-search">
+                                            <span class="glyphicon glyphicon-search"></span> Search
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
 
                         </div>
-
+                        
+                        <div style="margin-bottom: 15px;" ></div>
+                        
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <div class="panel panel-danger">
@@ -195,8 +220,8 @@
                                                     <input type="hidden" name="id-modelo-carro" id="id-modelo-carro" />
                                                     <input type="hidden" name="modelo-carro" id="modelo-carro" />
                                                     <div style="margin: 0 0 0 5px;">
-                                                        <button title="Adicionar carro" type="button" class="btn btn-info add-carro" >
-                                                            <i class="glyphicon  glyphicon-plus-sign"></i>
+                                                        <button title="Adicionar carro" type="button" class="btn btn-success add-carro" >
+                                                            <i class="glyphicon glyphicon-ok-sign"></i>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -220,7 +245,7 @@
 
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td colspan='7' style='color:green'><b>Nenhum veículo encontrado</b></td>
+                                                                        <td colspan="7" >Nenhum adicionado</td>
                                                                     </tr>
                                                                 </tbody>
 
@@ -279,8 +304,8 @@
                                                     <input type="hidden" name="id-modelo-moto" id="id-modelo-moto" />
                                                     <input type="hidden" name="modelo-moto" id="modelo-moto" />
                                                     <div style="margin: 0 0 0 5px;">
-                                                        <button title="Adicionar moto" type="button" class="btn btn-info add-moto" >
-                                                            <i class="glyphicon  glyphicon-plus-sign"></i>
+                                                        <button title="Adicionar moto" type="button" class="btn btn-success add-moto" >
+                                                            <i class="glyphicon glyphicon-ok-sign"></i>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -303,7 +328,7 @@
 
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td colspan='7' style='color:green'><b>Nenhum veículo encontrado</b></td>
+                                                                        <td colspan="7">Nenhuma adicionada</td>
                                                                     </tr>
                                                                 </tbody>
 
@@ -318,37 +343,13 @@
                             </div>
 
                         </div>
-                        <div class="row">
-
-                            <div class="col-sm-5">
-
-                                <div style="display: flex;">
-                                    <button type="button" class="btn btn-primary btn-save">
-                                        <span class="glyphicon glyphicon-floppy-saved"></span> Save
-                                    </button>
-
-                                    <div style="margin: 0 0 0 5px;">
-                                        <button type="reset" class="btn btn-warning btn-new" >
-                                            <span class="glyphicon glyphicon-refresh"></span> New
-                                        </button>
-                                    </div>
-
-                                    <div style="margin: 0 0 0 5px;">
-                                        <a th:href="@{/city/page/search}" type="button" class="btn btn-default btn-page-search">
-                                            <span class="glyphicon glyphicon-search"></span> Search
-                                        </a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
+                        
                     </span>
 
                 </form>
 
             </div>
-
+            <div id="divLoading"></div>
         </div>
 
         <script>
@@ -380,6 +381,7 @@
         <script th:src="@{/flyer-js/resident/casanumerada/save.resident.casanumerada.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/resident/casanumerada/add.automovel.js}" type="text/javascript"></script>
         <script th:src="@{/flyer-js/resident/addTelefone.js}" type="text/javascript"></script>
+        <script th:src="@{/vendor-js/jquery.blockUI.js}" type="text/javascript"></script>
     </body>
 
 </html>

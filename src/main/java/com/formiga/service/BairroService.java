@@ -3,10 +3,10 @@ package com.formiga.service;
 
 import com.formiga.entity.Bairro;
 import com.formiga.repository.IBairroRepository;
-import javax.transaction.Transactional;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *

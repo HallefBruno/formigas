@@ -4,9 +4,11 @@ package com.formiga.service;
 import com.formiga.entity.Telefone;
 import com.formiga.repository.ITelefoneRepository;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -28,6 +30,11 @@ public class TelefoneService {
     public List<Telefone> save(List<Telefone> telefone) {
         List<Telefone> list = telefoneRepository.saveAll(telefone);
         return list;
+    }
+    
+    @Transactional
+    public void delete(long id) throws EmptyResultDataAccessException, DataIntegrityViolationException {
+        telefoneRepository.deleteById(id);
     }
     
 }

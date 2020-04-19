@@ -5,15 +5,14 @@ import com.formiga.entity.Bairro;
 import com.formiga.entity.Cidade;
 import com.formiga.entity.Estado;
 import com.formiga.entity.Resident;
-import com.formiga.entity.exception.MessageException;
 import com.formiga.repository.IBairroRepository;
 import com.formiga.repository.ICidadeRepository;
 import com.formiga.repository.IResidentRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ResidentService {
@@ -26,20 +25,12 @@ public class ResidentService {
     
     @Autowired
     private IResidentRepository iResidentRepository;
-    
-    public Resident save(Resident resident) {
-//        Optional<Resident> exist = iResidentRepository.findByCpf(resident.getCpf());
-//        
-//        if(exist.isPresent()) {
-//            throw new MessageException("Essa pessoa ja foi cadastrada");
-//        }
-        
-        Resident salvo = iResidentRepository.save(resident);
-        
-        return salvo;
-        
+
+    @Transactional
+    public Resident save(Resident resident) throws Throwable {
+        return iResidentRepository.save(resident);
     }
-    
+
     public List<Cidade> getListCity(Long idEstado, String city) {
         
         List<Object[]> list = cidadeRepository.getListCity(idEstado, city);

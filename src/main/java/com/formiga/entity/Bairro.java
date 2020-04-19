@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+//@DateTimeFormat(pattern = "yyyy-MM-dd")
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = {"nome"})})
 public class Bairro implements Serializable {
@@ -72,7 +73,7 @@ public class Bairro implements Serializable {
             return false;
         }
         final Bairro other = (Bairro) obj;
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 }
 //@PrePersist

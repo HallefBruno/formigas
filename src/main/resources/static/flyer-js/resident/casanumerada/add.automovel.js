@@ -1,4 +1,4 @@
-/* global Swal, Formiga */
+/* global Swal, Formiga,  , idAtualRes*/
 
 var AddAutomovel = AddAutomovel || {};
 
@@ -63,16 +63,21 @@ AddAutomovel.Adicionar = (function () {
                 }
                 
                 if(situacao) {
-                    arrayCarro.push(
-                        {
-                            idfab:idFabricante,
-                            idmod:idModelo,
-                            fabricante:nomeFabricante,
-                            modelo:nomeModelo,
-                            placa:placa,
-                            cor:cor
-                        }
-                    );
+                    var carro = {
+                        modeloCarro: {
+                            id: idModelo,
+                            marcaCarro: {
+                                id: idFabricante
+                            }
+                        },
+                        resident: {
+                            id: idAtualRes
+                        },
+                        placa: placa,
+                        cor: cor
+                    };
+                    save(this.tblAddCarro,carro,"carro/save","data-row");
+
                 }
             
             } else {
@@ -101,7 +106,7 @@ AddAutomovel.Adicionar = (function () {
                 return false;
             }
 
-            bodyTable(this.tblAddCarro,arrayCarro,"data-row");
+            //bodyTable(this.tblAddCarro,arrayCarro,"data-row");
 
         }.bind(this));
         
@@ -173,7 +178,7 @@ AddAutomovel.Adicionar = (function () {
                 return false;
             }
 
-            bodyTable(this.tblAddMoto,arrayMoto,"data-rowmto");
+            //bodyTable(this.tblAddMoto,arrayMoto,"data-rowmto");
 
         }.bind(this));
     }
@@ -188,26 +193,69 @@ AddAutomovel.Adicionar = (function () {
         });
     }
     
+    function save(tabela,object, url, dataKey) {
+        
+        $.ajax({
+            url: $("#context-app").val() + url,
+            data: JSON.stringify(object),
+            type: "POST",
+            contentType: "application/json",
+            success: function (data, textStatus, jqXHR) {
+                
+                let car = data.toString().split(",");
+
+                var object = {
+                    id:car[0],
+                    modelo: {
+                        id:car[1],
+                        nome:car[2],
+                        marca: {
+                            id:car[3],
+                            nome:car[4]
+                        }
+                    },
+                    placa:car[5],
+                    cor:car[6]
+                };
+                arrayCarro.push(object);
+                bodyTable(tabela,arrayCarro,dataKey);
+                
+                Swal.fire("Pronto!","Salvo com sucesso!", "success");
+                
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                Swal.fire("Atenção!",jqXHR.responseText, "error");
+            }
+        });
+
+    }
+    
     return Adicionar;
 
 }());
 
 function bodyTable(tabela, array, key) {
+    
     var tds="";
-    $.each(array, function (index, moto) {
-
+    
+    $.each(array, function (index, object) {
+        
         tds+="<tr style='font-size:12px;'>"+
-                "<td>"+moto.fabricante+"</td>"+
-                "<td>"+moto.modelo+"</td>"+
-                "<td>"+moto.placa.toUpperCase()+"</td>"+
-                "<td>"+moto.cor+"</td>"+
+                "<td>"+object.modelo.marca.nome+"</td>"+
+                "<td>"+object.modelo.nome+"</td>"+
+                "<td>"+object.placa.toUpperCase()+"</td>"+
+                "<td>"+object.cor+"</td>"+
                 "<td class='text-center'>"+
-                    "<a onclick='deleteRow();' class='btn btn-link btn-xs btn-remove-row' title='Excluir' " + key + "='" + index + "'>" +
+                    "<a onclick='deletar();' class='btn btn-link btn-xs btn-remove-row' title='Excluir' " + key + "='" + object.id + "' data-index='"+index+"'>" +
                         "<i class='glyphicon glyphicon-remove'></i>" +
                     "</a>"+
                 "</td>"+
             "</tr>";
     });
+    
+    if(array.length === 0) {
+        tabela.find("tbody").append("<tr><td colspan='7'>Nenhuma adicionada</td></tr>");
+    }
     
     tabela.find("tbody").html("");
     tabela.find("tbody").append(tds);
@@ -215,13 +263,16 @@ function bodyTable(tabela, array, key) {
     return tds;
 }
 
-function deleteRow() {
+function deletar() {
 
     var row = $(event.currentTarget);
 
     if (typeof row.data("row") !== "undefined") {
         var posicao = row.data("row");
-        arrayCarro.splice(posicao,1);
+        ajaxDel(posicao);
+        arrayCarro = arrayCarro.filter(function (item) {
+            return item.id !== posicao.toString();
+        });
         bodyTable($(".tbl-add-carro"),arrayCarro, "data-row");
     } else if (typeof row.data("rowmto") !== "undefined") {
         var posicao = row.data("rowmto");
@@ -229,6 +280,22 @@ function deleteRow() {
         bodyTable($(".tbl-add-moto"),arrayMoto, "data-rowmto");
     }
 
+}
+
+function ajaxDel(id) {
+    $.ajax({
+        
+        url: $("#context-app").val()+"carro/delete/"+id,
+        type: 'DELETE',
+        
+        success: function (data, textStatus, jqXHR) {
+            Swal.fire("Pronto!","Registro apagado com sucesso!", "success");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            
+        }
+        
+    });
 }
 
 

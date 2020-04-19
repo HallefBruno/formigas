@@ -2,9 +2,14 @@
 
 var SaveResCasaNum = SaveResCasaNum || {};
 
+var idAtualRes = null;
+var carros = [];
+var telefones;
+
 SaveResCasaNum.Save = (function () {
     
     var msgToast;
+    var divBtnAddRemove;
     
     function Save() {
         $.fn.select2.defaults.set("theme", "bootstrap");
@@ -17,7 +22,6 @@ SaveResCasaNum.Save = (function () {
         this.comboCor = $("#cor");
         this.comboCorMoto = $("#cor-moto");
         this.btnSave = $(".btn-save");
-        this.inputTelefone = $("#telefone");
         this.selectTelefone = $("#telefones");
         
         this.nome = $("#nome");
@@ -30,6 +34,8 @@ SaveResCasaNum.Save = (function () {
         this.sexo = $("#combo-sexo-value");
         this.numeroCasa = $("#casa");
         this.qtdMoradores = $("#qtdMorador");
+        divBtnAddRemove = $(".btnAdd");
+
     }
 
     Save.prototype.init = function () {
@@ -40,6 +46,11 @@ SaveResCasaNum.Save = (function () {
         
         popularCombos.call(this);
         msgToast = new Formiga.MessageToast();
+        
+        divBtnAddRemove.block({ message: null });
+        divBtnAddRemove.on("mouseover", function() {
+            divBtnAddRemove.prop("title","Salve primeiro o resident");
+        });
     };
 
     function popularCombos() {
@@ -256,10 +267,10 @@ SaveResCasaNum.Save = (function () {
     function save() {
 
         var permitSave = true;
-        var telefone = [];
 
         var resident = {
             
+            id:idAtualRes,
             nome:this.nome.val(),
             cpf:this.cpf.val(),
             rg:this.rg.val(),
@@ -277,24 +288,14 @@ SaveResCasaNum.Save = (function () {
         $.each(resident, function(key,value) {
             if(value==="") {
                 $("."+key).addClass("has-error has-feedback");
-                msgToast.show("Preencha todos os campos!","warning");
+                msgToast.show("Por favor, preencha todos os campos!","warning");
                 permitSave = false;
             } else {
                 $("."+key).removeClass("has-error has-feedback");
             }
         });
 
-        if(this.inputTelefone.is(":visible")) {
-            if (this.inputTelefone.val()) {
-                $(".telefone").removeClass("has-error has-feedback");
-            } else {
-                permitSave = false;
-                $(".telefone").addClass("has-error has-feedback");
-            }
-        }
-
         if(permitSave) {
-            
 
             $.ajax({
 
@@ -304,99 +305,20 @@ SaveResCasaNum.Save = (function () {
                 url: $("#context-app").val() + "resident/save",
 
                 success: function (data, textStatus, jqXHR) {
-
-                    if($("#telefone").val()  && !$("#telefones").is(":visible")) {
-                        var oneTel = {
-                            numero:$("#telefone").val(),
-                            resident:{id:data.id}
-                        };
-                        telefone = oneTel;
-                    } else {
-                        var listTel = [];
-                        if($("#telefones").is(":visible")) {
-                            $("#telefones").find("option").each(function () {
-                                if($(this).val()) {
-                                    listTel[$(this).val()] = {
-                                        numero:$(this).text(),
-                                        resident: {
-                                            id:data.id
-                                        }
-                                    };
-                                }
-                            });
-                        }
-                        telefone = listTel;
-                    }
+                    idAtualRes = data.id;
+                    divBtnAddRemove.removeAttr("title");
+                    divBtnAddRemove.unblock();
                     
-                    saveCarMoto(arrayCarro,data.id,"carro/savelist");
-                    
-                    if(typeof telefone.length === "undefined") {
-                        savePhone(telefone,"save");
-                    } else {
-                        savePhone(telefone,"savelist");
-                    }
                     Swal.fire('Pronto!', "Salvo com sucesso", 'success');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    
+                    Swal.fire("Atenção!",jqXHR.responseText, "warning");
                 }
 
             });
             
         }
 
-    }
-    
-    function savePhone(object,method) {
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(object),
-            url: $("#context-app").val() + "telefone/"+method,
-            success: function (data, textStatus, jqXHR) {
-                
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                msgToast.show("Ocorreu um erro ao salvar o telefone","error");
-            }
-        });
-    }
-    
-    /*
-     * @param {type} object
-     * @param {type} url
-     * @returns {undefined}
-     */
-    function saveCarMoto(object,idResident, url) {
-        
-        var array = [];
-        $.each(object, function (i,obj) {
-
-            array[i] = {
-                id:null,
-                modeloCarro:{
-                    id:obj.idmod
-                },
-                resident:{
-                    id:idResident
-                },
-                placa:obj.placa,
-                cor:obj.cor
-            };
-        });
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(array),
-            url: $("#context-app").val() + url,
-            success: function (data, textStatus, jqXHR) {
-                
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                msgToast.show("Ocorreu um erro ao salvar o telefone","error");
-            }
-        });
     }
 
     return Save;

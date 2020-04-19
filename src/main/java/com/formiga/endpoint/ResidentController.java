@@ -68,10 +68,13 @@ public class ResidentController {
     
     @PostMapping("save")
     public ResponseEntity<?> save(@RequestBody Resident resident) {
+        
         try {
             return ResponseEntity.ok(residentService.save(resident));
         }catch(MessageException e) {
             return new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
+        } catch (Throwable ex) {
+            return new ResponseEntity("Já existe um morador com esse CPF!",HttpStatus.CONFLICT);
         }
     }
     

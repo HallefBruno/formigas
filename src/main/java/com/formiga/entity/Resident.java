@@ -13,10 +13,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"cpf"})})
 public class Resident implements Serializable {
     
     @Id
@@ -26,7 +31,7 @@ public class Resident implements Serializable {
     private String nome;
     private String cpf;
     private String naturalidade;
-    
+
     @Column(name = "orgao_emissor")
     private String orgaoEmissor;
     
@@ -44,11 +49,14 @@ public class Resident implements Serializable {
     @OneToMany(mappedBy = "resident")
     private List<Telefone> telefones;
     
+    @OneToMany(mappedBy = "modeloCarro")
+    private List<Carro> carros;
+    
     @Column(name = "numero_casa")
     private String numeroCasa;
     
     @Column(name = "qtd_moradores")
-    private int qtdMoradores;
+    private Integer qtdMoradores;
     
     @Column(name = "animal_domestico")
     private boolean animalDomestico;
@@ -125,11 +133,11 @@ public class Resident implements Serializable {
         this.numeroCasa = numeroCasa;
     }
 
-    public int getQtdMoradores() {
+    public Integer getQtdMoradores() {
         return qtdMoradores;
     }
 
-    public void setQtdMoradores(int qtdMoradores) {
+    public void setQtdMoradores(Integer qtdMoradores) {
         this.qtdMoradores = qtdMoradores;
     }
 
@@ -140,9 +148,15 @@ public class Resident implements Serializable {
     public void setAnimalDomestico(boolean animalDomestico) {
         this.animalDomestico = animalDomestico;
     }
-    
-    
-    
+
+    public List<Carro> getCarros() {
+        return carros;
+    }
+
+    public void setCarros(List<Carro> carros) {
+        this.carros = carros;
+    }
+
     public Long getId() {
         return id;
     }
@@ -173,6 +187,10 @@ public class Resident implements Serializable {
         return Objects.equals(this.id, other.id);
     }
     
-    
+    @PrePersist
+    @PreUpdate
+    public void retirarCaracterCPF() {
+        this.cpf = this.cpf.replace(".", "").replace("-", "");
+    }
     
 }

@@ -171,7 +171,7 @@ Formiga.LoadGif = (function () {
     LoadGif.prototype.enable = function (event, jqxhr, settings) {
 
         $(document).ajaxSend(function (event, jqxhr, settings) {
-            
+
             if((!settings.url.includes("term")) && (!settings.processResults)) {
                 $("#divLoading").addClass("show");
             }
@@ -301,5 +301,5 @@ $(function () {
     usuario.enable();
     loadGif.enable();
     initMsg.enable();
-    
+
 });

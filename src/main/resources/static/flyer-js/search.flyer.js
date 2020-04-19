@@ -137,8 +137,8 @@ function deletar(id) {
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#DD6B55',
+        //cancelButtonColor: '#d33',
         confirmButtonText: 'Sim, delete agora!'
     }).then((result) => {
         
