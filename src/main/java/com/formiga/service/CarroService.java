@@ -2,13 +2,7 @@
 package com.formiga.service;
 
 import com.formiga.entity.Carro;
-import com.formiga.entity.MarcaCarro;
-import com.formiga.entity.ModeloCarro;
-import com.formiga.entity.Resident;
 import com.formiga.repository.ICarroRepository;
-import com.formiga.repository.IMarcaCarroRepository;
-import com.formiga.repository.IModeloCarroRepository;
-import com.formiga.repository.IResidentRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +35,5 @@ public class CarroService {
         List<Carro> list = carroRepository.saveAll(carros);
         return list;
     }
-    
-    class CarroDTO {
-        
-    }
-    
+
 }

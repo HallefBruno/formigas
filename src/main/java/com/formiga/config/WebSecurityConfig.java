@@ -60,11 +60,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
           .userDetailsService(userDetailsService)
             .sessionManagement()
-            .invalidSessionUrl("/login")
+            .invalidSessionUrl("/login/")
             .sessionFixation().newSession()    
             .maximumSessions(1)
             .maxSessionsPreventsLogin(false)
-            .expiredUrl("/login");
+            .expiredUrl("/login/");
     }
     
     @Bean

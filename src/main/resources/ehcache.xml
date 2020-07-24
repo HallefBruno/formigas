@@ -2,7 +2,10 @@
 
 <ehcache>
     
-    <defaultCache eternal="false" maxElementsInMemory="100" overflowToDisk="false" memoryStoreEvictionPolicy="LRU" />
+    <defaultCache eternal="false" 
+                  maxElementsInMemory="100" 
+                  overflowToDisk="false" 
+                  memoryStoreEvictionPolicy="LRU" />
     
     <cache name="estado"
            maxElementsInMemory="26" 

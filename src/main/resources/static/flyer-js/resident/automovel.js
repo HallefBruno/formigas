@@ -17,15 +17,18 @@ AddAutomovel.Adicionar = (function () {
         this.comboCorMoto = $("#cor-moto");
         this.comboCorCarro = $("#cor");
         this.placa;
+        this.divBtnAddCarro = $("#divBtnAddCarro");
+        this.divBtnAddMoto = $("#divBtnAddMoto");
     }
 
     Adicionar.prototype.init = function () {
+        this.divBtnAddCarro.block({ message: null });
+        this.divBtnAddMoto.block({message:null});
         eventAddCarro.call(this);
         currentValueComboCorMoto.call(this);
         msgToast = new Formiga.MessageToast();
-        
     };
-    
+
     function eventAddCarro() {
 
         var idFabricante = "";
@@ -34,7 +37,7 @@ AddAutomovel.Adicionar = (function () {
         var nomeModelo = "";
         var placa = "";
         var cor = "";
-        
+
         this.btnAddCarro.on("click", function (e) {
             
             idFabricante = $("#id-fabri-carro").val();
@@ -112,21 +115,21 @@ AddAutomovel.Adicionar = (function () {
         
         this.btnAddMoto.on("click", function(e) {
             
+            idFabricante = $("#id-fabri-moto").val();
+            idModelo = $("#id-modelo-moto").val();
+            nomeFabricante = $("#fabri-moto").val();
+            nomeModelo = $("#modelo-moto").val();
+            placa = $("#placa-moto").val();
+            cor = $("#cor-moto-value").val();
+            var situacao = true;
+            
             if(nomeFabricante && cor && placa && nomeModelo) {
                 
                 $(".feed-fabricante-moto").removeClass("has-error has-feedback");
                 $(".feed-cor-moto").removeClass("has-error has-feedback");
                 $(".feed-placa-moto").removeClass("has-error has-feedback");
                 $(".fedd-modelo-moto").removeClass("has-error has-feedback");
-                
-                idFabricante = $("#id-fabri-moto").val();
-                idModelo = $("#id-modelo-moto").val();
-                nomeFabricante = $("#fabri-moto").val();
-                nomeModelo = $("#modelo-moto").val();
-                placa = $("#placa-moto").val();
-                cor = $("#cor-moto-value").val();
-                var situacao = true;
-                
+
                 if(arrayMoto.length > 0) {
                     
                     $.each(arrayMoto, function (i) {
@@ -137,18 +140,23 @@ AddAutomovel.Adicionar = (function () {
                         }
                     });
                 }
-                
+
                 if(situacao) {
-                    arrayMoto.push(
-                        {
-                            idfab:idFabricante,
-                            idmod:idModelo,
-                            fabricante:nomeFabricante,
-                            modelo:nomeModelo,
-                            placa:placa,
-                            cor:cor
-                        }
-                    );
+
+                    var moto = {
+                        modeloMoto: {
+                            id: idModelo,
+                            marcaMoto: {
+                                id: idFabricante
+                            }
+                        },
+                        resident: {
+                            id: idAtualRes
+                        },
+                        placa: placa,
+                        cor: cor
+                    };
+                    save(this.tblAddMoto,moto,"moto/save","data-rowmto");
                 }
 
             } else {
@@ -201,7 +209,7 @@ AddAutomovel.Adicionar = (function () {
             type: "POST",
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
-                
+
                 let car = data.toString().split(",");
 
                 var object = {
@@ -217,8 +225,14 @@ AddAutomovel.Adicionar = (function () {
                     placa:car[5],
                     cor:car[6]
                 };
-                arrayCarro.push(object);
-                bodyTable(tabela,arrayCarro,dataKey);
+
+                if(url === "carro/save") {
+                    arrayCarro.push(object);
+                    bodyTable(tabela,arrayCarro,dataKey);
+                } else if(url === "moto/save") {
+                    arrayMoto.push(object);
+                    bodyTable(tabela,arrayMoto,dataKey);
+                }
                 
                 Swal.fire("Pronto!","Salvo com sucesso!", "success");
                 
@@ -254,9 +268,9 @@ function bodyTable(tabela, array, key) {
     });
     
     if(array.length === 0) {
-        tabela.find("tbody").append("<tr><td colspan='7'>Nenhuma adicionada</td></tr>");
+        tds = "<tr><td colspan='7'>Nenhum adicionado</td></tr>";
     }
-    
+
     tabela.find("tbody").html("");
     tabela.find("tbody").append(tds);
     
@@ -268,31 +282,33 @@ function deletar() {
     var row = $(event.currentTarget);
 
     if (typeof row.data("row") !== "undefined") {
-        var posicao = row.data("row");
-        ajaxDel(posicao);
+        var id = row.data("row");
+        ajaxDel(id,"carro/delete");
         arrayCarro = arrayCarro.filter(function (item) {
-            return item.id !== posicao.toString();
+            return item.id !== id.toString();
         });
         bodyTable($(".tbl-add-carro"),arrayCarro, "data-row");
     } else if (typeof row.data("rowmto") !== "undefined") {
-        var posicao = row.data("rowmto");
-        arrayMoto.splice(posicao,1);
+        var id = row.data("rowmto");
+        ajaxDel(id,"moto/delete");
+        arrayMoto = arrayMoto.filter(function (item) {
+            return item.id !== id.toString();
+        });
         bodyTable($(".tbl-add-moto"),arrayMoto, "data-rowmto");
     }
 
 }
 
-function ajaxDel(id) {
+function ajaxDel(id, url) {
     $.ajax({
         
-        url: $("#context-app").val()+"carro/delete/"+id,
+        url: $("#context-app").val()+url+"/"+id,
         type: 'DELETE',
-        
         success: function (data, textStatus, jqXHR) {
             Swal.fire("Pronto!","Registro apagado com sucesso!", "success");
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            
+            Swal.fire("Atenção!",jqXHR.responseText, "error");
         }
         
     });

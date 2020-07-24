@@ -34,6 +34,7 @@ SaveResCasaNum.Save = (function () {
         this.sexo = $("#combo-sexo-value");
         this.numeroCasa = $("#casa");
         this.qtdMoradores = $("#qtdMorador");
+        this.btnNew = $(".btn-new");
         divBtnAddRemove = $(".btnAdd");
 
     }
@@ -41,16 +42,15 @@ SaveResCasaNum.Save = (function () {
     Save.prototype.init = function () {
         this.comboModelo.attr("disabled", true);
         this.comboModelosMoto.attr("disabled", true);
-        
         this.btnSave.on("click", save.bind(this));
-        
-        popularCombos.call(this);
-        msgToast = new Formiga.MessageToast();
         
         divBtnAddRemove.block({ message: null });
         divBtnAddRemove.on("mouseover", function() {
             divBtnAddRemove.prop("title","Salve primeiro o resident");
         });
+        clear.call(this);
+        popularCombos.call(this);
+        msgToast = new Formiga.MessageToast();
     };
 
     function popularCombos() {
@@ -305,20 +305,32 @@ SaveResCasaNum.Save = (function () {
                 url: $("#context-app").val() + "resident/save",
 
                 success: function (data, textStatus, jqXHR) {
-                    idAtualRes = data.id;
+                    idAtualRes = Number.parseInt(data.id);
                     divBtnAddRemove.removeAttr("title");
                     divBtnAddRemove.unblock();
-                    
+                    $("#divBtnAddCarro").unblock();
+                    $("#divBtnAddMoto").unblock();
                     Swal.fire('Pronto!', "Salvo com sucesso", 'success');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     Swal.fire("Atenção!",jqXHR.responseText, "warning");
+                    remove_class_swal2();
                 }
 
             });
             
         }
 
+    }
+    
+    function clear() {
+        this.btnNew.on("click", function(){
+            window.location.reload();
+        });
+        
+//        $("#divBtnAddCarro").block({message: null});
+//        divBtnAddRemove.block({message: null});
+//        $("#divBtnAddMoto").block({message: null});
     }
 
     return Save;

@@ -7,6 +7,7 @@ import com.formiga.entity.dto.DefaultAutoCompleteSelect2DTO;
 import com.formiga.repository.ICidadeRepository;
 import com.formiga.service.CidadeService;
 import com.formiga.service.EstadoService;
+import com.formiga.service.ResidentService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -36,6 +38,7 @@ public class CityController {
     
     @Autowired
     private ICidadeRepository cidadeRepository;
+
     
     @RequestMapping
     public ModelAndView init() {
@@ -69,9 +72,9 @@ public class CityController {
         return estadoService.listEstadoSelect2(term);
     }
     
-    @GetMapping("list/city")
-    public List<Cidade> listCity(@RequestParam(defaultValue = "", required = false, name = "param") String param) {
-        return cidadeRepository.getListCityParam(param);
+    @GetMapping("list/city/{id}")
+    public List<DefaultAutoCompleteSelect2DTO> listCity(@RequestParam(defaultValue = "", required = false, name = "param") String param, @PathVariable String id) {
+        return cidadeService.getListCity(Long.valueOf(id), param);
     }
 
 }

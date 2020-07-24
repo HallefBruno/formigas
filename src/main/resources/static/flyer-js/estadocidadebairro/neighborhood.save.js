@@ -141,7 +141,7 @@ Bairro.Save = (function () {
                 allowClear: true,
 
                 ajax: {
-                    url: $("#context-app").val() + "resident/lists/cidade/" + e.params.data.id,
+                    url: $("#context-app").val() + "city/list/city/" + e.params.data.id,
                     type: "get",
                     dataType: "json",
 

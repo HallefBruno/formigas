@@ -5,7 +5,9 @@ import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FormigaCloudinary {
     ////cloudinary.url().transformation(new Transformation().height(200).quality(100).width(180).crop("scale")).imageTag("mascote/mascote-formiga_rvitia.png");
     private Map configOpenCloudinary() {
@@ -16,14 +18,14 @@ public class FormigaCloudinary {
         return chave;
     }
     
-    public Map savePhotoThumbnail(byte[] dataImage, String residentName) throws IOException {
-        Map conf = ObjectUtils.asMap("public_id", "resident/" + residentName,"transformation", new Transformation().width(50).height(50).gravity("face").crop("fill").radius("max"));
+    public Map savePhotoThumbnail(byte[] dataImage, String residentName, Long idResident) throws IOException {
+        Map conf = ObjectUtils.asMap("public_id", "resident/" + residentName+"_"+idResident,"transformation", new Transformation().width(50).height(50).gravity("face").crop("fill").radius("max"));
         Cloudinary cloudinary = new Cloudinary(configOpenCloudinary());
         return cloudinary.uploader().upload(dataImage, conf);//.gravity("face")
     }
     
-    public Map savePhotoResident(byte[] dataImage, String residentName) throws IOException {
-        Map conf = ObjectUtils.asMap("public_id", "resident/" + residentName);
+    public Map savePhotoResident(byte[] dataImage, String residentName, Long idResident) throws IOException {
+        Map conf = ObjectUtils.asMap("public_id", "resident/" + residentName+"_"+idResident);
         Cloudinary cloudinary = new Cloudinary(configOpenCloudinary());
         return cloudinary.uploader().upload(dataImage, conf);//.gravity("face")
     }

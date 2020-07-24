@@ -138,7 +138,7 @@
                 left: '35%',
                 textAlign: 'center',
                 color: '#000',
-                border: '3px solid #aaa',
+                //border: '3px solid #aaa',
                 backgroundColor: '#fff',
                 cursor: 'wait'
             },
@@ -154,7 +154,7 @@
             overlayCSS: {
                 backgroundColor: '#ffffff',
                 opacity: 0.6,
-                cursor: 'wait'
+                //cursor: 'wait'
             },
 
             // style to replace wait cursor before unblocking to correct issue

@@ -12,6 +12,7 @@ var celula1;
 
 
 $(document).ready(function () {
+    
     event.preventDefault();
     $("#modaltelefoneResident").on('hidden.bs.modal', function () {
         verTodos();
@@ -144,10 +145,12 @@ function savePhone() {
                 id: idAtualRes
             }
         };
+        //modaltelefoneResident
         $.ajax({
             url: $("#context-app").val() + "telefone/save",
             data: JSON.stringify(object),
             type: "POST",
+            
             contentType: "application/json",
             success: function (data, textStatus, jqXHR) {
                 telefone.push(data);
@@ -164,8 +167,15 @@ function savePhone() {
                 celula1.innerHTML = "<button class='btn btn-danger btn-sm' data-id='" + data.id + "' onclick='onExcluirClicado()'><span class='glyphicon glyphicon-trash' ></span></button>";
                 celula1.style = "text-align: center;";
                 //$(".tel-adicionado").prop('style','display: block;').fadeOut(3000);
-                Swal.fire("Pronto!","Salvo com sucesso!", "success");
+                //Swal.fire("Pronto!","Salvo com sucesso!", "success");
 
+            },
+            
+            beforeSend: function (xhr) {
+                $("#camposTel").block({ message: "<img src='/formiga/imagens/mini-loading.gif' />" });
+            },
+            complete: function (jqXHR, textStatus) {
+                $("#camposTel").unblock();
             },
 
             error: function (jqXHR, textStatus, errorThrown) {

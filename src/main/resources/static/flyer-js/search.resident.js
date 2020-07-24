@@ -30,7 +30,7 @@ $(document).ready(function () {
             return markup;
         },
         
-        minimumInputLength: 1,
+        minimumInputLength: 2,
 
         ajax: {
             url: $("#context-app").val()+"flyer/search/resident",

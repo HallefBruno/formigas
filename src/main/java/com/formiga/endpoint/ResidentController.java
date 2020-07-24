@@ -85,10 +85,12 @@ public class ResidentController {
         return mv;
     }
     
-//    @GetMapping("search/{codResident}")
-//    public ResponseEntity listOfResidentsWithPhoto(@PathVariable String codResident) {
-//        return ResponseEntity.status(HttpStatus.OK).body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
-//    }
+    @GetMapping("search/{codResident}")
+    public ResponseEntity listOfResidentsWithPhoto(@PathVariable String codResident) {
+        //String newFilename = oldFilename.substring(0, oldFilename.length() - 3) + "mp3";
+        //return ResponseEntity.status(HttpStatus.OK).body(fotoRepository.getListPhtoResident(Long.valueOf(codResident)));
+        return null;
+    }
     
     @GetMapping("list/marcacar")
     public List<DefaultAutoCompleteSelect2DTO> getListMarcaCarro(@RequestParam(name = "term",required = false, defaultValue = "") String term) {
